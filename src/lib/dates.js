@@ -8,8 +8,8 @@ function isoDate(d) {
   return `${d.getFullYear()}-${mo}-${da}`;
 }
 
-export function todayStr() {
-  return isoDate(new Date());
+export function todayStr(d = new Date()) {
+  return isoDate(d);
 }
 
 export function weekStartFor(dateStr) {

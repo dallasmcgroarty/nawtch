@@ -46,7 +46,7 @@ function formatTime(iso) {
 
 function loggedTodayCount(itemId) {
   const today = todayStr();
-  return doseLog.filter((d) => d.itemId === itemId && d.loggedAt.slice(0, 10) === today).length;
+  return doseLog.filter((d) => d.itemId === itemId && todayStr(new Date(d.loggedAt)) === today).length;
 }
 
 // Whether every supplement logged on a given day (from a supplementDays
@@ -138,7 +138,7 @@ function openSupplementModal(isEdit) {
             <input id="supp-name" type="text" placeholder="e.g. Creatine" />
           </div>
           <div class="field-group">
-            <span class="field-label">Dosage Amount</span>
+            <span class="field-label">Dose</span>
             <input id="supp-amount" type="number" placeholder="500" min="0" step="any" />
           </div>
           <div class="field-group">
@@ -151,7 +151,7 @@ function openSupplementModal(isEdit) {
             </select>
           </div>
           <div class="field-group">
-            <span class="field-label">Dosages/Day</span>
+            <span class="field-label">Dose/Day</span>
             <input id="supp-target" type="number" placeholder="1" min="1" step="1" />
           </div>
         </div>
@@ -579,7 +579,7 @@ function renderSupplementCards() {
         <button class="srv-btn" ${met ? "disabled" : ""} onclick="window.logDose('${item.id}')">+</button>
         <div class="srv-count">
           <div class="current ${countClass}">${count}</div>
-          <div class="target">/ ${item.target} today</div>
+          <div class="target">/ ${item.target}</div>
         </div>
         <button class="srv-btn" ${count === 0 ? "disabled" : ""} onclick="window.removeLastDose('${item.id}')">−</button>
       </div>
