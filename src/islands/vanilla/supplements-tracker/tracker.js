@@ -301,6 +301,10 @@ function renderTabs() {
 function renderActivePanel() {
   document.getElementById("supp-panel-log").hidden = activeTab !== "log";
   document.getElementById("supp-panel-history").hidden = activeTab !== "history";
+  const infoBanners = document.getElementById("supp-info-banners");
+  if (infoBanners) {
+    infoBanners.style.display = activeTab === "log" ? "" : "none";
+  }
   if (activeTab === "history") renderHistory();
 }
 
