@@ -37,5 +37,92 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     </div>
   </div>
 
+  <div class="info-banners">
+    <div class="info-banner">
+      <div
+        class="info-banner-header"
+        onclick="this.parentElement.classList.toggle('open')"
+      >
+        <div
+          class="info-dot"
+          style="
+            background: var(--accent);
+            box-shadow: 0 0 6px var(--accent);
+          "
+        ></div>
+        <h2 class="info-banner-label">About This Tracker</h2>
+        <span class="info-banner-chevron">▼</span>
+      </div>
+      <div class="info-banner-body">
+        This supplement tracker is a simple daily logging tool for people who want a quick way to keep tabs on
+        vitamins, minerals, protein powders, herbs, and routine medications without juggling separate notes,
+        calendar reminders, or spreadsheets. It is designed for day-to-day consistency: check your list, mark
+        what you took, and see whether you're staying aligned with your target for the day.
+        <br /><br />
+        Use it to track recurring intake like daily creatine, magnesium, vitamin D, fish oil, caffeine, or a
+        prescribed medication schedule. You can set a per-day target for each item, log actual doses as they happen,
+        and review your history later to see patterns over time. The tracker is meant to be a lightweight reference
+        for your routine, not a substitute for medical advice or a medical record.
+        <br /><br />
+        Everything you add here is saved locally in your browser, so it stays private to your device and does not
+        sync to a server. See the <a href="/supplements/">supplements hub</a> for individual product guides and the
+        <a href="/guides/">Guides page</a> for more reference material.
+      </div>
+    </div>
+    <div class="info-banner">
+      <div
+        class="info-banner-header"
+        onclick="this.parentElement.classList.toggle('open')"
+      >
+        <div
+          class="info-dot"
+          style="
+            background: var(--accent);
+            box-shadow: 0 0 6px var(--accent);
+          "
+        ></div>
+        <h2 class="info-banner-label">How Supplement Tracker Works</h2>
+        <span class="info-banner-chevron">▼</span>
+      </div>
+      <div class="info-banner-body">
+        Add a supplement or medication, choose the target amount you want to hit each day, and set the unit that
+        matches your routine. You can then log a dose with a single tap, and the tracker keeps your current-day
+        total in view so you can quickly see whether you're on pace or already over your target for that item.
+        <br /><br />
+        The daily status updates automatically as you mark doses, and the history view helps you review what was
+        taken on previous days without changing your current plan. If you want a clean reset, you can remove a
+        supplement or start again with a fresh list.
+        <br /><br />
+        Like the rest of Nawtch, this is a local-only tool. Your saved supplement entries stay in this browser only,
+        and nothing is sent to a server or account.
+      </div>
+    </div>
+
+    <div class="info-banner">
+      <div
+        class="info-banner-header"
+        onclick="this.parentElement.classList.toggle('open')"
+      >
+        <div
+          class="info-dot"
+          style="
+            background: var(--accent3);
+            box-shadow: 0 0 6px var(--accent3);
+          "
+        ></div>
+        <h2 class="info-banner-label">Use It for Daily Consistency</h2>
+        <span class="info-banner-chevron">▼</span>
+      </div>
+      <div class="info-banner-body">
+        This tool is best for keeping a visible record of what you intend to take each day, especially when you are
+        juggling several supplements or medications at once. It is useful for checking a routine at a glance,
+        spotting gaps, and making it easier to stay consistent over time.
+        <br /><br />
+        It is not a medical dashboard or diagnosis tool. If you are starting a new supplement, changing a dose, or
+        dealing with side effects, talk with a qualified clinician or pharmacist before adjusting your routine.
+      </div>
+    </div>
+  </div>
+
   <script src="../../../islands/vanilla/supplements-tracker/tracker.js"></script>
 </BaseLayout>

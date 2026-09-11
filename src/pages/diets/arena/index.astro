@@ -43,6 +43,83 @@ import { DIETS } from '../../../data/diets';
     </div>
   </div>
 
+  <div class="settings-section">
+    <h2 class="settings-section-title">About This Comparison Tool</h2>
+    <div class="settings-section-body">
+      <p class="settings-desc">
+        Diet Arena is a side-by-side comparison tool for people who want to understand how two eating patterns
+        differ without turning the decision into a single “best diet” verdict. It is built for quick comparisons
+        between popular diets, including their typical foods, eating pattern, macro emphasis, and the overall
+        strength of evidence behind them.
+      </p>
+      <p class="settings-desc" style="margin-top: 10px">
+        This is useful when you're narrowing down options, exploring a diet for the first time, or trying to
+        compare two plans with the same categories in front of you. Instead of reading a long list of pros and cons
+        in separate places, you can look at the same structure for both diets and make a more informed comparison.
+      </p>
+      <p class="settings-desc" style="margin-top: 10px">
+        The goal is clarity and context, not a recommendation. Diets vary by goals, food preferences, constraints,
+        and evidence quality, and the comparison here is meant to help you understand those differences rather than
+        rank one as objectively “better.” See the <a href="/diets/">Diet hub</a> for more diet guides and deeper
+        detail on individual approaches.
+      </p>
+    </div>
+  </div>
+
+  <div class="info-banners">
+    <div class="info-banner">
+      <div
+        class="info-banner-header"
+        onclick="this.parentElement.classList.toggle('open')"
+      >
+        <div
+          class="info-dot"
+          style="
+            background: var(--accent);
+            box-shadow: 0 0 6px var(--accent);
+          "
+        ></div>
+        <h2 class="info-banner-label">How Diet Arena Works</h2>
+        <span class="info-banner-chevron">▼</span>
+      </div>
+      <div class="info-banner-body">
+        Pick any two diets from the dropdowns and then tap <strong>Compare</strong>. The page lines up the same
+        categories for both diets so you can quickly see how their eating patterns, food emphasis, and overall
+        dietary structure differ side by side.
+        <br /><br />
+        The comparison is designed to be straightforward and consistent: each diet is reviewed through the same lens,
+        which makes it easier to compare options without bouncing between separate pages. Everything here is meant
+        to help you understand the trade-offs, not to replace a clinician or personalized nutrition plan.
+      </div>
+    </div>
+
+    <div class="info-banner">
+      <div
+        class="info-banner-header"
+        onclick="this.parentElement.classList.toggle('open')"
+      >
+        <div
+          class="info-dot"
+          style="
+            background: var(--accent3);
+            box-shadow: 0 0 6px var(--accent3);
+          "
+        ></div>
+        <h2 class="info-banner-label">What This Comparison Does and Doesn't Do</h2>
+        <span class="info-banner-chevron">▼</span>
+      </div>
+      <div class="info-banner-body">
+        This tool is a <strong>reference and comparison tool</strong>. It helps you understand the broad structure of
+        a diet, the kinds of foods it tends to include, and how evidence strength and dietary priorities may differ
+        across approaches.
+        <br /><br />
+        It is not a personalized medical recommendation, a verdict on which diet is “best,” or a substitute for
+        individualized advice from a doctor, dietitian, or qualified clinician. The right choice depends on your
+        goals, nutrition needs, preferences, health conditions, and how realistic the pattern is for your daily life.
+      </div>
+    </div>
+  </div>
+
   <script type="application/json" id="arena-diets-data" is:inline set:html={JSON.stringify(DIETS.map((d) => ({ slug: d.slug, name: d.name })))} />
   <script src="../../../islands/vanilla/diet-arena/picker.js"></script>
 </BaseLayout>
