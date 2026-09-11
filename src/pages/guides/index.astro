@@ -310,6 +310,36 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <div class="info-banner">
       <div class="info-banner-header" onclick="this.parentElement.classList.toggle('open')">
         <div class="info-dot" style="background:var(--accent);box-shadow:0 0 6px var(--accent);"></div>
+        <h2 class="info-banner-label">Supplement Tracker</h2>
+        <span class="info-banner-chevron">▼</span>
+      </div>
+      <div class="info-banner-body">
+        The <a href="/supplements/tracker/">Supplement Tracker</a> logs daily supplement and approved-medication
+        doses separately from your food log. Pick a known item from the grouped list — everyday supplements like
+        creatine or vitamin D, or an FDA-approved medication like semaglutide — or type your own entry if it's not
+        listed, then set a <strong>dosage amount</strong> (e.g. 500), a <strong>unit</strong> (mg, g, ml, or IU),
+        and a <strong>target number of doses per day</strong>.
+        <br /><br />
+        Each saved supplement gets its own card with <strong>+</strong>/<strong>−</strong> buttons: tap
+        <strong>+</strong> once per dose taken, and the card shows your progress as "X of Y today." Once you hit
+        your target, <strong>+</strong> disables so you can't log past it. Tap <strong>−</strong> to undo the most
+        recent dose if you tapped by mistake. If you edit a supplement's dosage or unit partway through the day,
+        doses already logged keep their original values — only future taps reflect the change — so a single day's
+        log can correctly show two different dosages if you adjusted mid-day.
+        <br /><br />
+        The <strong>History</strong> tab lists every past day you've logged a dose, most recent first (30 at a
+        time, with a <strong>Load More</strong> button for older days), along with a ✓/✗ showing whether every
+        supplement hit its target that day. Switch to <strong>Month</strong> or <strong>Year</strong> to filter to
+        a specific period instead — a Year dropdown only appears in Month view once your history actually spans
+        more than one calendar year. Tap any day to see exactly what was logged, with a per-supplement ✓/✗ and
+        every individual dose's time and amount.
+        <br /><br />
+        Like the rest of Nawtch, the tracker resets at midnight and everything stays on your device.
+      </div>
+    </div>
+    <div class="info-banner">
+      <div class="info-banner-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="info-dot" style="background:var(--accent);box-shadow:0 0 6px var(--accent);"></div>
         <h2 class="info-banner-label">Tools & Utilities</h2>
         <span class="info-banner-chevron">▼</span>
       </div>

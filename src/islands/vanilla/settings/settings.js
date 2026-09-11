@@ -132,7 +132,7 @@ document.addEventListener("click", () => {
 // ═══════════════════════════════════════════════════════════════════
 // FULL BACKUP EXPORT / IMPORT
 // ═══════════════════════════════════════════════════════════════════
-const ALL_STORES = ["days", "weeks", "coreitems", "settings", "programs", "exercises", "weights"];
+const ALL_STORES = ["days", "weeks", "coreitems", "settings", "programs", "exercises", "weights", "supplementitems", "supplementDays"];
 
 async function exportFullBackup() {
   if (!await showConfirm("Export all data as a backup JSON file?", "Export")) return;

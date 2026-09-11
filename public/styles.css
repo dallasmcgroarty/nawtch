@@ -365,6 +365,11 @@ select {
   transition: border-color 0.15s;
 }
 
+#supp-history-month,
+#supp-history-year {
+  width: auto;
+}
+
 input[type="time"]::-webkit-calendar-picker-indicator {
   filter: invert(1);
   opacity: 0.6;
@@ -1071,7 +1076,7 @@ input[readonly] {
   border-left: 4px solid var(--accent);
   border-radius: 8px;
   padding: 12px 16px;
-  margin-bottom: 24px;
+  margin: 24px 0px;
   display: flex;
   align-items: flex-start;
   gap: 10px;
@@ -1893,6 +1898,20 @@ input[readonly] {
   display: block;
 }
 
+/* SAVED SUPPLEMENTS TRACKER GRID */
+#supplement-cards-list {
+  margin: 12px 0px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+@media (max-width: 660px) {
+  #supplement-cards-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 /* SAVED FOODS MANAGEMENT GRID */
 #core-items-mgmt-list {
   margin: 12px 0px;
@@ -1963,6 +1982,10 @@ input[readonly] {
   flex-shrink: 0;
 }
 
+#supplement-cards-list .mgmt-card-top .mgmt-edit-btn {
+  align-self: flex-start;
+}
+
 .mgmt-card-actions button {
   flex: 1;
 }
@@ -1975,6 +1998,33 @@ input[readonly] {
 .mgmt-delete-btn:hover {
   border-color: var(--warn) !important;
   color: var(--warn);
+}
+
+.mgmt-card-sub {
+  font-family: "DM Mono", monospace;
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+/* Supplement Tracker's "+" dose button enforces a hard stop at target,
+   unlike Today's servings (which allow logging past target with color-only
+   feedback) — dosing needs a real disabled state, not just recoloring. */
+.srv-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.srv-btn:disabled:hover {
+  background: var(--surface2);
+  color: var(--text);
+  border-color: var(--border);
+}
+
+/* Grouped known-item dropdown (Supplement Tracker's "+ Add Supplement" modal) */
+.field-group select optgroup {
+  font-weight: 700;
+  font-style: normal;
 }
 
 .mgmt-active-btn {
@@ -2706,6 +2756,10 @@ input[readonly] {
   font-size: 12px;
 }
 
+#supplement-history-list .days-table {
+  min-width: 100%;
+}
+
 .days-table th {
   font-family: "DM Mono", monospace;
   font-size: 10px;
@@ -2722,6 +2776,10 @@ input[readonly] {
 .days-table th:last-child {
   padding-right: 20px;
   text-align: right;
+}
+
+#supplement-history-list .days-table th:last-child {
+  text-align: left;
 }
 
 .days-table td {
@@ -2827,6 +2885,10 @@ input[readonly] {
 
 .day-row {
   cursor: pointer;
+}
+
+.day-row:hover {
+  background: var(--surface2);
 }
 
 .day-date {

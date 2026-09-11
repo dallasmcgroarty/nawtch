@@ -2,7 +2,7 @@
 // Modularized DB logic
 
 export const DB_NAME = "MealPlanDB";
-export const DB_VERSION = 11;
+export const DB_VERSION = 12;
 export let db = null;
 
 export function openDB() {
@@ -39,6 +39,12 @@ export function openDB() {
 			       }
 			       if (!d.objectStoreNames.contains("weightGoals")) {
 				       d.createObjectStore("weightGoals", { keyPath: "id" });
+			       }
+			       if (!d.objectStoreNames.contains("supplementitems")) {
+				       d.createObjectStore("supplementitems", { keyPath: "id" });
+			       }
+			       if (!d.objectStoreNames.contains("supplementDays")) {
+				       d.createObjectStore("supplementDays", { keyPath: "date" });
 			       }
 		};
 		req.onsuccess = (e) => {
@@ -114,6 +120,27 @@ export function saveTodayLS(todayStr, servings, customItems) {
 	localStorage.setItem(
 		LS_TODAY,
 		JSON.stringify({ date: todayStr, servings, customItems }),
+	);
+}
+
+export const LS_SUPPTRACKER = "mp_supptracker_v1";
+
+export function loadSuppTrackerLS(todayStr) {
+	try {
+		const raw = localStorage.getItem(LS_SUPPTRACKER);
+		if (!raw) return null;
+		const obj = JSON.parse(raw);
+		if (obj.date !== todayStr) return null;
+		return obj;
+	} catch (e) {
+		return null;
+	}
+}
+
+export function saveSuppTrackerLS(todayStr, doseLog) {
+	localStorage.setItem(
+		LS_SUPPTRACKER,
+		JSON.stringify({ date: todayStr, doseLog }),
 	);
 }
 

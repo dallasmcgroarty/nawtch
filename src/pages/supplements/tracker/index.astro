@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Supplement Tracker — Log Daily Doses — Nawtch"
+  description="Track daily supplement and approved-medication doses, set per-day targets, and log doses with one tap. All data stays on your device."
+  canonicalPath="/supplements/tracker/"
+  bodyClass="diets"
+>
+  <header>
+    <div class="header-left">
+      <h1>Supplement Tracker</h1>
+      <p class="subtitle">Log your daily supplement and medication doses against a target.</p>
+    </div>
+    <div class="date-badge">
+      <div class="date-day" id="supp-hdr-date">—</div>
+      <div class="date-reset">Resets at midnight</div>
+    </div>
+  </header>
+
+  <p class="field-hint" style="margin:-4px 0 14px;">Not medical advice — talk to a doctor before starting or changing any supplement or medication routine.</p>
+
+  <div id="supp-tabs"></div>
+
+  <div id="supp-panel-log">
+    <div class="section-header">
+      <h2 class="section-title" style="margin-bottom:0;">Your Supplements</h2>
+      <button class="add-btn" id="add-supplement-btn" onclick="window.openSupplementModal(false)">+ Add Supplement</button>
+    </div>
+    <div id="supplement-cards-list"></div>
+  </div>
+
+  <div id="supp-panel-history" hidden>
+    <div id="supplement-history-filters"></div>
+    <div style="overflow-x:auto;">
+      <div id="supplement-history-list"></div>
+    </div>
+  </div>
+
+  <script src="../../../islands/vanilla/supplements-tracker/tracker.js"></script>
+</BaseLayout>
