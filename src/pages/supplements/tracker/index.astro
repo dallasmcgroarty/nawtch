@@ -22,12 +22,13 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 
   <div id="supp-tabs"></div>
 
+  <div style="display:flex; justify-content:flex-end; margin-bottom:12px;">
+    <button class="add-btn" id="add-supplement-btn" onclick="window.openSupplementModal(false)">+ Add Supplement</button>
+  </div>
+
   <div class="settings-section" id="supp-panel-log">
     <h2 class="settings-section-title">Your Supplements</h2>
     <div class="settings-section-body">
-      <div style="display:flex; justify-content:flex-end; margin-bottom:12px;">
-        <button class="add-btn" id="add-supplement-btn" onclick="window.openSupplementModal(false)">+ Add Supplement</button>
-      </div>
       <div id="supplement-cards-list"></div>
     </div>
   </div>
