@@ -380,6 +380,10 @@ window.gbExportPlanPdf = async function (id) {
   if (!plan) return;
   if (!(await showConfirm("This will open your browser's print dialog so you can save this grocery list as a PDF or print it. Continue?", "Print / Save PDF"))) return;
   const area = document.getElementById("gb-print-area");
+  // Move to a true direct child of <body> — the CSS print rule hides every
+  // other body child, and #gb-print-area is otherwise nested inside
+  // BaseLayout's .page wrapper, which that rule would hide along with it.
+  document.body.appendChild(area);
   area.innerHTML = buildPrintPlanHTML(plan);
   window.print();
 };
