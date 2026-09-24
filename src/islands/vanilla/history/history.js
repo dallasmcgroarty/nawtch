@@ -1,5 +1,5 @@
 import * as db from "../../../lib/db.js";
-import { todayStr, weekStartFor } from "../../../lib/dates.js";
+import { todayStr, weekStartFor, isoDate, formatDate, formatDateShort } from "../../../lib/dates.js";
 import * as prefs from "../../../lib/prefs.js";
 import { esc, showConfirm } from "../../../lib/ui.js";
 
@@ -151,20 +151,6 @@ function applyWeeklyCostChartOption({ weekLabels, weekCostData, monthLabels, mon
     ],
     legend: { show: false },
   });
-}
-
-function formatDate(dateStr) {
-  return new Date(dateStr + "T00:00:00").toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
-}
-
-function formatDateShort(dateStr) {
-  return new Date(dateStr + "T00:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" });
-}
-
-function isoDate(d) {
-  const mo = String(d.getMonth() + 1).padStart(2, '0');
-  const da = String(d.getDate()).padStart(2, '0');
-  return `${d.getFullYear()}-${mo}-${da}`;
 }
 
 // ═══════════════════════════════════════════════════════════════════

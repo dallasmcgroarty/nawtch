@@ -70,7 +70,7 @@ function openFoodModal(isEdit) {
           </div>
           <div class="field-group">
             <span class="field-label">Target/Day</span>
-            <input type="number" id="ci-target" placeholder="2" min="0.5" step="0.5" oninput="window.updateFreqPreview()" />
+            <input type="number" id="ci-target" placeholder="2" min="0" step="0.5" oninput="window.updateFreqPreview()" />
           </div>
           <div class="field-group">
             <span class="field-label">Freq Details</span>

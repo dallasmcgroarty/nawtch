@@ -1,5 +1,5 @@
 import * as db from "../../../lib/db.js";
-import { todayStr, weekStartFor } from "../../../lib/dates.js";
+import { todayStr, weekStartFor, formatDate, formatDateShort } from "../../../lib/dates.js";
 import { CORE_ITEMS, loadCoreItems } from "../../../lib/items.js";
 import * as prefs from "../../../lib/prefs.js";
 import { esc, showConfirm, showAlert, showDbError } from "../../../lib/ui.js";
@@ -80,21 +80,6 @@ function fmtServing(n) {
   return Number.isInteger(n) ? String(n) : n.toFixed(1);
 }
 
-function formatDate(dateStr) {
-  return new Date(dateStr + "T00:00:00").toLocaleDateString("en-US", {
-    weekday: "short",
-    month: "short",
-    day: "numeric",
-  });
-}
-
-function formatDateShort(dateStr) {
-  return new Date(dateStr + "T00:00:00").toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-  });
-}
-
 // ═══════════════════════════════════════════════════════════════════
 // PERSIST — save today's snapshot to IndexedDB
 // ═══════════════════════════════════════════════════════════════════
@@ -105,13 +90,11 @@ async function persistState() {
     try {
       await db.dbDelete("days", todayStr());
     } catch (e) {}
-    await updateWeekRecord(true); // remove today from the week too
+    await updateWeekRecord(tot, true); // remove today from the week too
     return;
   }
   const snapshot = {
     date: todayStr(),
-    servings: { ...servings },
-    customItems: [...customItems],
     loggedItems: buildLoggedItems(),
     cal: tot.cal,
     p: tot.p,
@@ -124,12 +107,13 @@ async function persistState() {
   try {
     await db.dbPut("days", snapshot);
   } catch (e) {
+    console.error(e);
     showDbError();
   }
-  await updateWeekRecord();
+  await updateWeekRecord(tot);
 }
 
-async function updateWeekRecord(removeIfZero) {
+async function updateWeekRecord(tot, removeIfZero) {
   const weekStart = weekStartFor(todayStr());
   let week;
   try {
@@ -138,13 +122,13 @@ async function updateWeekRecord(removeIfZero) {
     week = null;
   }
   if (!week) week = { weekStart, days: {} };
-  const tot = computeTotals();
   if (removeIfZero === true && tot.cal === 0 && tot.cost === 0) {
     if (week.days && week.days[todayStr()]) {
       delete week.days[todayStr()];
       try {
         await db.dbPut("weeks", week);
       } catch (e) {
+        console.error(e);
         showDbError();
       }
     }
@@ -163,7 +147,8 @@ async function updateWeekRecord(removeIfZero) {
   try {
     await db.dbPut("weeks", week);
   } catch (e) {
-    console.warn("IDB week write failed", e);
+    console.error(e);
+    showDbError();
   }
 }
 
@@ -658,21 +643,8 @@ async function confirmResetDay() {
   Object.keys(servings).forEach(k => { delete servings[k]; });
   CORE_ITEMS.forEach((item) => { servings[item.id] = 0; });
   customItems.length = 0;
-  persistState();
-  (async () => {
-    const weekStart = weekStartFor(todayStr());
-    let week;
-    try {
-      week = await db.dbGet("weeks", weekStart);
-    } catch (e) {
-      week = null;
-    }
-    if (week && week.days && week.days[todayStr()]) {
-      week.days[todayStr()] = { cal: 0, p: 0, c: 0, f: 0, cost: 0 };
-      await db.dbPut("weeks", week);
-    }
-    renderWeeklyCost();
-  })();
+  await persistState();
+  renderWeeklyCost();
   render();
 }
 window.confirmResetDay = confirmResetDay;

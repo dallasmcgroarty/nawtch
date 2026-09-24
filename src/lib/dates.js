@@ -2,7 +2,7 @@
 // (Today, History, Weight). Kept separate from items.js so pages that don't
 // touch the food catalog (Weight, History) don't need to pull that in too.
 
-function isoDate(d) {
+export function isoDate(d) {
   const mo = String(d.getMonth() + 1).padStart(2, '0');
   const da = String(d.getDate()).padStart(2, '0');
   return `${d.getFullYear()}-${mo}-${da}`;
@@ -10,6 +10,21 @@ function isoDate(d) {
 
 export function todayStr(d = new Date()) {
   return isoDate(d);
+}
+
+export function formatDate(dateStr) {
+  return new Date(dateStr + "T00:00:00").toLocaleDateString("en-US", {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+  });
+}
+
+export function formatDateShort(dateStr) {
+  return new Date(dateStr + "T00:00:00").toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+  });
 }
 
 export function weekStartFor(dateStr) {

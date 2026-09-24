@@ -188,6 +188,7 @@ async function handleImportFile(e) {
     }
     localStorage.removeItem(db.LS_TODAY);
     localStorage.removeItem(db.LS_WEEK);
+    localStorage.removeItem(db.LS_SUPPTRACKER);
     // Restored theme lives in the "settings" store now, but the FOUC-prevention
     // bootstrap script reads localStorage — mirror it so the reload below (and
     // every page after) reflects the restored value instead of the stale one.

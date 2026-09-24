@@ -1,5 +1,5 @@
 import * as db from "../../../lib/db.js";
-import { todayStr } from "../../../lib/dates.js";
+import { todayStr, formatDate } from "../../../lib/dates.js";
 import {
   SUPPLEMENT_ITEMS,
   KNOWN_SUPPLEMENTS,
@@ -22,14 +22,6 @@ import { esc, showConfirm, showDbError } from "../../../lib/ui.js";
 let doseLog = [];
 let editingSupplementId = null;
 let activeTab = "log"; // "log" | "history"
-
-function formatDate(dateStr) {
-  return new Date(dateStr + "T00:00:00").toLocaleDateString("en-US", {
-    weekday: "short",
-    month: "short",
-    day: "numeric",
-  });
-}
 
 function formatDateWithYear(dateStr) {
   return new Date(dateStr + "T00:00:00").toLocaleDateString("en-US", {
@@ -88,6 +80,7 @@ async function persistDoseLog() {
   try {
     await db.dbPut("supplementDays", snapshot);
   } catch (e) {
+    console.error(e);
     showDbError();
   }
 }

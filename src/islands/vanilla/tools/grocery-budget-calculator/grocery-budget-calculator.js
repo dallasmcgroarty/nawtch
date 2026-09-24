@@ -284,6 +284,7 @@ window.gbDeletePlan = async function (id) {
   try {
     await deleteGroceryPlanFromDB(id);
   } catch (e) {
+    console.error(e);
     showDbError();
     return;
   }
@@ -311,6 +312,7 @@ async function persistPlan(asNew) {
   try {
     await saveGroceryPlan(plan);
   } catch (e) {
+    console.error(e);
     showDbError();
     return false;
   }

@@ -104,9 +104,11 @@ export function dbClear(store) {
 export const LS_TODAY = "mp_today_v3";
 export const LS_WEEK = "mp_weekstart_v3";
 
-export function loadTodayLS(todayStr) {
+// Shared "JSON blob keyed by today's date, reject on date mismatch" pattern,
+// used by both the Today cache and the Supplement Tracker cache below.
+function loadDatedLS(key, todayStr) {
 	try {
-		const raw = localStorage.getItem(LS_TODAY);
+		const raw = localStorage.getItem(key);
 		if (!raw) return null;
 		const obj = JSON.parse(raw);
 		if (obj.date !== todayStr) return null;
@@ -116,32 +118,26 @@ export function loadTodayLS(todayStr) {
 	}
 }
 
+function saveDatedLS(key, payload) {
+	localStorage.setItem(key, JSON.stringify(payload));
+}
+
+export function loadTodayLS(todayStr) {
+	return loadDatedLS(LS_TODAY, todayStr);
+}
+
 export function saveTodayLS(todayStr, servings, customItems) {
-	localStorage.setItem(
-		LS_TODAY,
-		JSON.stringify({ date: todayStr, servings, customItems }),
-	);
+	saveDatedLS(LS_TODAY, { date: todayStr, servings, customItems });
 }
 
 export const LS_SUPPTRACKER = "mp_supptracker_v1";
 
 export function loadSuppTrackerLS(todayStr) {
-	try {
-		const raw = localStorage.getItem(LS_SUPPTRACKER);
-		if (!raw) return null;
-		const obj = JSON.parse(raw);
-		if (obj.date !== todayStr) return null;
-		return obj;
-	} catch (e) {
-		return null;
-	}
+	return loadDatedLS(LS_SUPPTRACKER, todayStr);
 }
 
 export function saveSuppTrackerLS(todayStr, doseLog) {
-	localStorage.setItem(
-		LS_SUPPTRACKER,
-		JSON.stringify({ date: todayStr, doseLog }),
-	);
+	saveDatedLS(LS_SUPPTRACKER, { date: todayStr, doseLog });
 }
 
 export function loadWeekStart(todayStr, weekStartFor) {

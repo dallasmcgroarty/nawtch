@@ -499,6 +499,7 @@ window.bbDeleteBowl = async function (id) {
   try {
     await deleteBowlFromDB(id);
   } catch (e) {
+    console.error(e);
     showDbError();
     return;
   }
@@ -526,6 +527,7 @@ async function persistBowl(asNew) {
   try {
     await saveBowl(bowl);
   } catch (e) {
+    console.error(e);
     showDbError();
     return false;
   }
@@ -581,6 +583,7 @@ async function flattenToFood(name, components) {
   try {
     await saveCoreItem(newItem);
   } catch (e) {
+    console.error(e);
     showDbError();
     return;
   }

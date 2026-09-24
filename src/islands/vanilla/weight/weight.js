@@ -1,5 +1,5 @@
 import * as db from "../../../lib/db.js";
-import { todayStr, weekStartFor, daysBetween } from "../../../lib/dates.js";
+import { todayStr, weekStartFor, daysBetween, formatDateShort } from "../../../lib/dates.js";
 import * as prefs from "../../../lib/prefs.js";
 import * as weightGoals from "../../../lib/weightGoals.js";
 import { showConfirm } from "../../../lib/ui.js";
@@ -36,11 +36,6 @@ function displayToKg(val) {
 
 function round1(n) {
   return Math.round(n * 10) / 10;
-}
-
-function formatDateShort(dateStr) {
-  const d = new Date(dateStr + "T00:00:00");
-  return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
 }
 
 function formatHeaderDate() {
