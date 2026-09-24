@@ -21,6 +21,8 @@ https://nawtch.com
   - https://nawtch.app/diets/
 - popular supplements and research behind them
   - https://nawtch.app/supplements/
+- supplement tracker for daily logging
+  - https://nawtch.app/supplements/tracker/
 - popular and up-and-coming peptide information (based on FDA data)
   - https://nawtch.app/supplements/peptides/
 - guides to help you use nawtch and support your fitness journey
@@ -40,6 +42,7 @@ https://nawtch.com
 - all data stored locally in your browser
 - access via the web on any device
 - cost tracking
+- useful tools and calculators
 - simple, fast and free
 
 ---
