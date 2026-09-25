@@ -1,0 +1,40 @@
+---
+import { ADS_LIVE, AD_CLIENT, AD_UNITS, type AdPlacement } from '../data/ads';
+
+interface Props {
+  placement: AdPlacement;
+}
+
+const { placement } = Astro.props;
+const unitId = AD_UNITS[placement];
+const live = ADS_LIVE && unitId !== '';
+const isRail = placement === 'rail';
+// after-tool + page-bottom: fixed banner per breakpoint (see .ad-banner in styles.css)
+const isBanner = placement === 'after-tool' || placement === 'page-bottom';
+
+const previewSize: Record<AdPlacement, string> = {
+  'rail': '160×600',
+  'in-article': 'responsive · in-article',
+  'after-tool': '728×90 desktop · 320×100 mobile',
+  'page-bottom': '728×90 desktop · 320×100 mobile',
+};
+---
+
+{live ? (
+  <div class={`ad-slot ad-slot--${placement}`}>
+    <span class="ad-slot-label">Advertisement</span>
+    {isRail ? (
+      <ins class="adsbygoogle" style="display:inline-block;width:160px;height:600px" data-ad-client={AD_CLIENT} data-ad-slot={unitId}></ins>
+    ) : placement === 'in-article' ? (
+      <ins class="adsbygoogle" style="display:block;text-align:center" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client={AD_CLIENT} data-ad-slot={unitId}></ins>
+    ) : (
+      <ins class="adsbygoogle ad-banner" style="display:inline-block" data-ad-client={AD_CLIENT} data-ad-slot={unitId}></ins>
+    )}
+    <script is:inline>(window.adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+) : (
+  <div class={`ad-slot ad-slot--${placement} ad-slot--preview${isBanner ? ' ad-banner' : ''}`} aria-hidden="true">
+    <span class="ad-slot-preview-name">{placement}</span>
+    <span class="ad-slot-preview-size">{previewSize[placement]}</span>
+  </div>
+)}

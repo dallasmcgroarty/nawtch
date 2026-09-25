@@ -1,6 +1,8 @@
 ---
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import AdSlot from '../components/AdSlot.astro';
+import type { AdLevel } from '../data/ads';
 
 interface Props {
   title: string;
@@ -12,6 +14,7 @@ interface Props {
   noIndex?: boolean;
   showLegalFooter?: boolean;
   showSettingsHint?: boolean;
+  ads?: AdLevel; // see src/data/ads.ts
 }
 
 const {
@@ -24,7 +27,10 @@ const {
   noIndex = false,
   showLegalFooter = true,
   showSettingsHint = true,
+  ads = 'full',
 } = Astro.props;
+
+const adPreviewDefault = import.meta.env.DEV;
 
 const canonicalUrl = `https://nawtch.app${canonicalPath}`;
 ---
@@ -44,6 +50,16 @@ const canonicalUrl = `https://nawtch.app${canonicalPath}`;
           if (t === "system" && window.matchMedia) {
             matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function () { apply("system"); });
           }
+        } catch (e) {}
+      })();
+    </script>
+    <script is:inline define:vars={{ adPreviewDefault }}>
+      (function () {
+        try {
+          var q = new URLSearchParams(location.search).get("adpreview");
+          if (q !== null) sessionStorage.setItem("nawtch_adpreview", q === "0" ? "0" : "1");
+          var v = sessionStorage.getItem("nawtch_adpreview");
+          if (v === "1" || (v === null && adPreviewDefault)) document.documentElement.classList.add("ad-preview");
         } catch (e) {}
       })();
     </script>
@@ -79,7 +95,7 @@ const canonicalUrl = `https://nawtch.app${canonicalPath}`;
 
     <link rel="icon" type="image/x-icon" sizes="48x48" href="/media/favicon-48x48.ico" />
     <link rel="icon" type="image/svg+xml" href="/media/nawtch-logo.svg" />
-    <link rel="icon" type="image/png" size="32x32" href="/media/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/media/favicon-32x32.png" />
     <link rel="apple-touch-icon" href="/media/favicon-512x512.png" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -107,12 +123,15 @@ const canonicalUrl = `https://nawtch.app${canonicalPath}`;
       <main>
         <slot />
       </main>
+      {ads === 'full' && <AdSlot placement="page-bottom" />}
       {showLegalFooter && (
         <div class="legal-footer">
           &copy; 2026 Nawtch · <a href="/privacy/">Privacy Policy</a> · <a href="/terms/">Terms of Use</a> · <a href="/contact/">Contact</a>
         </div>
       )}
     </div>
+
+    {ads !== 'none' && <AdSlot placement="rail" />}
 
     <slot name="footer">
       <Footer />

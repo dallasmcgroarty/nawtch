@@ -3308,3 +3308,123 @@ input[readonly] {
     margin-bottom: 4px;
   }
 }
+/* AD SLOTS (see src/data/ads.ts + src/components/AdSlot.astro) */
+.ad-slot {
+  margin: 24px auto;
+  text-align: center;
+  min-height: 100px;
+}
+
+.ad-slot-label {
+  display: block;
+  font-family: "DM Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+/* Collapse slots AdSense couldn't fill (it sets data-ad-status="unfilled" on
+   the <ins>). The :has() rule also hides the wrapper + "Advertisement" label;
+   the bare ins rule is Google's recommended fallback for older browsers. */
+ins.adsbygoogle[data-ad-status="unfilled"] {
+  display: none !important;
+}
+
+.ad-slot:has(ins.adsbygoogle[data-ad-status="unfilled"]) {
+  display: none !important;
+}
+
+/* Right rail: desktop only, fixed in the gutter beside the 900px column,
+   below modals (1001+) and the app footer (100). */
+.ad-slot--rail {
+  display: none;
+  position: fixed;
+  top: 28px;
+  left: calc(50% + 470px);
+  width: 160px;
+  margin: 0;
+  z-index: 50;
+}
+
+@media (min-width: 1340px) and (min-height: 700px) {
+  .ad-slot--rail {
+    display: block;
+  }
+}
+
+/* Banner size for after-tool + page-bottom, shared by the live <ins> and the
+   preview box. The column is 728px+ wide once the viewport reaches 768px
+   (body has 20px side padding). Responsive unit resized by CSS — AdSense's
+   "exact size per screen width" pattern, so no data-ad-format on the <ins>. */
+.ad-banner {
+  width: 320px;
+  height: 100px;
+}
+
+@media (min-width: 768px) {
+  .ad-banner {
+    width: 728px;
+    height: 90px;
+  }
+}
+
+/* Placeholders stay hidden until preview mode (dev, or ?adpreview=1) */
+.ad-slot--preview {
+  display: none;
+}
+
+.ad-preview .ad-slot--preview {
+  --ad-color: #ff3fd2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 250px;
+  border: 2px dashed var(--ad-color);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--ad-color) 14%, transparent);
+  color: var(--ad-color);
+  font-family: "DM Mono", monospace;
+}
+
+.ad-preview .ad-slot--preview.ad-slot--rail {
+  display: none;
+  height: 600px;
+}
+
+@media (min-width: 1340px) and (min-height: 700px) {
+  .ad-preview .ad-slot--preview.ad-slot--rail {
+    display: flex;
+  }
+}
+
+.ad-preview .ad-slot--preview.ad-slot--in-article {
+  --ad-color: #3fa9ff;
+}
+
+.ad-preview .ad-slot--preview.ad-slot--after-tool {
+  --ad-color: #ffb13f;
+}
+
+.ad-preview .ad-slot--preview.ad-slot--page-bottom {
+  --ad-color: #b56bff;
+}
+
+.ad-preview .ad-slot--preview.ad-banner {
+  min-height: 0;
+}
+
+.ad-slot-preview-name {
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.ad-slot-preview-size {
+  font-size: 11px;
+  opacity: 0.8;
+}
