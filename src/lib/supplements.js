@@ -26,7 +26,7 @@ export async function deleteSupplementItemFromDB(id) {
 
 // Static reference lists for the "known item" dropdown — never persisted,
 // just used to populate the grouped <select> and auto-fill the name field.
-// "Supplements" = the 14 existing dedicated Nawtch supplement pages + 17
+// "Supplements" = the 16 existing dedicated Nawtch supplement pages + 15
 // additional popular supplements with no dedicated page. "Approved
 // Medications" = Tier 1 (FDA-approved) peptides only, cross-referenced
 // against /supplements/peptides/ — Tier 2/3 peptides are deliberately never
@@ -46,13 +46,13 @@ export const KNOWN_SUPPLEMENTS = [
   { name: "NAD/NMN" },
   { name: "Fiber" },
   { name: "Prebiotics/Probiotics" },
+  { name: "Multivitamin" },
+  { name: "Melatonin" },
   { name: "Zinc" },
   { name: "Iron" },
   { name: "Vitamin B12" },
-  { name: "Multivitamin" },
   { name: "L-Glutamine" },
   { name: "Turmeric/Curcumin" },
-  { name: "Melatonin" },
   { name: "Fish Oil" },
   { name: "CoQ10" },
   { name: "L-Theanine" },

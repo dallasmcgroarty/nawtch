@@ -44,7 +44,7 @@
   </url>
   <url>
     <loc>https://nawtch.app/calculators/</loc>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -127,6 +127,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://nawtch.app/calculators/heart-rate-zones/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://nawtch.app/calculators/walking-calories/</loc>
     <lastmod>2026-08-07</lastmod>
     <changefreq>weekly</changefreq>
@@ -140,7 +146,7 @@
   </url>
   <url>
     <loc>https://nawtch.app/diets/</loc>
-    <lastmod>2026-08-07</lastmod>
+    <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -235,6 +241,18 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://nawtch.app/diets/high-protein/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nawtch.app/diets/anti-inflammatory/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://nawtch.app/tools/</loc>
     <lastmod>2026-08-04</lastmod>
     <changefreq>weekly</changefreq>
@@ -260,7 +278,7 @@
   </url>
   <url>
     <loc>https://nawtch.app/supplements/</loc>
-    <lastmod>2026-08-12</lastmod>
+    <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -351,6 +369,18 @@
   <url>
     <loc>https://nawtch.app/supplements/prebiotics-probiotics/</loc>
     <lastmod>2026-08-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nawtch.app/supplements/multivitamin/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nawtch.app/supplements/melatonin/</loc>
+    <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -536,9 +566,105 @@
   </url>
   <url>
     <loc>https://nawtch.app/diets/arena/</loc>
-    <lastmod>2026-09-08</lastmod>
+    <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nawtch.app/diets/arena/anti-inflammatory-vs-blue-zones/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://nawtch.app/diets/arena/anti-inflammatory-vs-carnivore/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://nawtch.app/diets/arena/anti-inflammatory-vs-dash/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://nawtch.app/diets/arena/anti-inflammatory-vs-eating-on-glp-1/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://nawtch.app/diets/arena/anti-inflammatory-vs-flexible-dieting/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://nawtch.app/diets/arena/anti-inflammatory-vs-flexitarian/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://nawtch.app/diets/arena/anti-inflammatory-vs-high-protein/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://nawtch.app/diets/arena/anti-inflammatory-vs-intermittent-fasting/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://nawtch.app/diets/arena/anti-inflammatory-vs-keto/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://nawtch.app/diets/arena/anti-inflammatory-vs-low-fodmap/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://nawtch.app/diets/arena/anti-inflammatory-vs-mediterranean/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://nawtch.app/diets/arena/anti-inflammatory-vs-mind/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://nawtch.app/diets/arena/anti-inflammatory-vs-paleo/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://nawtch.app/diets/arena/anti-inflammatory-vs-plant-based/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://nawtch.app/diets/arena/anti-inflammatory-vs-volumetrics/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://nawtch.app/diets/arena/anti-inflammatory-vs-whole30/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
   <url>
     <loc>https://nawtch.app/diets/arena/blue-zones-vs-carnivore/</loc>
@@ -567,6 +693,12 @@
   <url>
     <loc>https://nawtch.app/diets/arena/blue-zones-vs-flexitarian/</loc>
     <lastmod>2026-09-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://nawtch.app/diets/arena/blue-zones-vs-high-protein/</loc>
+    <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -649,6 +781,12 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://nawtch.app/diets/arena/carnivore-vs-high-protein/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://nawtch.app/diets/arena/carnivore-vs-intermittent-fasting/</loc>
     <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
@@ -721,6 +859,12 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://nawtch.app/diets/arena/dash-vs-high-protein/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://nawtch.app/diets/arena/dash-vs-intermittent-fasting/</loc>
     <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
@@ -787,6 +931,12 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://nawtch.app/diets/arena/eating-on-glp-1-vs-high-protein/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://nawtch.app/diets/arena/eating-on-glp-1-vs-intermittent-fasting/</loc>
     <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
@@ -847,6 +997,12 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://nawtch.app/diets/arena/flexible-dieting-vs-high-protein/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://nawtch.app/diets/arena/flexible-dieting-vs-intermittent-fasting/</loc>
     <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
@@ -901,6 +1057,12 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://nawtch.app/diets/arena/flexitarian-vs-high-protein/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://nawtch.app/diets/arena/flexitarian-vs-intermittent-fasting/</loc>
     <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
@@ -951,6 +1113,60 @@
   <url>
     <loc>https://nawtch.app/diets/arena/flexitarian-vs-whole30/</loc>
     <lastmod>2026-09-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://nawtch.app/diets/arena/high-protein-vs-intermittent-fasting/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://nawtch.app/diets/arena/high-protein-vs-keto/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://nawtch.app/diets/arena/high-protein-vs-low-fodmap/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://nawtch.app/diets/arena/high-protein-vs-mediterranean/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://nawtch.app/diets/arena/high-protein-vs-mind/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://nawtch.app/diets/arena/high-protein-vs-paleo/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://nawtch.app/diets/arena/high-protein-vs-plant-based/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://nawtch.app/diets/arena/high-protein-vs-volumetrics/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://nawtch.app/diets/arena/high-protein-vs-whole30/</loc>
+    <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>

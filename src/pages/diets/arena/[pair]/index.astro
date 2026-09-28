@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import { DIETS, type Diet } from '../../../../data/diets';
+import AdSlot from '../../../../components/AdSlot.astro';
 
 export function getStaticPaths() {
   const paths: { params: { pair: string }; props: { dietA: Diet; dietB: Diet } }[] = [];
@@ -88,6 +89,9 @@ const ROWS: { label: string; key: keyof Diet }[] = [
             {dietB[row.key]}
           </div>
         </div>
+      </div>
+      <div>
+        {row.label === 'Best For' && <AdSlot placement="in-article" />}
       </div>
     ))}
   </div>

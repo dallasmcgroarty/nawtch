@@ -350,4 +350,51 @@ export const DIETS: Diet[] = [
       'Prioritizing protein-dense foods at every meal, and sometimes a protein supplement, to hit intake targets on a much smaller food volume can add cost on top of the medication itself.',
     url: '/diets/eating-on-glp-1/',
   },
+  {
+    slug: 'high-protein',
+    name: 'High-Protein Diet',
+    shortName: 'High-Protein',
+    shortDescription:
+      'Eating well above the 0.8 g/kg protein RDA, typically by building each meal around a protein source. A macronutrient emphasis rather than a branded plan, and the most common diet Americans report following (IFIC 2025).',
+    typicalFoods:
+      'Poultry, fish and seafood, eggs, lean red meat, Greek yogurt, cottage cheese, milk, tofu, tempeh, edamame, lentils, beans, chickpeas; protein powder optional.',
+    foodsToAvoid:
+      'Nothing formally excluded. Lower-protein refined carbs and sweets get less room in practice, since protein takes up more of each meal at the same calorie level.',
+    eatingPattern: 'No specific eating window. At least roughly 25–30g of protein per meal is a commonly cited per-meal target.',
+    primaryGoal: 'Appetite control and preserving lean mass, especially during weight loss or resistance training.',
+    bestFor:
+      'People losing weight who struggle with hunger, people who lift weights, and older adults with higher protein needs.',
+    macroEmphasis: 'High protein. Roughly 1.2–1.6 g/kg/day in weight-management research, versus the 0.8 g/kg/day RDA; carbs and fat fill the remaining calories.',
+    healthConditionRelevance:
+      'Weight loss and body composition (modestly more fat loss and lean-mass retention in energy-restricted trials), age-related muscle loss. Not appropriate at high intakes for chronic kidney disease (KDIGO 2024).',
+    evidenceStrength:
+      'Moderate. Consistent but modest benefits in short-term controlled trials (meta-analysis of 24 RCTs); longer-term results are limited and conflicting, largely due to poor adherence.',
+    restrictiveness: 'Low. No foods banned, though hitting a protein target each day takes some planning or tracking.',
+    costAccessibility:
+      'Animal proteins and protein powders can raise grocery costs; eggs, dairy, canned fish, and legumes keep it affordable.',
+    url: '/diets/high-protein/',
+  },
+  {
+    slug: 'anti-inflammatory',
+    name: 'Anti-Inflammatory Diet',
+    shortName: 'Anti-Inflammatory',
+    shortDescription:
+      'A loosely defined, Mediterranean-style eating pattern built around foods linked to lower inflammation markers. No official plan, governing body, or calorie target, and different sources publish different food lists.',
+    typicalFoods:
+      'Tomatoes, olive oil, leafy greens, nuts, fatty fish (salmon, mackerel, sardines), berries and other fruit, whole grains, legumes, herbs and spices.',
+    foodsToAvoid:
+      'Refined carbohydrates, fried foods, sugar-sweetened drinks, red and processed meat, margarine/shortening/lard. These are limited, not banned outright.',
+    eatingPattern: 'No specific eating window. A food-quality framework, not a timed or calorie-counted plan.',
+    primaryGoal: 'Lowering chronic, low-grade inflammation and associated chronic disease risk.',
+    bestFor:
+      'People who want a flexible, food-quality pattern without counting and like the general shape of Mediterranean-style eating.',
+    macroEmphasis: 'None built in. No calorie or macro structure; total calories still determine weight change.',
+    healthConditionRelevance:
+      'Associated (observationally) with lower risk of heart attack, all-cause mortality, and some cancers via the Dietary Inflammatory Index; Mediterranean-diet RCTs show modest drops in CRP and IL-6. Not a treatment for any specific inflammatory condition.',
+    evidenceStrength:
+      'Limited-to-moderate. Large but mostly observational evidence (only 1 of 38 outcomes graded "convincing" in a 2021 umbrella review); trial evidence comes from Mediterranean-diet studies, not the diet as its own named plan.',
+    restrictiveness: 'Low. Food-quality guidance with limits rather than hard exclusions.',
+    costAccessibility: 'Similar to the Mediterranean diet. May be less practical on tight food budgets or with limited access to fresh produce and fish.',
+    url: '/diets/anti-inflammatory/',
+  },
 ];

@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import AdSlot from '../../../components/AdSlot.astro';
+---
+
+<BaseLayout
+  title="Heart Rate Zones Calculator – Max HR & Karvonen | Nawtch"
+  description="Free heart rate zones calculator. Estimate max heart rate by age and see ACSM intensity ranges by % of max HR or heart rate reserve (Karvonen)."
+  canonicalPath="/calculators/heart-rate-zones/"
+  bodyClass="calculators"
+>
+  <header>
+    <div class="header-left">
+      <h1>Heart Rate Zones Calculator</h1>
+      <p class="subtitle">Estimate your max heart rate and see the heart rate ranges that line up with light, moderate, and vigorous exercise.</p>
+    </div>
+    <a class="ghost-btn" href="/calculators/">← Back to Calculators</a>
+  </header>
+
+  <p class="field-hint" style="margin:-4px 0 14px;">Curious about aerobic fitness, not just training ranges? Our <a href="/calculators/vo2-max/">VO2 Max Calculator</a> uses the same max heart rate estimate plus your resting heart rate.</p>
+
+  <div id="calc-hrz"></div>
+
+  <AdSlot placement="after-tool" />
+
+  <div id="calc-hrz-explain-max" class="settings-section">
+    <h2 class="settings-section-title">How We Calculate This — Max Heart Rate</h2>
+    <div class="settings-section-body">
+      <p class="settings-desc">
+        Unless you enter a measured value, we estimate max heart rate with the <strong>Tanaka formula</strong>: HRmax = 208 − 0.7 × age. We also show the older <strong>220 − age</strong> formula for comparison, since it's the one most people have seen. The two give the same answer at age 40. Below 40, 220 − age comes out higher, and above 40 it comes out lower, with the gap widening with age.
+        <br /><br />
+        Tanaka and colleagues built their equation from a meta-analysis of 351 studies (18,712 people) and then checked it in a separate lab study of 514 healthy adults, where the measured result (209 − 0.7 × age) was nearly identical. They also found the equation didn't differ between men and women or by how active people were, and concluded that 220 − age underestimates max heart rate in older adults.
+        <br /><br />
+        <strong>Worth knowing:</strong> Tanaka's equation was built from group average max heart rates, so it describes a typical person your age, not you specifically. Your true max may be higher or lower, which would shift every range below with it. A max heart rate measured during a supervised exercise test is more accurate. If you have one, enter it and we'll use it instead.
+      </p>
+      <strong>Source:</strong> Tanaka, H., Monahan, K.D., &amp; Seals, D.R. (2001). <em>Age-predicted maximal heart rate revisited.</em> Journal of the American College of Cardiology, 37(1), 153–156.
+      <br /><br />
+      <a href="https://pubmed.ncbi.nlm.nih.gov/11153730/" target="_blank" rel="noopener">Read the original study →</a>
+    </div>
+  </div>
+
+  <div id="calc-hrz-explain-zones" class="settings-section">
+    <h2 class="settings-section-title">How We Calculate This — Intensity Ranges</h2>
+    <div class="settings-section-body">
+      <p class="settings-desc">
+        The ranges come from the American College of Sports Medicine's <em>Guidelines for Exercise Testing and Prescription</em> (11th ed.), as reproduced in the 2025 ACSM/ESSA intensity-terminology statement below. You can view them two ways:
+      </p>
+      <ul>
+        <li><strong>% of Max HR:</strong> target = max HR × percentage. Only needs your age.</li>
+        <li><strong>Heart Rate Reserve (Karvonen method):</strong> target = resting HR + percentage × (max HR − resting HR). Takes your resting heart rate into account, so two people with the same max but different resting heart rates get different targets.</li>
+      </ul>
+      <p class="settings-desc">
+        The ACSM bands used here:
+      </p>
+      <ul>
+        <li><strong>Very light</strong> — under 57% of max HR, or under 30% of heart rate reserve</li>
+        <li><strong>Light</strong> — 57–63% of max HR, or 30–39% of reserve</li>
+        <li><strong>Moderate</strong> — 64–76% of max HR, or 40–59% of reserve</li>
+        <li><strong>Vigorous</strong> — 77–95% of max HR, or 60–89% of reserve</li>
+        <li><strong>Near-maximal</strong> — above the vigorous range: 96% of max HR and up, or 90% of reserve and up</li>
+      </ul>
+      <p class="settings-desc">
+        These are ACSM's bands, not the generic "Zone 1–5" charts common on fitness apps and watches. Those zone schemes vary from brand to brand and don't trace back to a single standard source.
+        <br /><br />
+        <strong>Worth knowing:</strong> the same ACSM/ESSA statement points out that fixed percentages of max heart rate or heart rate reserve don't put everyone at the same metabolic effort. At the same percentage, some people will be working noticeably harder than others. Lab-measured thresholds (such as a lactate or ventilatory threshold from a graded exercise test) are more individual. Heart rate ranges are a practical, reasonable starting point, but how hard the effort actually feels is worth paying attention to as well.
+        <br /><br />
+        <strong>If you take a beta-blocker:</strong> in a randomized, placebo-controlled trial, the beta-blocker metoprolol lowered heart rate at every intensity, including at maximal effort. Perceived exertion at a given relative intensity stayed the same, so the authors concluded that rating of perceived exertion (RPE) is a reliable way to gauge intensity on that medication. The ranges in this calculator would likely be set too high, so check with your doctor about how to set intensity instead.
+      </p>
+      <strong>Intensity bands:</strong> Bishop, D.J., Beck, B., Biddle, S.J.H., et al. (2025). <em>Physical activity and exercise intensity terminology: a joint American College of Sports Medicine (ACSM) expert statement and Exercise and Sport Science Australia (ESSA) consensus statement.</em> Medicine &amp; Science in Sports &amp; Exercise, 57(11), 2599–2613. Table 1.
+      <br /><br />
+      <a href="https://pubmed.ncbi.nlm.nih.gov/41085254/" target="_blank" rel="noopener">Read the statement →</a>
+      <br /><br />
+      <strong>Heart rate reserve method:</strong> Karvonen, M.J., Kentala, E., &amp; Mustala, O. (1957). <em>The effects of training on heart rate; a longitudinal study.</em> Annales Medicinae Experimentalis et Biologiae Fenniae, 35(3), 307–315.
+      <br /><br />
+      <a href="https://pubmed.ncbi.nlm.nih.gov/13470504/" target="_blank" rel="noopener">Read the original study →</a>
+      <br /><br />
+      <strong>Beta-blockers:</strong> Mitchell, B.L., Davison, K., Parfitt, G., Spedding, S., &amp; Eston, R.G. (2019). <em>Physiological and perceived exertion responses during exercise: effect of β-blockade.</em> Medicine &amp; Science in Sports &amp; Exercise, 51(4), 782–791.
+      <br /><br />
+      <a href="https://pubmed.ncbi.nlm.nih.gov/30439785/" target="_blank" rel="noopener">Read the study →</a>
+    </div>
+  </div>
+
+  <script src="../../../islands/vanilla/calculators/heart-rate-zones/heart-rate-zones.js"></script>
+</BaseLayout>
