@@ -6,7 +6,8 @@ https://nawtch.app
 https://nawtch.com
 
 ## What it does
-- daily food & cost tracking 
+- daily food & cost tracking (main page utility)
+  - https://nawtch.app/
 - manage your foods
   - https://nawtch.app/foods/
 - daily weight logging and history
@@ -19,6 +20,8 @@ https://nawtch.com
   - https://nawtch.app/calculators/
 - popular diet options and research behind them
   - https://nawtch.app/diets/
+- diet arena tool, pit two supported diets against each other and see the differences
+  - https://nawtch.app/diets/arena
 - popular supplements and research behind them
   - https://nawtch.app/supplements/
 - supplement tracker for daily logging
@@ -43,6 +46,8 @@ https://nawtch.com
 - access via the web on any device
 - cost tracking
 - useful tools and calculators
+- stand-alone daily supplement tracker
+- diet, supplement, and peptide information (research backed with links to evidence and studies)
 - simple, fast and free
 
 ---
