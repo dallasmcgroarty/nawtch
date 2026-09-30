@@ -28,27 +28,33 @@ function computeCalorieChartData(weeks) {
   allDays.sort((a, b) => a.date.localeCompare(b.date));
   const calLabels = allDays.map(d => d.date);
   const calData = allDays.map(d => d.cal);
+  // Each day is judged against the target that was active that day, not
+  // today's — only records that predate per-day targets fall back to it.
+  const calTargetLow = allDays.map(d => d.calLow ?? calRange.low);
+  const calTargetHigh = allDays.map(d => d.calHigh ?? calRange.high);
 
   const sortedWeeks = [...weeks].sort((a, b) => a.weekStart.localeCompare(b.weekStart));
-  let calWeekLabels = [], calWeekAvgData = [];
+  let calWeekLabels = [], calWeekAvgData = [], calWeekTargetLow = [], calWeekTargetHigh = [];
+  const avg = vals => Math.round(vals.reduce((s, v) => s + v, 0) / vals.length);
   sortedWeeks.forEach(w => {
-    const days = w.days || {};
-    const calVals = Object.values(days).map(d => d.cal || 0).filter(c => c > 0);
-    if (!calVals.length) return;
+    const loggedDays = Object.values(w.days || {}).filter(d => (d.cal || 0) > 0);
+    if (!loggedDays.length) return;
     calWeekLabels.push(w.weekStart);
-    calWeekAvgData.push(Math.round(calVals.reduce((s, c) => s + c, 0) / calVals.length));
+    calWeekAvgData.push(avg(loggedDays.map(d => d.cal)));
+    calWeekTargetLow.push(avg(loggedDays.map(d => d.calLow ?? calRange.low)));
+    calWeekTargetHigh.push(avg(loggedDays.map(d => d.calHigh ?? calRange.high)));
   });
 
-  return { calLabels, calData, calWeekLabels, calWeekAvgData };
+  return { calLabels, calData, calTargetLow, calTargetHigh, calWeekLabels, calWeekAvgData, calWeekTargetLow, calWeekTargetHigh };
 }
 
-function applyCaloriesChartOption({ calLabels, calData, calWeekLabels, calWeekAvgData }) {
+function applyCaloriesChartOption({ calLabels, calData, calTargetLow, calTargetHigh, calWeekLabels, calWeekAvgData, calWeekTargetLow, calWeekTargetHigh }) {
   if (!window._echartCalories) return;
   const isCalWeekly = calChartMode === 'weekly';
   const calChartLabels = isCalWeekly ? calWeekLabels : calLabels;
   const calChartData = isCalWeekly ? calWeekAvgData : calData;
-  const calChartTargetLow = calChartLabels.map(() => calRange.low);
-  const calChartTargetHigh = calChartLabels.map(() => calRange.high);
+  const calChartTargetLow = isCalWeekly ? calWeekTargetLow : calTargetLow;
+  const calChartTargetHigh = isCalWeekly ? calWeekTargetHigh : calTargetHigh;
   const calSeriesName = isCalWeekly ? 'Avg Calories' : 'Calories';
   window._echartCalories.setOption({
     tooltip: {
@@ -72,16 +78,16 @@ function applyCaloriesChartOption({ calLabels, calData, calWeekLabels, calWeekAv
     yAxis: {
       type: 'value',
       min: 0,
-      max: calChartData.length ? Math.ceil(Math.max(...calChartData, calRange.high) * 1.15 / 250) * 250 : 2000,
+      max: calChartData.length ? Math.ceil(Math.max(...calChartData, ...calChartTargetHigh) * 1.15 / 250) * 250 : 2000,
       splitLine: { show: false },
       axisLabel: { formatter: v => Math.round(prefs.kcalToDisplayUnit(v, prefs.getEnergyUnitSync())) },
     },
     series: [
       { name: calSeriesName, type: 'line', data: calChartData, smooth: true, symbolSize: 6,
         lineStyle: { color: '#60c8f0', width: 3 }, areaStyle: { color: 'rgba(96,200,240,0.12)' } },
-      { name: `Target Low (${prefs.formatEnergy(calRange.low)})`, type: 'line', data: calChartTargetLow, smooth: true, symbol: 'none',
+      { name: 'Target Low', type: 'line', data: calChartTargetLow, step: 'middle', symbol: 'none',
         tooltip: { show: false }, lineStyle: { color: '#60f0a0', type: 'dashed', width: 2 } },
-      { name: `Target High (${prefs.formatEnergy(calRange.high)})`, type: 'line', data: calChartTargetHigh, smooth: true, symbol: 'none',
+      { name: 'Target High', type: 'line', data: calChartTargetHigh, step: 'middle', symbol: 'none',
         tooltip: { show: false }, lineStyle: { color: '#f0a060', type: 'dashed', width: 2 } },
     ],
     legend: { show: false },

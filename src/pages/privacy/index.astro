@@ -12,7 +12,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   <header>
     <div class="header-left">
       <h1>Privacy Policy</h1>
-      <p class="subtitle">Effective date: August 6, 2026</p>
+      <p class="subtitle">Effective date: September 30, 2026</p>
     </div>
     <a class="ghost-btn" href="#" onclick="window.history.back(); return false;">← Back</a>
   </header>
@@ -74,9 +74,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       </p>
       <ul>
         <li>
-          For users in the European Economic Area, the UK, and Switzerland, we currently serve only <strong>non-personalized ads</strong>, meaning ads are not based on your individual browsing history
-          or interests. This may change in the future; if it does, we will update this policy and obtain any
-          consent required by law through a certified consent management platform before doing so.
+          For users in the European Economic Area, the UK, and Switzerland, Nawtch uses Google's certified
+          consent management platform to ask for your consent before cookies are used for personalized ads.
+          You can accept or decline. If you decline, Google may still show ads that aren't based on your
+          individual browsing history or interests. You can change your choice at any time using the <strong>Manage privacy choices</strong> button below or on the <a href="/settings/">Settings</a> page.
         </li>
         <li>
           For users elsewhere, ads served through AdSense may be personalized based on data Google collects
@@ -84,6 +85,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           personalization settings at <a href="https://adssettings.google.com" target="_blank" rel="noopener">adssettings.google.com</a>, and learn more about interest-based advertising opt-outs at <a href="https://optout.aboutads.info" target="_blank" rel="noopener">optout.aboutads.info</a> (US) or <a href="https://www.youronlinechoices.eu" target="_blank" rel="noopener">youronlinechoices.eu</a> (EU).
         </li>
       </ul>
+      <div data-privacy-choices hidden style="margin-top:10px;">
+        <button class="ghost-btn">Manage privacy choices</button>
+      </div>
       <p class="settings-desc" style="margin-top:10px;">
         <strong>Open Food Facts.</strong> Barcode scanning works by sending the scanned barcode directly from
         your browser to the Open Food Facts API to retrieve product information. This request is made directly
@@ -149,8 +153,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <h2 class="settings-section-title">Contact</h2>
     <div class="settings-section-body">
       <p class="settings-desc">
-        Questions about this policy can be sent to <a href="mailto:team@nawtch.app">team@nawtch.app</a>.
+        Questions about this policy can be sent to <a href="mailto:business@nawtch.app">business@nawtch.app</a>.
       </p>
     </div>
   </div>
+
+  <script src="../../islands/vanilla/privacy-choices/privacy-choices.js"></script>
 </BaseLayout>

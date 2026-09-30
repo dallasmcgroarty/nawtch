@@ -84,7 +84,7 @@ function renderItemList() {
         <div class="gb-item-fields">
           <div class="field-group">
             <label class="field-label">Cost per serving (${sym})</label>
-            <input type="number" class="gb-cost-input" min="0" step="0.01" value="${item.costPerServing || ""}" placeholder="0.00" oninput="window.gbSetCost('${item.id}', this.value)" />
+            <input type="number" class="gb-cost-input" min="0" step="0.01" value="${item.costPerServing ? round2(item.costPerServing) : ""}" placeholder="0.00" oninput="window.gbSetCost('${item.id}', this.value)" />
           </div>
           <div class="field-group">
             <label class="field-label">Target servings</label>
@@ -190,7 +190,9 @@ window.gbSetCost = function (id, value) {
 
 function recomputeFromBulk(item) {
   if (item.bulkTotalPrice > 0 && item.packageServings > 0) {
-    item.costPerServing = round2(item.bulkTotalPrice / item.packageServings);
+    // Unrounded — rounding to cents here and then multiplying by servings/week
+    // drifts the total ($1 for 7 servings → $0.14 × 7 = $0.98). Inputs round for display.
+    item.costPerServing = item.bulkTotalPrice / item.packageServings;
   }
 }
 
@@ -245,7 +247,7 @@ function refreshItemDisplay(id) {
   if (valueEl) valueEl.textContent = `${gbFormatCurrency(costs.pacedCost)}/wk`;
   const costInput = row.querySelector(".gb-cost-input");
   if (costInput && document.activeElement !== costInput) {
-    costInput.value = item.costPerServing || "";
+    costInput.value = item.costPerServing ? round2(item.costPerServing) : "";
   }
 }
 
@@ -303,11 +305,14 @@ async function persistPlan(asNew) {
   const nameInput = document.getElementById("gb-plan-name-input").value.trim();
   const name = nameInput || defaultPlanName();
   const now = Date.now();
+  // Copy, same as when a saved plan is opened — otherwise the saved plan in
+  // GROCERY_PLANS shares the working array and picks up later unsaved edits.
+  const items = workingPlan.items.map((i) => ({ ...i }));
   let plan;
   if (workingPlan.id && !asNew) {
-    plan = { id: workingPlan.id, name, createdAt: workingPlan.createdAt || now, updatedAt: now, items: workingPlan.items };
+    plan = { id: workingPlan.id, name, createdAt: workingPlan.createdAt || now, updatedAt: now, items };
   } else {
-    plan = { id: "gplan_" + now, name, createdAt: now, updatedAt: now, items: workingPlan.items };
+    plan = { id: "gplan_" + now, name, createdAt: now, updatedAt: now, items };
   }
   try {
     await saveGroceryPlan(plan);
@@ -574,6 +579,7 @@ window.gbSetCurrencyOverride = function (code) {
   document.getElementById("gb-currency-dropdown")?.classList.remove("open");
   renderCurrencyDropdown();
   renderAll();
+  renderSavedPlans(); // saved-plan cards show totals in the chosen currency too
 };
 
 window.gbToggleCurrencyDropdown = function (e) {

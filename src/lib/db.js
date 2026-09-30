@@ -64,7 +64,24 @@ export function dbGet(store, key) {
 	});
 }
 
+// Ask the browser to exempt this site's storage from automatic eviction
+// (low disk space, inactivity cleanup). Chromium and Safari grant or deny
+// silently based on site engagement; Firefox shows the user a permission
+// prompt — which is why this runs on the first write of a page load rather
+// than on page load itself, so it only appears once the user saves something.
+// Doesn't protect against the user clearing site data themselves.
+let persistRequested = false;
+function requestPersistentStorage() {
+	if (persistRequested) return;
+	persistRequested = true;
+	if (!navigator.storage?.persist) return;
+	navigator.storage.persisted()
+		.then((granted) => { if (!granted) return navigator.storage.persist(); })
+		.catch(() => {});
+}
+
 export function dbPut(store, value) {
+	requestPersistentStorage();
 	return new Promise((resolve, reject) => {
 		const tx = db.transaction(store, "readwrite");
 		const req = tx.objectStore(store).put(value);

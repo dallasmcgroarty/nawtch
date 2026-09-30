@@ -1,8 +1,8 @@
 import * as db from "../../../lib/db.js";
-import { todayStr, weekStartFor, daysBetween, formatDateShort } from "../../../lib/dates.js";
+import { todayStr, isoDate, weekStartFor, daysBetween, formatDateShort } from "../../../lib/dates.js";
 import * as prefs from "../../../lib/prefs.js";
 import * as weightGoals from "../../../lib/weightGoals.js";
-import { showConfirm } from "../../../lib/ui.js";
+import { showConfirm, showAlert } from "../../../lib/ui.js";
 
 // Weight is always stored normalized to kg. Display unit is a global setting
 // (owned by prefs.js, shared with the Settings page).
@@ -70,7 +70,7 @@ function renderHeader() {
 // this file only renders it and reacts to wtSave.
 // ═══════════════════════════════════════════════════════════════════
 function directionLabel(direction) {
-  return direction === "lose" ? "Lose" : "Gain";
+  return direction === "lose" ? "lose" : "gain";
 }
 
 function goalSectionHTML() {
@@ -87,18 +87,18 @@ function goalSectionHTML() {
   const remaining = daysBetween(todayStr(), activeGoal.targetDate);
   let countdownHTML;
   if (remaining > 0) {
-    countdownHTML = `<span class="wt-goal-countdown">${remaining} day${remaining === 1 ? "" : "s"} left</span>`;
+    countdownHTML = `<span class="wt-goal-countdown">${remaining} day${remaining === 1 ? "" : "s"} left</span> to reach it`;
   } else if (remaining === 0) {
     countdownHTML = `<span class="wt-goal-countdown">Due today</span>`;
   } else {
-    countdownHTML = `<span class="wt-goal-countdown overdue">${Math.abs(remaining)} day${Math.abs(remaining) === 1 ? "" : "s"} overdue</span>`;
+    countdownHTML = `<span class="wt-goal-countdown overdue">${Math.abs(remaining)} day${Math.abs(remaining) === 1 ? "" : "s"} overdue</span> (target was ${formatDateShort(activeGoal.targetDate)})`;
   }
   return `
   <div class="wt-goal-section">
     <div class="wt-goal-card">
       <div class="wt-goal-info">
-        <div class="wt-goal-target">Current goal is to ${directionLabel(activeGoal.direction)} ${targetDisplay} ${weightUnit}s</div>
-        <div class="wt-goal-countdown-wrapper">You have a ${countdownHTML} to achieve it!</div>
+        <div class="wt-goal-target">Current goal: ${directionLabel(activeGoal.direction)} weight to reach ${targetDisplay} ${weightUnit}</div>
+        <div class="wt-goal-countdown-wrapper">${countdownHTML}</div>
       </div>
       <button class="wt-goal-delete" title="Delete goal" onclick="window.wgDeleteGoal()">🗑</button>
     </div>
@@ -154,7 +154,7 @@ window.openGoalModal = function () {
   const modal = document.getElementById("goal-modal");
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
-  const minDate = tomorrow.toISOString().slice(0, 10);
+  const minDate = isoDate(tomorrow); // local date — toISOString() is UTC and can be off by a day
   modal.innerHTML = `
     <div class="pg-modal-box">
       <div class="pg-modal-header">
@@ -212,6 +212,19 @@ window.wgStartGoal = async function () {
   const targetWeightKg = displayToKg(round1(targetVal));
   const priorEntry = [...WEIGHT_ENTRIES].filter((e) => e.date <= today).sort((a, b) => b.date.localeCompare(a.date))[0];
   const startWeightKg = priorEntry ? priorEntry.weightKg : null;
+  // A target already on the "met" side of the current weight would complete
+  // the goal on the very next save. Compared in display units, as the user sees them.
+  if (startWeightKg != null) {
+    const currentDisplay = round1(kgToDisplay(startWeightKg));
+    const target = round1(targetVal);
+    const alreadyMet = direction === "lose" ? target >= currentDisplay : target <= currentDisplay;
+    if (alreadyMet) {
+      showAlert("Check Your Target",
+        `Your latest weight is ${currentDisplay} ${weightUnit}. To ${direction} weight, pick a target ${direction === "lose" ? "below" : "above"} that.`);
+      targetInput.focus();
+      return;
+    }
+  }
   activeGoal = await weightGoals.startGoal({ targetWeightKg, direction, targetDate, startWeightKg });
   modal.classList.remove("open");
   renderWeightTab();

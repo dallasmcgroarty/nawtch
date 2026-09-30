@@ -81,9 +81,43 @@ function fmtServing(n) {
 }
 
 // ═══════════════════════════════════════════════════════════════════
+// DAY ROLLOVER — a tab left open past midnight (or a phone woken the next
+// morning, where background timers were paused) still holds yesterday's
+// servings in memory. Every write checks for a date change first, so
+// yesterday's log is never saved under today's date. Yesterday was already
+// persisted under its own date on its last change, so rolling over just
+// swaps in whatever is saved for the new day (usually nothing).
+// ═══════════════════════════════════════════════════════════════════
+let loadedDate = null;
+
+function loadStateForToday() {
+  Object.keys(servings).forEach(k => { delete servings[k]; });
+  customItems.length = 0;
+  const saved = db.loadTodayLS(todayStr());
+  if (saved) {
+    Object.assign(servings, saved.servings || {});
+    if (saved.customItems) customItems.push(...saved.customItems);
+  }
+  CORE_ITEMS.forEach((item) => {
+    if (servings[item.id] === undefined) servings[item.id] = 0;
+  });
+  loadedDate = todayStr();
+}
+
+// Returns true if the day changed (state was reset and re-rendered).
+function rollOverIfNewDay() {
+  if (loadedDate === null || todayStr() === loadedDate) return false;
+  loadStateForToday();
+  render();
+  renderWeeklyCost();
+  return true;
+}
+
+// ═══════════════════════════════════════════════════════════════════
 // PERSIST — save today's snapshot to IndexedDB
 // ═══════════════════════════════════════════════════════════════════
 async function persistState() {
+  rollOverIfNewDay();
   db.saveTodayLS(todayStr(), servings, customItems);
   const tot = computeTotals();
   if (tot.cal === 0 && tot.cost === 0) {
@@ -419,6 +453,7 @@ async function renderWeeklyCost() {
 // ACTIONS
 // ═══════════════════════════════════════════════════════════════════
 function handleAdjustServing(id, delta) {
+  rollOverIfNewDay();
   adjustServing(id, delta);
   persistState();
   render();
@@ -476,6 +511,7 @@ async function handleAddCustomItem() {
   const cPerSrv = Math.max(0, parseFloat(document.getElementById("cf-c").value) || 0);
   const fPerSrv = Math.max(0, parseFloat(document.getElementById("cf-f").value) || 0);
   if (!await showConfirm(`Add "${name}" to today's log?`, 'Add')) return;
+  rollOverIfNewDay();
   customItems.push({
     name,
     cal: calPerSrv * servingsEaten,
@@ -501,6 +537,7 @@ window.addCustomItem = handleAddCustomItem;
 
 async function handleRemoveCustomItem(idx) {
   if (!await showConfirm('Delete this custom food?', 'Delete')) return;
+  if (rollOverIfNewDay()) return; // idx pointed into yesterday's list
   customItems.splice(idx, 1);
   persistState();
   render();
@@ -603,6 +640,10 @@ window.saveCustomItemEdit = async (idx) => {
   const costPerSrv = Math.max(0, parseFloat(document.getElementById('cfe-cost-per-srv').value) || 0);
   const bulkPrice = parseFloat(document.getElementById('cfe-bulk-price').value) || null;
   const bulkServings = parseFloat(document.getElementById('cfe-bulk-servings').value) || null;
+  if (rollOverIfNewDay()) { // idx pointed into yesterday's list
+    document.getElementById('custom-food-edit-modal').classList.remove('open');
+    return;
+  }
   const item = customItems[idx];
   item.name = name;
   item.cal = calPerSrv * servingsEaten;
@@ -622,6 +663,7 @@ window.saveCustomItemEdit = async (idx) => {
 window.deleteCustomItemFromModal = async (idx) => {
   if (!await showConfirm('Delete this custom food?', 'Delete')) return;
   document.getElementById('custom-food-edit-modal').classList.remove('open');
+  if (rollOverIfNewDay()) return; // idx pointed into yesterday's list
   customItems.splice(idx, 1);
   persistState();
   render();
@@ -674,6 +716,18 @@ async function saveCalRange() {
   await prefs.setCalRange(low, high);
   document.getElementById("cal-range-editor").style.display = "none";
   renderStats();
+  await persistState(); // so today's saved record carries the new range
+}
+
+// Settings or the TDEE calculator may have changed the range while this tab
+// sat in the background — pick it up so today's record isn't saved with a
+// stale range.
+async function refreshCalRange() {
+  const latest = await prefs.getCalRange();
+  if (latest.low === calRange.low && latest.high === calRange.high) return;
+  calRange = latest;
+  renderStats();
+  await persistState();
 }
 window.saveCalRange = saveCalRange;
 
@@ -777,34 +831,24 @@ async function init() {
   });
   await loadCoreItems();
 
-  const saved = db.loadTodayLS(todayStr());
-  if (saved) {
-    Object.assign(servings, saved.servings || {});
-    customItems.length = 0;
-    if (saved.customItems) customItems.push(...saved.customItems);
-  }
-  CORE_ITEMS.forEach((item) => {
-    if (servings[item.id] === undefined) servings[item.id] = 0;
-  });
+  loadStateForToday();
   render();
 
   const initTot = computeTotals();
   if (initTot.cal > 0 || initTot.cost > 0) await persistState();
   await maybeShowWelcome();
 
-  // Auto-reset daily log at midnight
-  let lastDate = todayStr();
-  setInterval(() => {
-    const nowDate = todayStr();
-    if (nowDate !== lastDate) {
-      lastDate = nowDate;
-      Object.keys(servings).forEach(k => { delete servings[k]; });
-      CORE_ITEMS.forEach((item) => { servings[item.id] = 0; });
-      customItems.length = 0;
-      persistState();
-      render();
-    }
-  }, 5 * 60 * 1000);
+  // Roll over at midnight while the tab is visible, and catch up (plus pick
+  // up any calorie range change) whenever the tab comes back into view —
+  // background timers can be paused for hours on phones.
+  setInterval(rollOverIfNewDay, 60 * 1000);
+  const onReturn = () => {
+    if (document.visibilityState !== 'visible') return;
+    rollOverIfNewDay();
+    refreshCalRange();
+  };
+  document.addEventListener('visibilitychange', onReturn);
+  window.addEventListener('pageshow', (e) => { if (e.persisted) onReturn(); });
 }
 
 init();

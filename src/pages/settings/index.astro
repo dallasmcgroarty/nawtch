@@ -21,9 +21,22 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <h2 class="settings-section-title">Where Your Data Is Stored</h2>
     <div class="settings-section-body">
       <p class="settings-desc">
-        Nawtch keeps everything — foods, logs, weight, programs, exercises, settings — locally in this browser, not on a server. Nothing leaves your device, but that also means <strong style="color:var(--warn);font-size:12px">clearing your browser's site data/cookies for this page, using private
+        Nawtch keeps everything — foods, logs, weight, programs, exercises, settings — locally in this browser, not on a server. None of it leaves your device, but that also means <strong style="color:var(--warn);font-size:12px">clearing your browser's site data/cookies for this page, using private
         browsing, or uninstalling the browser can permanently erase your data.</strong> Export a backup below every so often to stay safe.
       </p>
+    </div>
+  </div>
+
+  <!-- Privacy & Ads -->
+  <div class="settings-section">
+    <h2 class="settings-section-title">Privacy &amp; Ads</h2>
+    <div class="settings-section-body">
+      <p class="settings-desc">
+        Nawtch uses Google Analytics for usage stats and Google AdSense for ads, which may use cookies. Your tracking data is never shared with either. See the <a href="/privacy/">Privacy Policy</a> for details.
+      </p>
+      <div data-privacy-choices hidden>
+        <button class="ghost-btn">Manage privacy choices</button>
+      </div>
     </div>
   </div>
 
@@ -107,4 +120,5 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   </div>
 
   <script src="../../islands/vanilla/settings/settings.js"></script>
+  <script src="../../islands/vanilla/privacy-choices/privacy-choices.js"></script>
 </BaseLayout>

@@ -46,7 +46,13 @@ export function showDbError() {
   showAlert('Storage Error', 'Your data could not be saved. Device storage may be full or browser storage is restricted. Export a backup from Settings to avoid losing data.');
 }
 
+// Only one confirm can be pending at a time: opening a new one cancels the
+// previous, so a double Enter/click can't stack two dialogs that both resolve
+// true off a single OK click.
+let _cancelPendingConfirm = null;
+
 export function showConfirm(message, okLabel = 'Confirm') {
+  if (_cancelPendingConfirm) _cancelPendingConfirm();
   return new Promise(resolve => {
     const modal = document.getElementById("confirm-modal");
     const ok = document.getElementById("confirm-ok");
@@ -55,6 +61,7 @@ export function showConfirm(message, okLabel = 'Confirm') {
     ok.textContent = okLabel;
     modal.classList.add("open");
     function cleanup(result) {
+      _cancelPendingConfirm = null;
       modal.classList.remove("open");
       ok.textContent = 'Confirm';
       ok.removeEventListener("click", onOk);
@@ -68,5 +75,6 @@ export function showConfirm(message, okLabel = 'Confirm') {
     ok.addEventListener("click", onOk);
     cancel.addEventListener("click", onCancel);
     modal.addEventListener("click", onBackdrop);
+    _cancelPendingConfirm = () => cleanup(false);
   });
 }

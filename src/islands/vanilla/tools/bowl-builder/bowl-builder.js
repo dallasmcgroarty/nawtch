@@ -260,7 +260,9 @@ window.bbCommitAmount = function (id, value) {
   editingAmountId = null;
   if (comp) {
     const parsed = parseFloat(value);
-    comp.amount = parsed > 0 ? round1(parsed) : comp.amount;
+    // The input is pre-filled with the rounded display value — leave the
+    // full-precision amount alone unless the user actually changed it.
+    if (parsed > 0 && parsed !== displayAmount(comp)) comp.amount = round1(parsed);
   }
   renderAll();
 };
@@ -518,11 +520,14 @@ async function persistBowl(asNew) {
   const nameInput = document.getElementById("bb-bowl-name-input").value.trim();
   const name = nameInput || defaultBowlName();
   const now = Date.now();
+  // Copy, same as when a saved bowl is opened — otherwise the saved bowl in
+  // BOWLS shares the working array and picks up later unsaved edits.
+  const components = workingBowl.components.map((c) => ({ ...c, per100g: { ...c.per100g } }));
   let bowl;
   if (workingBowl.id && !asNew) {
-    bowl = { id: workingBowl.id, name, createdAt: workingBowl.createdAt || now, updatedAt: now, components: workingBowl.components };
+    bowl = { id: workingBowl.id, name, createdAt: workingBowl.createdAt || now, updatedAt: now, components };
   } else {
-    bowl = { id: "bowl_" + now, name, createdAt: now, updatedAt: now, components: workingBowl.components };
+    bowl = { id: "bowl_" + now, name, createdAt: now, updatedAt: now, components };
   }
   try {
     await saveBowl(bowl);
