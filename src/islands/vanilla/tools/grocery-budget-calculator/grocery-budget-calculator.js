@@ -537,7 +537,7 @@ function wireSearch() {
       .map(
         (food, idx) => `
         <div class="gb-search-result" onclick="window.gbAddSearchResult(${idx})">
-          <span class="gb-search-result-name">${food.isSaved ? `<span class="material-symbols-outlined gb-saved-star" title="From your saved foods">star</span>` : ""}${esc(food.name)}</span>
+          <span class="gb-search-result-name">${food.isSaved ? `<span class="material-symbols-outlined gb-saved-star" title="From your saved foods" role="img" aria-label="Saved food">star</span>` : ""}${esc(food.name)}</span>
           <span class="gb-search-result-cost">${food.costPerServing ? gbFormatCurrency(food.costPerServing) + "/serving" : "no cost saved"}</span>
         </div>`
       )

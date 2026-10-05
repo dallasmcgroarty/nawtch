@@ -412,10 +412,66 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         without creating an account. Track meals with a food database and
         barcode scanner, monitor progress over time, and use our
         calculators, guides, tools, supplements and diet resources to support your
-        goals. No sign-ups, no data tracking, free forever. Everything is
-        stored locally in your browser, so your data is private and
-        secure.
+        goals. No sign-ups and free forever. Your food, weight, and workout
+        data never leaves your device. It is stored locally in your browser.
       </p>
+    </div>
+  </div>
+
+  <div class="info-banners" id="home-info-banners">
+    <div class="info-banner">
+      <div class="info-banner-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="info-dot" style="background: var(--accent); box-shadow: 0 0 6px var(--accent);"></div>
+        <h2 class="info-banner-label">How Nawtch Works</h2>
+        <span class="info-banner-chevron">▼</span>
+      </div>
+      <div class="info-banner-body">
+        Search for a food, scan a barcode, or enter a custom food by hand. Product lookups come from Open Food Facts.
+        Save the foods you eat often on the <a href="/foods/">Foods</a> page with their serving size, macros, and cost,
+        then log servings here with a tap.
+        <br /><br />
+        Set your daily calorie target as a range, a low and a high number, instead of one fixed figure. As you log,
+        the tracker shows calories against that range along with your protein, carbs, and fat.
+        <br /><br />
+        Add a cost per serving to any food, and Nawtch totals what you spent today and this week, next to a weekly
+        target. Today's log resets at midnight. Past days stay in <a href="/history/">History</a>.
+      </div>
+    </div>
+    <div class="info-banner">
+      <div class="info-banner-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="info-dot" style="background: var(--accent3); box-shadow: 0 0 6px var(--accent3);"></div>
+        <h2 class="info-banner-label">What Nawtch Doesn't Do</h2>
+        <span class="info-banner-chevron">▼</span>
+      </div>
+      <div class="info-banner-body">
+        Nawtch is not medical advice. It does not diagnose or treat any condition. Calorie and macro numbers are
+        estimates, since labels, databases, and portion sizes all carry some error. Treat the totals as a guide, not
+        an exact measurement.
+        <br /><br />
+        There are no accounts, so there is no sync between devices. Data logged on your phone stays on your phone.
+        To move it, export a backup in Settings and import it on the other device. See the <a href="/terms/">Terms of Use</a> for the full terms.
+      </div>
+    </div>
+    <div class="info-banner">
+      <div class="info-banner-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="info-dot" style="background: var(--accent); box-shadow: 0 0 6px var(--accent);"></div>
+        <h2 class="info-banner-label">What Else Is Here</h2>
+        <span class="info-banner-chevron">▼</span>
+      </div>
+      <div class="info-banner-body">
+        <a href="/calculators/">Calculators</a>: 16 fitness and nutrition calculators, including TDEE, BMR, macros,
+        and protein. Each one names the formula it uses.
+        <br /><br />
+        <a href="/diets/">Diets</a>: guides to 17 eating patterns, with the evidence for each. <a href="/diets/arena/">Diet Arena</a> lets you compare any two side by side.
+        <br /><br />
+        <a href="/supplements/">Supplements</a>: evidence summaries for common supplements and a tiered guide to
+        peptides. The <a href="/supplements/tracker/">Supplement Tracker</a> logs daily doses against a target.
+        <br /><br />
+        <a href="/tools/">Tools</a>: <a href="/tools/bowl-builder/">Bowl Builder</a> totals the calories and macros of
+        a meal as you build it, and the <a href="/tools/grocery-budget-calculator/">Grocery Budget Calculator</a> turns your grocery list into a weekly cost.
+        <br /><br />
+        <a href="/guides/">Guides</a>: step-by-step help for each part of Nawtch, including how to keep your data safe.
+      </div>
     </div>
   </div>
 

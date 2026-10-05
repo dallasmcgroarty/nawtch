@@ -2,6 +2,7 @@
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import { DIETS, type Diet } from '../../../../data/diets';
 import AdSlot from '../../../../components/AdSlot.astro';
+import { pairMeta, sharedGround } from '../../../../lib/arena-compare';
 
 export function getStaticPaths() {
   const paths: { params: { pair: string }; props: { dietA: Diet; dietB: Diet } }[] = [];
@@ -9,10 +10,7 @@ export function getStaticPaths() {
   for (let i = 0; i < DIETS.length; i++) {
     for (let j = i + 1; j < DIETS.length; j++) {
       const [dietA, dietB] = DIETS[i].slug < DIETS[j].slug ? [DIETS[i], DIETS[j]] : [DIETS[j], DIETS[i]];
-      const pair = `${dietA.slug}-vs-${dietB.slug}`;
-
-      const title = `${dietA.shortName} vs ${dietB.shortName} — Nawtch`;
-      const description = `Compare ${dietA.name} and ${dietB.name} side by side — foods, eating pattern, macros, and evidence strength.`;
+      const { pair, title, description } = pairMeta(dietA, dietB);
 
       if (title.length > 60) {
         throw new Error(`Diet Arena title too long (${title.length} chars) for pair "${pair}": ${title}`);
@@ -35,11 +33,11 @@ interface Props {
 
 const { dietA, dietB } = Astro.props;
 
-const title = `${dietA.shortName} vs ${dietB.shortName} — Nawtch`;
-const description = `Compare ${dietA.name} and ${dietB.name} side by side — foods, eating pattern, macros, and evidence strength.`;
-const pair = `${dietA.slug}-vs-${dietB.slug}`;
+const { pair, differences, title, description } = pairMeta(dietA, dietB);
+const shared = sharedGround(dietA, dietB, pair);
 
-const ROWS: { label: string; key: keyof Diet }[] = [
+type TextField = Exclude<keyof Diet, 'attrs'>;
+const ROWS: { label: string; key: TextField }[] = [
   { label: 'Typical Foods', key: 'typicalFoods' },
   { label: 'Foods to Avoid', key: 'foodsToAvoid' },
   { label: 'Eating Pattern', key: 'eatingPattern' },
@@ -50,7 +48,17 @@ const ROWS: { label: string; key: keyof Diet }[] = [
   { label: 'Evidence Strength', key: 'evidenceStrength' },
   { label: 'Restrictiveness', key: 'restrictiveness' },
   { label: 'Cost / Accessibility', key: 'costAccessibility' },
+  { label: 'Nutrients to Watch', key: 'nutrientsToWatch' },
+  { label: 'Adjustment Period', key: 'adjustmentPeriod' },
+  { label: 'A Sample Day', key: 'sampleDay' },
+  { label: 'Prep and Eating Out', key: 'prepAndEatingOut' },
+  { label: 'Talk to a Clinician First If', key: 'cautionGroups' },
+  { label: 'Sticking With It and Stopping', key: 'adherenceAndStopping' },
 ];
+
+// The table is split after Evidence Strength so a mid-page in-article ad can sit between the halves.
+const splitAt = ROWS.findIndex((r) => r.key === 'evidenceStrength') + 1;
+const ROW_GROUPS = [ROWS.slice(0, splitAt), ROWS.slice(splitAt)];
 ---
 
 <BaseLayout title={title} description={description} canonicalPath={`/diets/arena/${pair}/`} bodyClass="diets">
@@ -75,26 +83,55 @@ const ROWS: { label: string; key: keyof Diet }[] = [
     </div>
   </div>
 
-  <div class="arena-compare">
-    {ROWS.map((row) => (
-      <div class="arena-row">
-        <div class="arena-row-label">{row.label}</div>
-        <div class="arena-row-values">
-          <div class="arena-value">
-            <span class="arena-value-diet">{dietA.name}</span>
-            {dietA[row.key]}
-          </div>
-          <div class="arena-value">
-            <span class="arena-value-diet">{dietB.name}</span>
-            {dietB[row.key]}
-          </div>
-        </div>
-      </div>
-      <div>
-        {row.label === 'Best For' && <AdSlot placement="in-article" />}
-      </div>
-    ))}
+  <div class="settings-section">
+    <h2 class="settings-section-title">Key Differences</h2>
+    <div class="settings-section-body">
+      {differences.length === 0 ? (
+        <p class="settings-desc">These two are very similar on paper, with no major differences in their core rules.</p>
+      ) : (
+        <>
+          {differences.length < 3 && (
+            <p class="settings-desc">These two are close on paper, so the differences are smaller than in most pairs.</p>
+          )}
+          <ul>
+            {differences.map((d) => <li class="settings-desc">{d.text}</li>)}
+          </ul>
+        </>
+      )}
+    </div>
   </div>
+
+  <div class="settings-section">
+    <h2 class="settings-section-title">What They Share</h2>
+    <div class="settings-section-body">
+      <p class="settings-desc">{shared.text}</p>
+    </div>
+  </div>
+
+  <AdSlot placement="in-article" />
+
+  {ROW_GROUPS.map((rows, i) => (
+    <>
+      {i > 0 && <AdSlot placement="in-article" />}
+      <div class="arena-compare">
+        {rows.map((row) => (
+          <div class="arena-row">
+            <div class="arena-row-label">{row.label}</div>
+            <div class="arena-row-values">
+              <div class="arena-value">
+                <span class="arena-value-diet">{dietA.name}</span>
+                {dietA[row.key]}
+              </div>
+              <div class="arena-value">
+                <span class="arena-value-diet">{dietB.name}</span>
+                {dietB[row.key]}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </>
+  ))}
 
   <p class="field-hint" style="margin-top:20px;">
     Educational only, not medical advice. Want to compare a different pair? <a href="/diets/arena/">Back to Diet Arena</a>.

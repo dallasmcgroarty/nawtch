@@ -138,7 +138,7 @@ function renderTiles() {
     .map(
       (food) => `
       <div class="bb-tile" role="button" tabindex="0" onclick="window.bbAddCommonFood('${food.id}')">
-        <span class="material-symbols-outlined bb-tile-icon">${food.icon}</span>
+        <span class="material-symbols-outlined bb-tile-icon" aria-hidden="true">${food.icon}</span>
         <span class="bb-tile-name">${esc(food.name)}</span>
       </div>`
     )

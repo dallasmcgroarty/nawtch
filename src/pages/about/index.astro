@@ -1,0 +1,96 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="About Nawtch | Free Calorie & Macro Tracker"
+  description="Why Nawtch exists, how your data is stored, how diet and supplement content is sourced, and how the free tracker is funded."
+  canonicalPath="/about/"
+  bodyClass="privacy"
+  ads="rail"
+>
+  <header>
+    <div class="header-left">
+      <h1>About Nawtch</h1>
+      <p class="subtitle">A free calorie, macro, and cost tracker, built and maintained by one person.</p>
+    </div>
+    <a class="ghost-btn" href="#" onclick="window.history.back(); return false;">← Back</a>
+  </header>
+
+  <div class="settings-section">
+    <h2 class="settings-section-title">Why Nawtch Exists</h2>
+    <div class="settings-section-body">
+      <p class="settings-desc">
+        I built Nawtch because the trackers I tried kept putting basic features behind a paywall, or asked me to
+        make an account just to log a meal.
+        <br /><br />
+        Nawtch is built and maintained by one person, and I use it every day myself.
+        <br /><br />
+        At one point I planned a paid tier. I scrapped it, because charging for features contradicted the reason
+        the app exists.
+      </p>
+    </div>
+  </div>
+
+  <div class="settings-section">
+    <h2 class="settings-section-title">How Your Data Is Handled</h2>
+    <div class="settings-section-body">
+      <p class="settings-desc">
+        There are no accounts. Your food, weight, and workout data never leaves your device. It is stored in your
+        browser's IndexedDB, and there is no Nawtch server holding your logs.
+        <br /><br />
+        Because of that, clearing your browser's site data can erase everything. Export a full backup from <a href="/settings/">Settings</a> and keep it somewhere safe.
+        Food searches and barcode scans are looked up through Open Food Facts, and ads and analytics are run by
+        Google. The <a href="/privacy/">Privacy Policy</a> explains what is collected.
+      </p>
+    </div>
+  </div>
+
+  <div class="settings-section">
+    <h2 class="settings-section-title">How the Content Is Sourced</h2>
+    <div class="settings-section-body">
+      <p class="settings-desc">
+        Each calculator names the formula or guideline it uses, so you can check the math.
+        <br /><br />
+        Diet and supplement pages present the evidence evenhandedly and never rank one option as the best. Where
+        evidence is weak or missing, the page says so. For example, Whole30 has no independent clinical trials, and
+        its page states that plainly.
+        <br /><br />
+        The peptides section sorts each substance into one of three tiers: FDA-approved, off-label or limited
+        history, and unregulated research chemicals. Pages in the two unapproved tiers give no dosing or
+        administration information. Peptide pages carry a "last verified" date, and the section is reviewed monthly.
+      </p>
+    </div>
+  </div>
+
+  <!-- If affiliate links are ever added, update this section, the Terms of Use, and the Privacy Policy. -->
+  <div class="settings-section">
+    <h2 class="settings-section-title">How Nawtch Is Funded</h2>
+    <div class="settings-section-body">
+      <p class="settings-desc">
+        Nawtch is free to use. It is supported by non-intrusive ads. There are no paywalls.
+      </p>
+    </div>
+  </div>
+
+  <div class="settings-section">
+    <h2 class="settings-section-title">Not Medical Advice</h2>
+    <div class="settings-section-body">
+      <p class="settings-desc">
+        Nawtch is for education and personal tracking. It is not medical advice and does not diagnose or treat any
+        condition. Talk to a qualified clinician before changing your diet, supplements, or medication. See the <a href="/terms/">Terms of Use</a>.
+      </p>
+    </div>
+  </div>
+
+  <div class="settings-section">
+    <h2 class="settings-section-title">Contact</h2>
+    <div class="settings-section-body">
+      <p class="settings-desc">
+        Questions, corrections, or a source you think I missed? Use the <a href="/contact/">contact page</a>.
+      </p>
+    </div>
+  </div>
+
+  <p class="field-hint" style="margin-top:20px;">Written by Dallas, developer and nutrition nut.</p>
+</BaseLayout>
