@@ -1,0 +1,118 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const title = "What's New in Nawtch | Updates and Changelog";
+const description = "See the latest features, improvements, and fixes shipped in Nawtch, with a dated changelog of what's new.";
+const updates = (await getCollection('updates')).sort((a, b) => b.data.date.localeCompare(a.data.date));
+const monthGroups = new Map<string, typeof updates>();
+
+for (const update of updates) {
+  const date = new Date(`${update.data.date}T00:00:00Z`);
+  const month = new Intl.DateTimeFormat('en-US', {
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'UTC',
+  }).format(date);
+  const entries = monthGroups.get(month) ?? [];
+  entries.push(update);
+  monthGroups.set(month, entries);
+}
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalPath="/updates/"
+  bodyClass="updates"
+  ads="rail"
+>
+  <header>
+    <div class="header-left">
+      <h1>What's New</h1>
+      <p class="subtitle">Everything new and improved in Nawtch, newest first.</p>
+    </div>
+    <a class="ghost-btn" href="#" onclick="window.history.back(); return false;">← Back</a>
+  </header>
+
+  {Array.from(monthGroups, ([month, entries]) => (
+    <section class="settings-section" aria-label={month}>
+      <h2 class="settings-section-title">{month}</h2>
+      <div class="settings-section-body">
+        {entries.map((update) => (
+          <article class="update-entry">
+            <div class="update-meta">
+              <time datetime={update.data.date}>
+                {new Intl.DateTimeFormat('en-US', {
+                  month: 'long',
+                  day: 'numeric',
+                  year: 'numeric',
+                  timeZone: 'UTC',
+                }).format(new Date(`${update.data.date}T00:00:00Z`))}
+              </time>
+              <span class:list={['update-tag', `update-tag-${update.data.category.toLowerCase()}`]}>
+                {update.data.category}
+              </span>
+            </div>
+            <h3 class="update-title">
+              {update.data.link ? <a href={update.data.link}>{update.data.title}</a> : update.data.title}
+            </h3>
+            <p class="settings-desc">{update.data.description}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  ))}
+</BaseLayout>
+
+<style>
+  .update-entry + .update-entry {
+    border-top: 1px solid var(--border);
+    margin-top: 14px;
+    padding-top: 14px;
+  }
+
+  .update-meta {
+    align-items: center;
+    color: var(--muted);
+    display: flex;
+    flex-wrap: wrap;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    gap: 9px;
+  }
+
+  .update-tag {
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    font-size: 10px;
+    padding: 2px 6px;
+  }
+
+  .update-tag-new {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .update-title {
+    font-size: 15px;
+    font-family: 'Syne', sans-serif;
+    color: white;
+    margin: 8px 0 5px;
+  }
+
+  .update-title a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .update-title a:hover {
+    color: var(--accent);
+  }
+
+  .update-entry .settings-desc {
+    margin: 0;
+  }
+</style>

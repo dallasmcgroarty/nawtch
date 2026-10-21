@@ -1,0 +1,114 @@
+[
+  {
+    "date": "2026-09-28",
+    "title": "Added the Heart Rate Zones calculator",
+    "description": "I added a calculator for estimating heart-rate training zones.",
+    "category": "New",
+    "link": "/calculators/heart-rate-zones/"
+  },
+  {
+    "date": "2026-09-11",
+    "title": "Added the Supplement Tracker",
+    "description": "I added a separate place to log daily supplements and approved medications, set dose targets, and review past days.",
+    "category": "New",
+    "link": "/supplements/tracker/"
+  },
+  {
+    "date": "2026-09-08",
+    "title": "Added Diet Arena",
+    "description": "I added side-by-side diet comparisons, including eating patterns, typical foods, and evidence summaries.",
+    "category": "New",
+    "link": "/diets/arena/"
+  },
+  {
+    "date": "2026-08-17",
+    "title": "Added export options for bowls and grocery plans",
+    "description": "I added options to export saved Bowl Builder bowls and grocery plans.",
+    "category": "Improved",
+    "link": "/tools/"
+  },
+  {
+    "date": "2026-08-14",
+    "title": "Added Grocery Budget Calculator",
+    "description": "I added a grocery budgeting tool to plan costs by item, price, and servings, and save named plans.",
+    "category": "New",
+    "link": "/tools/grocery-budget-calculator/"
+  },
+  {
+    "date": "2026-08-13",
+    "title": "Expanded the peptide guides",
+    "description": "I added 18 peptide information pages to the research library.",
+    "category": "New",
+    "link": "/supplements/peptides/"
+  },
+  {
+    "date": "2026-08-12",
+    "title": "Added supplement and peptide guides",
+    "description": "I published new supplement and peptide guides with research and safety information.",
+    "category": "New",
+    "link": "/supplements/"
+  },
+  {
+    "date": "2026-08-11",
+    "title": "Added Bowl Builder",
+    "description": "I added a meal builder that totals calories and macros as you change foods and portions.",
+    "category": "New",
+    "link": "/tools/bowl-builder/"
+  },
+  {
+    "date": "2026-08-07",
+    "title": "Added 11 diet guides",
+    "description": "I added guides to 11 eating patterns, including DASH, keto, Mediterranean, and Whole30.",
+    "category": "New",
+    "link": "/diets/"
+  },
+  {
+    "date": "2026-08-07",
+    "title": "Added Waist-to-Height Ratio calculator",
+    "description": "I added a calculator that estimates waist-to-height ratio from your measurements.",
+    "category": "New",
+    "link": "/calculators/waist-to-height/"
+  },
+  {
+    "date": "2026-08-06",
+    "title": "Added fitness and nutrition calculators",
+    "description": "I added calculators for calorie needs, TDEE, BMR, macros, body measurements, and exercise estimates.",
+    "category": "New",
+    "link": "/calculators/"
+  },
+  {
+    "date": "2026-08-04",
+    "title": "Added Scorekeeper",
+    "description": "I added a scoreboard for tracking players and updating scores during games.",
+    "category": "New",
+    "link": "/tools/scorekeeper/"
+  },
+  {
+    "date": "2026-08-03",
+    "title": "Added energy and currency preferences",
+    "description": "You can now choose kcal or kJ and the currency symbol shown for costs.",
+    "category": "Improved",
+    "link": "/settings/"
+  },
+  {
+    "date": "2026-07-28",
+    "title": "Nawtch launched (formerly Foop).",
+    "description": "I launched Nawtch to the public as the new name for my personal project, Foop.",
+    "category": "New",
+    "link": "/"
+  },
+  {
+    "date": "2026-07-09",
+    "title": "Added weight tracking",
+    "description": "I added daily weight logging and charts, along with half-serving food logs and more detailed graphs.",
+    "category": "New",
+    "link": "/weight/"
+  },
+  {
+    "date": "2026-05-21",
+    "title": "Added barcode scanning",
+    "description": "I added barcode scanning to look up product details and prefill the food form.",
+    "category": "New",
+    "link": "/foods/"
+  }
+]
