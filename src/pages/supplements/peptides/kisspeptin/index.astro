@@ -1,5 +1,9 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import LinkSection from '../../../../components/LinkSection.astro';
+import { relatedFor } from '../../../../data/relatedPages';
+
+const related = relatedFor('/supplements/peptides/kisspeptin/');
 ---
 
 <BaseLayout
@@ -85,4 +89,6 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
           <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11006622/" target="_blank" rel="noopener">PMC — Kisspeptin: A Potential Therapeutic Target in Metabolic and Reproductive Dysfunction</a>
         </div>
       </div>
+
+  <LinkSection title="Related" groups={related} />
 </BaseLayout>

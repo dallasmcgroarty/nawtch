@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import BackLink from '../../../components/BackLink.astro';
 import AdSlot from '../../../components/AdSlot.astro';
 ---
 
@@ -22,15 +23,7 @@ import AdSlot from '../../../components/AdSlot.astro';
         flat per-person estimate.
       </p>
     </div>
-    <a
-      class="ghost-btn"
-      href="#"
-      onclick="
-        window.history.back();
-        return false;
-      "
-      >← Back</a
-    >
+    <BackLink />
   </header>
 
   <p class="field-hint" style="margin-bottom: 12px">

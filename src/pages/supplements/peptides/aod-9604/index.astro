@@ -1,5 +1,9 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import LinkSection from '../../../../components/LinkSection.astro';
+import { relatedFor } from '../../../../data/relatedPages';
+
+const related = relatedFor('/supplements/peptides/aod-9604/');
 ---
 
 <BaseLayout
@@ -91,4 +95,6 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
           <a href="https://emiratitimes.com/lessons-from-a-discontinued-aod-9604-research-peptide/" target="_blank" rel="noopener">Emirati Times — Lessons from a Discontinued AOD-9604 Research Peptide</a>
         </div>
       </div>
+
+  <LinkSection title="Related" groups={related} />
 </BaseLayout>

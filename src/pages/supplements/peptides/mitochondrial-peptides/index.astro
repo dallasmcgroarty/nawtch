@@ -1,5 +1,9 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import LinkSection from '../../../../components/LinkSection.astro';
+import { relatedFor } from '../../../../data/relatedPages';
+
+const related = relatedFor('/supplements/peptides/mitochondrial-peptides/');
 ---
 
 <BaseLayout
@@ -117,4 +121,6 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
           <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9905433/" target="_blank" rel="noopener">PMC — MOTS-c: A Promising Mitochondrial-Derived Peptide for Therapeutic Exploitation</a>
         </div>
       </div>
+
+  <LinkSection title="Related" groups={related} />
 </BaseLayout>

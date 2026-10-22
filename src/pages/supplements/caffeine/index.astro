@@ -1,6 +1,10 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import LinkSection from '../../../components/LinkSection.astro';
+import { relatedFor } from '../../../data/relatedPages';
 import AdSlot from '../../../components/AdSlot.astro';
+
+const related = relatedFor('/supplements/caffeine/');
 ---
 
 <BaseLayout
@@ -100,4 +104,6 @@ import AdSlot from '../../../components/AdSlot.astro';
       <a href="https://efsa.onlinelibrary.wiley.com/doi/pdf/10.2903/j.efsa.2015.4102" target="_blank" rel="noopener">EFSA — Scientific Opinion on the Safety of Caffeine</a>
     </div>
   </div>
+
+  <LinkSection title="Related" groups={related} />
 </BaseLayout>

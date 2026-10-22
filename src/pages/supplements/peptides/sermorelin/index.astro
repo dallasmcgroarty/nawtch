@@ -1,5 +1,9 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import LinkSection from '../../../../components/LinkSection.astro';
+import { relatedFor } from '../../../../data/relatedPages';
+
+const related = relatedFor('/supplements/peptides/sermorelin/');
 ---
 
 <BaseLayout
@@ -97,4 +101,6 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
           <a href="https://www.federalregister.gov/documents/2013/03/04/2013-04827/determination-that-geref-sermorelin-acetate-injection-05-milligrams-basevial-and-10-milligrams" target="_blank" rel="noopener">Federal Register — Determination on Geref (Sermorelin) Withdrawal</a>
         </div>
       </div>
+
+  <LinkSection title="Related" groups={related} />
 </BaseLayout>

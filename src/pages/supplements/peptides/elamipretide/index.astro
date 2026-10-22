@@ -1,6 +1,10 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import LinkSection from '../../../../components/LinkSection.astro';
+import { relatedFor } from '../../../../data/relatedPages';
 import AdSlot from '../../../../components/AdSlot.astro';
+
+const related = relatedFor('/supplements/peptides/elamipretide/');
 ---
 
 <BaseLayout
@@ -105,4 +109,6 @@ import AdSlot from '../../../../components/AdSlot.astro';
           <a href="https://www.pharmacytimes.com/view/fda-grants-accelerated-approval-to-elamipretide-first-treatment-for-barth-syndrome" target="_blank" rel="noopener">Pharmacy Times — FDA Grants Accelerated Approval to Elamipretide</a>
         </div>
       </div>
+
+  <LinkSection title="Related" groups={related} />
 </BaseLayout>

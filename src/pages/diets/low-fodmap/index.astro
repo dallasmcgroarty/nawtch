@@ -1,6 +1,12 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import LinkSection from '../../../components/LinkSection.astro';
+import { DIETS } from '../../../data/diets';
+import { comparisonsFor } from '../../../lib/arena-compare';
 import AdSlot from '../../../components/AdSlot.astro';
+
+const diet = DIETS.find((d) => d.slug === 'low-fodmap')!;
+const comparisons = comparisonsFor(diet, DIETS);
 ---
 
 <BaseLayout
@@ -144,4 +150,6 @@ import AdSlot from '../../../components/AdSlot.astro';
       <a href="https://my.clevelandclinic.org/health/treatments/22466-low-fodmap-diet" target="_blank" rel="noopener">Cleveland Clinic — Low-FODMAP Diet: What It Is, Uses & How to Follow</a>
     </div>
   </div>
+
+  <LinkSection title={`Compare ${diet.shortName} with other diets (${comparisons.length})`} groups={[{ links: comparisons }]} />
 </BaseLayout>

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import BackLink from '../../components/BackLink.astro';
 ---
 
 <BaseLayout
@@ -14,7 +15,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <h1>About Nawtch</h1>
       <p class="subtitle">A free calorie, macro, and cost tracker, built and maintained by one person.</p>
     </div>
-    <a class="ghost-btn" href="#" onclick="window.history.back(); return false;">← Back</a>
+    <BackLink />
   </header>
 
   <div class="settings-section">

@@ -1,6 +1,12 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import LinkSection from '../../../components/LinkSection.astro';
+import { DIETS } from '../../../data/diets';
+import { comparisonsFor } from '../../../lib/arena-compare';
 import AdSlot from '../../../components/AdSlot.astro';
+
+const diet = DIETS.find((d) => d.slug === 'volumetrics')!;
+const comparisons = comparisonsFor(diet, DIETS);
 ---
 
 <BaseLayout
@@ -156,4 +162,6 @@ import AdSlot from '../../../components/AdSlot.astro';
       <a href="https://health.usnews.com/best-diet/volumetrics-diet" target="_blank" rel="noopener">U.S. News & World Report — Volumetrics Diet Overview</a>
     </div>
   </div>
+
+  <LinkSection title={`Compare ${diet.shortName} with other diets (${comparisons.length})`} groups={[{ links: comparisons }]} />
 </BaseLayout>

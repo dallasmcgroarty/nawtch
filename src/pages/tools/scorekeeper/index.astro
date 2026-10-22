@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import BackLink from '../../../components/BackLink.astro';
 ---
 
 <BaseLayout
@@ -15,7 +16,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       <h1>Free Online Scorekeeper</h1>
       <p class="subtitle">Track scores for board games, card games, drinking games, or any game where points matter — no account needed. Add players, log points, and keep the game moving without pen and paper.</p>
     </div>
-    <a class="ghost-btn" href="#" onclick="window.history.back(); return false;">← Back</a>
+    <BackLink />
   </header>
 
   <div class="settings-section">

@@ -1,6 +1,10 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import LinkSection from '../../../components/LinkSection.astro';
+import { relatedFor } from '../../../data/relatedPages';
 import AdSlot from '../../../components/AdSlot.astro';
+
+const related = relatedFor('/supplements/vitamin-d/');
 ---
 
 <BaseLayout
@@ -98,4 +102,6 @@ import AdSlot from '../../../components/AdSlot.astro';
       <a href="https://ods.od.nih.gov/factsheets/VitaminD-HealthProfessional/" target="_blank" rel="noopener">NIH Office of Dietary Supplements — Vitamin D</a>
     </div>
   </div>
+
+  <LinkSection title="Related" groups={related} />
 </BaseLayout>

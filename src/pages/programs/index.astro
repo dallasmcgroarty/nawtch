@@ -3,23 +3,38 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout
-  title="Workout Planner & Exercise Programs | Nawtch"
-  description="Build multi-day workout programs with sets, reps, rest, and notes in Nawtch. Create and reuse exercises from your own personal exercise library."
+  title="Workout Planner & Log with PR Tracker | Nawtch"
+  description="Build workout programs, log every set as you train, and track your personal records. Free, no account, and your data stays on your device."
   canonicalPath="/programs/"
   ads="full"
 >
   <header>
     <div class="header-left">
-      <h1>Workout Planner</h1>
-      <p class="subtitle">Create workout routines, plan exercises, and follow personalized fitness programs.</p>
+      <h1>Workout Planner &amp; Log</h1>
+      <p class="subtitle">Build workout programs, log your sets as you train, and track your personal records.</p>
     </div>
     <div style="display:flex;gap:8px;flex-direction: column;">
       <button style="align-self: auto;" class="add-btn" onclick="window.pgOpenCreate()">+ New Program</button>
       <button style="align-self: auto;" class="ghost-btn pg-exercise-manage-btn" onclick="window.pgOpenExLibrary()">Exercise Library</button>
     </div>
   </header>
+  <div class="wt-toggle pg-tabs" id="pg-tabs"></div>
+  <div id="pg-active-banner"></div>
   <div id="programs-list"></div>
-  <div class="info-banners">
+  <div id="pg-log" style="display:none;"></div>
+  <div class="info-banners" id="pg-info-programs">
+    <div class="info-banner">
+      <div class="info-banner-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="info-dot" style="background:var(--accent);box-shadow:0 0 6px var(--accent);"></div>
+        <span class="info-banner-label" style="color:var(--accent);">Start a workout from any day</span>
+        <span class="info-banner-chevron">▼</span>
+      </div>
+      <div class="info-banner-body">
+        Open a program and tap <strong>Start</strong> on a day. Sets, reps, and weight fill in from the program, or
+        from your last session if the program leaves them blank. See the <strong>Workout Log</strong> tab for how
+        logging works, your past workouts, and personal records.
+      </div>
+    </div>
     <div class="info-banner">
       <div class="info-banner-header" onclick="this.parentElement.classList.toggle('open')">
         <div class="info-dot" style="background:var(--accent2);box-shadow:0 0 6px var(--accent2);"></div>
@@ -53,6 +68,57 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <div class="info-banner-body">
         Use the <strong>↑</strong>/<strong>↓</strong> arrows next to each exercise to reorder it within a day.
         The library itself — creating, editing, or deleting exercises — can also be managed on its own via the <strong>Exercise Library</strong> button, independent of any specific program.
+      </div>
+    </div>
+  </div>
+  <div class="info-banners" id="pg-info-log" style="display:none;">
+    <div class="info-banner">
+      <div class="info-banner-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="info-dot" style="background:var(--accent);box-shadow:0 0 6px var(--accent);"></div>
+        <span class="info-banner-label" style="color:var(--accent);">Your workout saves as you go</span>
+        <span class="info-banner-chevron">▼</span>
+      </div>
+      <div class="info-banner-body">
+        Every check and edit is saved on this device right away. You can close the tab, refresh, or lock your
+        phone, then pick up where you left off with <strong>Resume workout</strong>. Only one workout can be in
+        progress at a time. A workout is dated the day you started it, even if you finish after midnight.
+      </div>
+    </div>
+    <div class="info-banner">
+      <div class="info-banner-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="info-dot" style="background:var(--accent2);box-shadow:0 0 6px var(--accent2);"></div>
+        <span class="info-banner-label info-label-warn">Logging sets</span>
+        <span class="info-banner-chevron">▼</span>
+      </div>
+      <div class="info-banner-body">
+        Tap <strong>✓</strong> to mark a set done. Change the weight or reps first if you did something different
+        from the plan. <strong>Mark all as planned</strong> checks every set at once. Leave weight blank for a
+        bodyweight set, shown as <strong>BW</strong>. Only checked sets are saved as completed when you tap <strong>Finish</strong>. Exercises you add during a workout stay in that workout only, unless you tick <strong>Also add to this program</strong>.
+      </div>
+    </div>
+    <div class="info-banner">
+      <div class="info-banner-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="info-dot" style="background:var(--carbs);box-shadow: 0 0 6px var(--carbs);"></div>
+        <span class="info-banner-label info-label-warn-2">How personal records work</span>
+        <span class="info-banner-chevron">▼</span>
+      </div>
+      <div class="info-banner-body">
+        <strong>Heaviest</strong> is your heaviest checked set, with its reps. <strong>Most reps</strong> is your
+        highest rep count in one set, with its weight. On a tie, the set with more reps or more weight wins. <strong>Est. 1RM</strong> averages the Epley and Brzycki formulas and only uses sets of 1 to 10 reps.
+        Timed exercises track your longest time. A small <strong>PR</strong> tag shows on a set that beats a
+        record during a workout.
+      </div>
+    </div>
+    <div class="info-banner">
+      <div class="info-banner-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="info-dot" style="background:var(--muted);box-shadow: 0 0 6px var(--muted);"></div>
+        <span class="info-banner-label info-label-info">Past workouts don't change when programs do</span>
+        <span class="info-banner-chevron">▼</span>
+      </div>
+      <div class="info-banner-body">
+        Each workout keeps the program and exercise names and values from the day you did it. Renaming or deleting
+        a program or exercise later won't change it. Tap a workout to view, edit, or delete it. Records update to
+        match.
       </div>
     </div>
   </div>

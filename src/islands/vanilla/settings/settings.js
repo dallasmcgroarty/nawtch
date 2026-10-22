@@ -2,6 +2,7 @@ import * as db from "../../../lib/db.js";
 import { todayStr } from "../../../lib/dates.js";
 import * as prefs from "../../../lib/prefs.js";
 import { showConfirm } from "../../../lib/ui.js";
+import { LS_ACTIVE_WORKOUT } from "../../../lib/workouts.js";
 
 // ═══════════════════════════════════════════════════════════════════
 // CALORIE RANGE
@@ -132,7 +133,7 @@ document.addEventListener("click", () => {
 // ═══════════════════════════════════════════════════════════════════
 // FULL BACKUP EXPORT / IMPORT
 // ═══════════════════════════════════════════════════════════════════
-const ALL_STORES = ["days", "weeks", "coreitems", "settings", "programs", "exercises", "weights", "weightGoals", "bowls", "groceryPlans", "supplementitems", "supplementDays"];
+const ALL_STORES = ["days", "weeks", "coreitems", "settings", "programs", "exercises", "weights", "weightGoals", "bowls", "groceryPlans", "supplementitems", "supplementDays", "workoutSessions"];
 
 async function exportFullBackup() {
   if (!await showConfirm("Export all data as a backup JSON file?", "Export")) return;
@@ -189,6 +190,7 @@ async function handleImportFile(e) {
     localStorage.removeItem(db.LS_TODAY);
     localStorage.removeItem(db.LS_WEEK);
     localStorage.removeItem(db.LS_SUPPTRACKER);
+    localStorage.removeItem(LS_ACTIVE_WORKOUT); // else an old in-progress workout would outlive the restore
     // Restored theme lives in the "settings" store now, but the FOUC-prevention
     // bootstrap script reads localStorage — mirror it so the reload below (and
     // every page after) reflects the restored value instead of the stale one.

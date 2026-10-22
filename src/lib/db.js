@@ -2,7 +2,7 @@
 // Modularized DB logic
 
 export const DB_NAME = "MealPlanDB";
-export const DB_VERSION = 12;
+export const DB_VERSION = 13;
 export let db = null;
 
 export function openDB() {
@@ -45,6 +45,9 @@ export function openDB() {
 			       }
 			       if (!d.objectStoreNames.contains("supplementDays")) {
 				       d.createObjectStore("supplementDays", { keyPath: "date" });
+			       }
+			       if (!d.objectStoreNames.contains("workoutSessions")) {
+				       d.createObjectStore("workoutSessions", { keyPath: "id" });
 			       }
 		};
 		req.onsuccess = (e) => {

@@ -1,0 +1,52 @@
+---
+// A titled section of internal links in the site's info-banner style.
+// Several links: a collapsed accordion. A single link: the same section, shown
+// open with no toggle, since collapsing one link only adds a click.
+// Links are plain anchors in the static HTML (only hidden with CSS while
+// collapsed), so crawlers see and follow them either way.
+export interface SectionLink {
+  href: string;
+  label: string;
+  title?: string; // fuller name for hover, when the label is shortened
+}
+
+interface Props {
+  title: string;
+  groups: { heading?: string; links: SectionLink[] }[];
+}
+
+const { title, groups } = Astro.props;
+const total = groups.reduce((n, g) => n + g.links.length, 0);
+const collapsible = total > 1;
+---
+
+{total > 0 && (
+  <div class="info-banners comparison-links">
+    <div class={`info-banner${collapsible ? '' : ' open link-section-static'}`}>
+      {collapsible ? (
+        <div class="info-banner-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="info-dot" style="background:var(--accent);box-shadow:0 0 6px var(--accent);"></div>
+          <h2 class="info-banner-label">{title}</h2>
+          <span class="info-banner-chevron">▼</span>
+        </div>
+      ) : (
+        <div class="info-banner-header">
+          <div class="info-dot" style="background:var(--accent);box-shadow:0 0 6px var(--accent);"></div>
+          <h2 class="info-banner-label">{title}</h2>
+        </div>
+      )}
+      <div class="info-banner-body">
+        {groups.filter((g) => g.links.length).map((g) => (
+          <div class="comparison-links-group">
+            {g.heading && <h3 class="comparison-links-heading">{g.heading}</h3>}
+            <ul class="comparison-links-grid">
+              {g.links.map((l) => (
+                <li><a href={l.href} title={l.title}>{l.label}</a></li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+)}

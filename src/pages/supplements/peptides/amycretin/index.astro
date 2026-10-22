@@ -1,5 +1,9 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import LinkSection from '../../../../components/LinkSection.astro';
+import { relatedFor } from '../../../../data/relatedPages';
+
+const related = relatedFor('/supplements/peptides/amycretin/');
 ---
 
 <BaseLayout
@@ -89,4 +93,6 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
           <a href="https://www.prnewswire.com/news-releases/novo-nordisks-investigational-zenagamtide-shows-significant-a1c-reductions-with-up-to-14-6-weight-loss-in-adults-with-type-2-diabetespresented-at-ada-2026--302793124.html" target="_blank" rel="noopener">Novo Nordisk — Zenagamtide Shows Significant A1C Reductions with Up to 14.6% Weight Loss</a>
         </div>
       </div>
+
+  <LinkSection title="Related" groups={related} />
 </BaseLayout>

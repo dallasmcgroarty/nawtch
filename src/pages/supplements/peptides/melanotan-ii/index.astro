@@ -1,5 +1,9 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import LinkSection from '../../../../components/LinkSection.astro';
+import { relatedFor } from '../../../../data/relatedPages';
+
+const related = relatedFor('/supplements/peptides/melanotan-ii/');
 ---
 
 <BaseLayout
@@ -96,4 +100,6 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
           <a href="https://www.unsw.edu.au/newsroom/news/2023/01/what-is-melanotan-ii---the-drug-that-the-tga-urges-consumers-to-" target="_blank" rel="noopener">UNSW Newsroom — What Is Melanotan-II, the Drug Regulators Urge Consumers to Avoid?</a>
         </div>
       </div>
+
+  <LinkSection title="Related" groups={related} />
 </BaseLayout>

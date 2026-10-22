@@ -1,6 +1,10 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import LinkSection from '../../../components/LinkSection.astro';
+import { relatedFor } from '../../../data/relatedPages';
 import AdSlot from '../../../components/AdSlot.astro';
+
+const related = relatedFor('/supplements/creatine/');
 ---
 
 <BaseLayout
@@ -129,4 +133,6 @@ import AdSlot from '../../../components/AdSlot.astro';
       <a href="https://www.mayoclinic.org/drugs-supplements-creatine/art-20347591" target="_blank" rel="noopener">Mayo Clinic — Creatine</a>
     </div>
   </div>
+
+  <LinkSection title="Related" groups={related} />
 </BaseLayout>

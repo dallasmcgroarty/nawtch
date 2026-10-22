@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import BackLink from '../../components/BackLink.astro';
 ---
 
 <BaseLayout
@@ -13,7 +14,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <h1>Settings</h1>
       <p class="subtitle">Preferences · Backup &amp; restore</p>
     </div>
-    <a class="ghost-btn" href="#" onclick="window.history.back(); return false;">← Back</a>
+    <BackLink />
   </header>
 
   <div class="settings-section">

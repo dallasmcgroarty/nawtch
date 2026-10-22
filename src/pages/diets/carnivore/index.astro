@@ -1,6 +1,12 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import LinkSection from '../../../components/LinkSection.astro';
+import { DIETS } from '../../../data/diets';
+import { comparisonsFor } from '../../../lib/arena-compare';
 import AdSlot from '../../../components/AdSlot.astro';
+
+const diet = DIETS.find((d) => d.slug === 'carnivore')!;
+const comparisons = comparisonsFor(diet, DIETS);
 ---
 
 <BaseLayout
@@ -159,4 +165,6 @@ import AdSlot from '../../../components/AdSlot.astro';
       <a href="https://health.clevelandclinic.org/the-carnivore-diet" target="_blank" rel="noopener">Cleveland Clinic — Carnivore Diet: What Is It and Is It Healthy? (independent, dietitian-reviewed)</a>
     </div>
   </div>
+
+  <LinkSection title={`Compare ${diet.shortName} with other diets (${comparisons.length})`} groups={[{ links: comparisons }]} />
 </BaseLayout>

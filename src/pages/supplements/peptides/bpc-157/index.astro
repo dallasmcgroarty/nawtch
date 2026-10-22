@@ -1,5 +1,9 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import LinkSection from '../../../../components/LinkSection.astro';
+import { relatedFor } from '../../../../data/relatedPages';
+
+const related = relatedFor('/supplements/peptides/bpc-157/');
 ---
 
 <BaseLayout
@@ -105,4 +109,6 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
           <a href="https://www.fda.gov/drugs/human-drug-compounding/bulk-drug-substances-used-compounding-under-section-503a-fdc-act" target="_blank" rel="noopener">FDA — Bulk Drug Substances Used in Compounding Under Section 503A</a>
         </div>
       </div>
+
+  <LinkSection title="Related" groups={related} />
 </BaseLayout>

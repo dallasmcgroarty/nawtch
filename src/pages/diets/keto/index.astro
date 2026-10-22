@@ -1,6 +1,12 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import AdSlot from '../../../components/AdSlot.astro';
+import LinkSection from '../../../components/LinkSection.astro';
+import { DIETS } from '../../../data/diets';
+import { comparisonsFor } from '../../../lib/arena-compare';
+
+const diet = DIETS.find((d) => d.slug === 'keto')!;
+const comparisons = comparisonsFor(diet, DIETS);
 ---
 
 <BaseLayout
@@ -146,4 +152,6 @@ import AdSlot from '../../../components/AdSlot.astro';
       <a href="https://diet.mayoclinic.org/us/meal-plans/healthy-keto-meal-plan/" target="_blank" rel="noopener">Mayo Clinic Diet — Healthy Keto Meal Plan</a>
     </div>
   </div>
+
+  <LinkSection title={`Compare ${diet.shortName} with other diets (${comparisons.length})`} groups={[{ links: comparisons }]} />
 </BaseLayout>

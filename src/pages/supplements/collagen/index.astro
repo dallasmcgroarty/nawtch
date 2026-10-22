@@ -1,6 +1,10 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import LinkSection from '../../../components/LinkSection.astro';
+import { relatedFor } from '../../../data/relatedPages';
 import AdSlot from '../../../components/AdSlot.astro';
+
+const related = relatedFor('/supplements/collagen/');
 ---
 
 <BaseLayout
@@ -94,4 +98,6 @@ import AdSlot from '../../../components/AdSlot.astro';
       <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10180699/" target="_blank" rel="noopener">Pu et al., 2023 — Effects of Oral Collagen for Skin Anti-Aging (Nutrients)</a>
     </div>
   </div>
+
+  <LinkSection title="Related" groups={related} />
 </BaseLayout>

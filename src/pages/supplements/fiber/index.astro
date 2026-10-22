@@ -1,6 +1,10 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import LinkSection from '../../../components/LinkSection.astro';
+import { relatedFor } from '../../../data/relatedPages';
 import AdSlot from '../../../components/AdSlot.astro';
+
+const related = relatedFor('/supplements/fiber/');
 ---
 
 <BaseLayout
@@ -113,4 +117,6 @@ import AdSlot from '../../../components/AdSlot.astro';
       <a href="https://www.ncbi.nlm.nih.gov/books/NBK559033/" target="_blank" rel="noopener">NCBI Bookshelf — The Role of Dietary Fiber in Health Promotion and Disease Prevention</a>
     </div>
   </div>
+
+  <LinkSection title="Related" groups={related} />
 </BaseLayout>

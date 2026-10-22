@@ -1,6 +1,12 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import LinkSection from '../../../components/LinkSection.astro';
+import { DIETS } from '../../../data/diets';
+import { comparisonsFor } from '../../../lib/arena-compare';
 import AdSlot from '../../../components/AdSlot.astro';
+
+const diet = DIETS.find((d) => d.slug === 'dash')!;
+const comparisons = comparisonsFor(diet, DIETS);
 ---
 
 <BaseLayout
@@ -181,4 +187,6 @@ import AdSlot from '../../../components/AdSlot.astro';
       <a href="https://www.mayoclinic.org/healthy-lifestyle/nutrition-and-healthy-eating/in-depth/dash-diet/art-20050989" target="_blank" rel="noopener">Mayo Clinic — DASH Diet: Guide to Recommended Servings</a>
     </div>
   </div>
+
+  <LinkSection title={`Compare ${diet.shortName} with other diets (${comparisons.length})`} groups={[{ links: comparisons }]} />
 </BaseLayout>

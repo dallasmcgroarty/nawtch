@@ -1,7 +1,7 @@
 import { showAlert } from "../../../../lib/ui.js";
 import "../../../../lib/nav.js";
 import "../../../../lib/settingsHint.js";
-import { KG_PER_LB, round1 } from "../../../../lib/calculators/calc-shared.js";
+import { KG_PER_LB, round1, epley1RM, brzycki1RM, estimate1RM } from "../../../../lib/calculators/calc-shared.js";
 
 let units = "imperial"; // 'imperial' | 'metric' — label only, math is unit-agnostic
 let weightVal = "";
@@ -138,9 +138,7 @@ window.calcOrmRun = function () {
   if (reps >= 37) {
     return showAlert("Rep Count Too High", "The Brzycki formula is undefined at 37+ reps — enter a lower rep count for a reliable estimate.");
   }
-  const epley = weight * (1 + reps / 30);
-  const brzycki = (weight * 36) / (37 - reps);
-  result = { epley, brzycki, avg: (epley + brzycki) / 2, reps };
+  result = { epley: epley1RM(weight, reps), brzycki: brzycki1RM(weight, reps), avg: estimate1RM(weight, reps), reps };
   renderTab();
 };
 

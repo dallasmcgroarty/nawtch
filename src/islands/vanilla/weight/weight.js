@@ -2,6 +2,7 @@ import * as db from "../../../lib/db.js";
 import { todayStr, isoDate, weekStartFor, daysBetween, formatDateShort } from "../../../lib/dates.js";
 import * as prefs from "../../../lib/prefs.js";
 import * as weightGoals from "../../../lib/weightGoals.js";
+import * as projections from "../../../lib/weightProjections.js";
 import { showConfirm, showAlert } from "../../../lib/ui.js";
 
 // Weight is always stored normalized to kg. Display unit is a global setting
@@ -11,6 +12,7 @@ let weightUnit = "lb"; // 'lb' | 'kg'
 let chartMode = "daily"; // 'daily' | 'weekly'
 let activeGoal = null; // weightGoals "active-goal" record, or null
 let latestCompletedGoal = null; // most recent unhidden completed-goal record, or null
+let FOOD_DAYS = []; // [{ date, cal }] from the Today page's "days" store, cal in kcal
 
 const KG_PER_LB = 0.45359237;
 
@@ -24,6 +26,12 @@ export async function loadAll() {
   weightUnit = await prefs.getWeightUnit();
   activeGoal = await weightGoals.getActiveGoal();
   latestCompletedGoal = await weightGoals.getLatestCompletedGoal();
+  await prefs.getEnergyUnit();
+  try {
+    FOOD_DAYS = ((await db.dbGetAll("days")) || []).map((d) => ({ date: d.date, cal: d.cal || 0 }));
+  } catch (e) {
+    FOOD_DAYS = [];
+  }
 }
 
 function kgToDisplay(kg) {
@@ -275,6 +283,154 @@ window.wgCloseCongrats = async function () {
 };
 
 // ═══════════════════════════════════════════════════════════════════
+// TREND AND ESTIMATES — trend weight, weekly rate, data-based TDEE, and
+// goal projection. All math lives in weightProjections.js (kg/kcal); this
+// section only converts units and renders. Recomputed from the logs on
+// every render; nothing is stored.
+// ═══════════════════════════════════════════════════════════════════
+function formatRate(kgPerWeek) {
+  const v = round1(kgToDisplay(kgPerWeek));
+  return `${v > 0 ? "+" : ""}${v.toFixed(1)} ${weightUnit}`;
+}
+
+function formatDateMaybeYear(dateStr) {
+  const sameYear = dateStr.slice(0, 4) === todayStr().slice(0, 4);
+  if (sameYear) return formatDateShort(dateStr);
+  return new Date(dateStr + "T00:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+}
+
+function plural(n, word) {
+  return `${n} ${word}${n === 1 ? "" : "s"}`;
+}
+
+function energyPerUnitText() {
+  const kcal = weightUnit === "lb" ? 3500 : projections.KCAL_PER_KG;
+  const unit = prefs.getEnergyUnitSync();
+  return `${Math.round(prefs.kcalToDisplayUnit(kcal, unit)).toLocaleString()} ${unit}`;
+}
+
+function tdeeNeedsText(needs) {
+  const parts = [];
+  if (needs.foodDays) parts.push(`log ${plural(needs.foodDays, "more day")} of food`);
+  if (needs.weighIns) parts.push(`log ${plural(needs.weighIns, "more weigh-in")}`);
+  if (needs.spanDays) parts.push(`keep weighing in for ${plural(needs.spanDays, "more day")}`);
+  if (parts.length === 1) return `${parts[0].charAt(0).toUpperCase()}${parts[0].slice(1)} to see your estimated TDEE.`;
+  return `To see your estimated TDEE: ${parts.slice(0, -1).join(", ")}, and ${parts[parts.length - 1]}.`;
+}
+
+function goalEstimateLines(ctx) {
+  const { trend, kgPerWeek, tdee } = ctx;
+  const last = trend[trend.length - 1];
+  const { projection, needed } = projections.projectGoal({
+    goal: activeGoal,
+    currentTrendKg: last.trendKg,
+    asOfDate: last.date,
+    kgPerWeek,
+    tdeeKcal: tdee.status === "ok" ? tdee.tdeeKcal : null,
+    today: todayStr(),
+  });
+  const goalText = `${round1(kgToDisplay(activeGoal.targetWeightKg))} ${weightUnit}`;
+  const targetText = formatDateMaybeYear(activeGoal.targetDate);
+  const lines = [];
+
+  if (projection.status === "date") {
+    const n = Math.abs(projection.daysAhead);
+    const vs =
+      projection.daysAhead === 0
+        ? `right on your ${targetText} target`
+        : `${plural(n, "day")} ${projection.daysAhead > 0 ? "ahead of" : "behind"} your ${targetText} target`;
+    lines.push(`<div class="wt-est-line">Projected to reach ${goalText} on <strong>${formatDateMaybeYear(projection.date)}</strong>, ${vs}.</div>`);
+  } else if (projection.status === "notMoving") {
+    lines.push(`<div class="wt-est-line">At your current trend, you're not moving toward your goal yet.</div>`);
+  } else if (projection.status === "tooFar") {
+    lines.push(`<div class="wt-est-line">At your current trend, reaching ${goalText} would take more than 2 years.</div>`);
+  } else if (projection.status === "trendPastGoal") {
+    lines.push(`<div class="wt-est-line">Your trend is already past ${goalText}. The goal completes when a weigh-in reaches it.</div>`);
+  } else {
+    lines.push(`<div class="wt-est-line">Keep logging your weight to see a projected date.</div>`);
+  }
+
+  if (needed && needed.status === "unreachable") {
+    lines.push(`<div class="wt-est-line">Not reachable by your target date at any intake.</div>`);
+  } else if (needed) {
+    lines.push(`<div class="wt-est-line">To reach it by ${targetText}: about <strong>${prefs.formatEnergy(needed.kcalPerDay)}</strong> per day.</div>`);
+    if (needed.fastPace) {
+      const pace = round1(kgToDisplay(Math.abs(needed.requiredKgPerWeek)));
+      lines.push(`<div class="wt-est-note">This pace is about ${pace.toFixed(1)} ${weightUnit}/week.</div>`);
+    }
+  } else if (tdee.status !== "ok" && daysBetween(todayStr(), activeGoal.targetDate) > 0 && projection.status !== "trendPastGoal") {
+    lines.push(`<div class="wt-est-note">Calories needed for your target date will show once your estimated TDEE is ready.</div>`);
+  }
+  return lines.join("");
+}
+
+function estimatesSectionHTML(trend) {
+  const last = trend[trend.length - 1];
+  const stale = daysBetween(last.date, todayStr()) > 7;
+  const kgPerWeek = projections.computeWeeklyRate(trend);
+  const tdee = projections.estimateTdee({ entries: WEIGHT_ENTRIES, trend, foodDays: FOOD_DAYS, today: todayStr() });
+
+  let tdeeVal = "—";
+  let tdeeSub = "not enough data";
+  let tdeeNote = "";
+  if (tdee.status === "ok") {
+    tdeeVal = prefs.formatEnergy(tdee.tdeeKcal);
+    tdeeSub = "per day, last 4 weeks";
+  } else if (tdee.status === "implausible") {
+    tdeeSub = "check your logs";
+    tdeeNote = `<div class="wt-est-note">Your estimated TDEE came out outside a normal range. This usually means some meals or weigh-ins weren't logged. Keep logging every day and it should settle.</div>`;
+  } else {
+    tdeeNote = `<div class="wt-est-note">${tdeeNeedsText(tdee.needs)}</div>`;
+  }
+
+  const linesHTML = tdeeNote + (activeGoal ? goalEstimateLines({ trend, kgPerWeek, tdee }) : "");
+
+  return `
+    <div class="meter-section wt-est-section">
+      <div class="section-header">
+        <div class="section-title" style="margin-bottom:0;">Trend and Estimates</div>
+        <span class="wt-est-tag">${stale ? `As of ${formatDateMaybeYear(last.date)}` : "Estimates"}</span>
+      </div>
+      <div class="totals-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:0;">
+        <div class="total-card">
+          <div class="val">${round1(kgToDisplay(last.trendKg)).toFixed(1)} ${weightUnit}</div>
+          <div class="lbl">Trend weight</div>
+          <div class="sub">smoothed</div>
+        </div>
+        <div class="total-card">
+          <div class="val">${kgPerWeek == null ? "—" : formatRate(kgPerWeek)}</div>
+          <div class="lbl">Weekly rate</div>
+          <div class="sub">${kgPerWeek == null ? "needs 7 days" : "per week"}</div>
+        </div>
+        <div class="total-card tc-cal">
+          <div class="val">${tdeeVal}</div>
+          <div class="lbl">Est. TDEE</div>
+          <div class="sub">${tdeeSub}</div>
+        </div>
+      </div>
+      ${linesHTML ? `<div class="wt-est-lines">${linesHTML}</div>` : ""}
+      <div class="info-banners wt-est-how">
+        <div class="info-banner">
+          <div class="info-banner-header" onclick="this.parentElement.classList.toggle('open')">
+            <div class="info-dot" style="background:var(--muted);box-shadow:0 0 6px var(--muted);"></div>
+            <span class="info-banner-label info-label-info">How this works</span>
+            <span class="info-banner-chevron">▼</span>
+          </div>
+          <div class="info-banner-body">
+            <strong>Trend weight</strong> smooths out daily swings from water, salt, and food. Each day it moves 10% of the way toward your weigh-in. Days you skip are filled in from the weigh-ins on either side.<br><br>
+            <strong>Weekly rate</strong> is how fast your trend has been changing over the last 3 weeks.<br><br>
+            <strong>Estimated TDEE</strong> compares what you ate with how your weight actually changed over the last 4 weeks. About ${energyPerUnitText()} counts as 1 ${weightUnit} of body weight. Only days with food logged count toward your average intake. It needs at least 8 weigh-ins spread over 14 days and 10 days of food logs.<br><br>
+            <strong>Accuracy improves</strong> with consistent daily logging. Meals you eat but don't log make your TDEE look lower than it really is.<br><br>
+            <strong>The first week or two</strong> can be skewed by water weight, especially after a change in diet.<br><br>
+            These numbers are estimates, not medical advice.
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// ═══════════════════════════════════════════════════════════════════
 // WEIGHT TAB
 // ═══════════════════════════════════════════════════════════════════
 export function renderWeightTab() {
@@ -285,6 +441,7 @@ export function renderWeightTab() {
   const todayEntry = WEIGHT_ENTRIES.find((e) => e.date === today);
   const hasAny = WEIGHT_ENTRIES.length > 0;
   const prefill = todayEntry ? round1(kgToDisplay(todayEntry.weightKg)) : "";
+  const trend = projections.computeTrend(WEIGHT_ENTRIES);
 
   tab.innerHTML = `
     ${
@@ -309,6 +466,7 @@ export function renderWeightTab() {
     `
     }
 
+    ${hasAny ? estimatesSectionHTML(trend) : ""}
     ${completedBannerHTML()}
     ${goalSectionHTML()}
 
@@ -327,51 +485,61 @@ export function renderWeightTab() {
     </div>
   `;
 
-  if (hasAny) renderChart();
+  if (hasAny) renderChart(trend);
 }
 
-function weeklyAggregate() {
-  const buckets = {}; // weekStart -> { sum, count }
+function weeklyAggregate(trendByDate) {
+  const buckets = {}; // weekStart -> { sum, count, lastDate }
   WEIGHT_ENTRIES.forEach((e) => {
     const ws = weekStartFor(e.date);
-    if (!buckets[ws]) buckets[ws] = { sum: 0, count: 0 };
+    if (!buckets[ws]) buckets[ws] = { sum: 0, count: 0, lastDate: e.date };
     buckets[ws].sum += e.weightKg;
     buckets[ws].count += 1;
+    if (e.date > buckets[ws].lastDate) buckets[ws].lastDate = e.date;
   });
   const weekStarts = Object.keys(buckets).sort();
   return {
     labels: weekStarts,
     values: weekStarts.map((ws) => buckets[ws].sum / buckets[ws].count),
+    // Trend as of the last weigh-in that week
+    trend: weekStarts.map((ws) => trendByDate.get(buckets[ws].lastDate)),
   };
 }
 
-function renderChart() {
+function renderChart(trend) {
   const dom = document.getElementById("weight-chart");
   if (!dom || !window.echarts) return;
   if (window._echartWeight) window._echartWeight.dispose();
   window._echartWeight = echarts.init(dom);
 
-  let labels, values, tooltipDateFmt;
+  const trendByDate = new Map(trend.map((p) => [p.date, p.trendKg]));
+  let labels, valuesKg, trendKg, rawName, tooltipDateFmt;
   if (chartMode === "weekly") {
-    const agg = weeklyAggregate();
+    const agg = weeklyAggregate(trendByDate);
     labels = agg.labels;
-    values = agg.values.map((kg) => round1(kgToDisplay(kg)));
+    valuesKg = agg.values;
+    trendKg = agg.trend;
+    rawName = "Weekly avg";
     tooltipDateFmt = (v) => `Week of ${formatDateShort(v)}`;
   } else {
     labels = WEIGHT_ENTRIES.map((e) => e.date);
-    values = WEIGHT_ENTRIES.map((e) => round1(kgToDisplay(e.weightKg)));
+    valuesKg = WEIGHT_ENTRIES.map((e) => e.weightKg);
+    trendKg = WEIGHT_ENTRIES.map((e) => trendByDate.get(e.date));
+    rawName = "Weigh-in";
     tooltipDateFmt = (v) => formatDateShort(v);
   }
+  const values = valuesKg.map((kg) => round1(kgToDisplay(kg)));
+  const trendValues = trendKg.map((kg) => kgToDisplay(kg)); // unrounded so the line stays smooth; tooltip rounds
 
   window._echartWeight.setOption({
     tooltip: {
       trigger: "axis",
       formatter: (params) => {
-        const p = params[0];
-        return `${tooltipDateFmt(p.axisValue)}<br/>Weight: ${p.value} ${weightUnit}`;
+        const lines = params.map((p) => `${p.seriesName}: ${Number(p.value).toFixed(1)} ${weightUnit}`);
+        return `${tooltipDateFmt(params[0].axisValue)}<br/>${lines.join("<br/>")}`;
       },
     },
-    grid: { left: 40, right: 20, top: 20, bottom: 55 },
+    grid: { left: 40, right: 20, top: 30, bottom: 55 },
     xAxis: {
       type: "category",
       data: labels,
@@ -380,10 +548,12 @@ function renderChart() {
     },
     yAxis: { type: "value", scale: true, splitLine: { show: false } },
     series: [
-      { name: "Weight", type: "line", data: values, smooth: true, symbolSize: 6,
-        lineStyle: { color: "#60c8f0", width: 3 }, areaStyle: { color: "rgba(96,200,240,0.12)" } },
+      { name: rawName, type: "line", data: values, symbolSize: 4, showAllSymbol: true,
+        lineStyle: { color: "rgba(96,200,240,0.35)", width: 1 }, itemStyle: { color: "rgba(96,200,240,0.55)" } },
+      { name: "Trend", type: "line", data: trendValues, smooth: true, showSymbol: false,
+        lineStyle: { color: "#60c8f0", width: 3 }, itemStyle: { color: "#60c8f0" }, areaStyle: { color: "rgba(96,200,240,0.12)" } },
     ],
-    legend: { show: false },
+    legend: { show: true, top: 0, right: 0, itemWidth: 14, itemHeight: 8, textStyle: { color: "#7a7f96", fontSize: 10 } },
   });
   setTimeout(() => window._echartWeight.resize(), 0);
   window.addEventListener("resize", () => window._echartWeight && window._echartWeight.resize(), { passive: true });

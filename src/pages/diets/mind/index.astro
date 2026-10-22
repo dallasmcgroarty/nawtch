@@ -1,6 +1,12 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import LinkSection from '../../../components/LinkSection.astro';
+import { DIETS } from '../../../data/diets';
+import { comparisonsFor } from '../../../lib/arena-compare';
 import AdSlot from '../../../components/AdSlot.astro';
+
+const diet = DIETS.find((d) => d.slug === 'mind')!;
+const comparisons = comparisonsFor(diet, DIETS);
 ---
 
 <BaseLayout
@@ -147,4 +153,6 @@ import AdSlot from '../../../components/AdSlot.astro';
       <a href="https://nutritionsource.hsph.harvard.edu/healthy-weight/diet-reviews/mind-diet/" target="_blank" rel="noopener">Harvard T.H. Chan School of Public Health — Diet Review</a>
     </div>
   </div>
+
+  <LinkSection title={`Compare ${diet.shortName} with other diets (${comparisons.length})`} groups={[{ links: comparisons }]} />
 </BaseLayout>

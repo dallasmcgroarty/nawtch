@@ -2,7 +2,8 @@
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import { DIETS, type Diet } from '../../../../data/diets';
 import AdSlot from '../../../../components/AdSlot.astro';
-import { pairMeta, sharedGround } from '../../../../lib/arena-compare';
+import LinkSection from '../../../../components/LinkSection.astro';
+import { pairMeta, sharedGround, relatedComparisons } from '../../../../lib/arena-compare';
 
 export function getStaticPaths() {
   const paths: { params: { pair: string }; props: { dietA: Diet; dietB: Diet } }[] = [];
@@ -35,6 +36,7 @@ const { dietA, dietB } = Astro.props;
 
 const { pair, differences, title, description } = pairMeta(dietA, dietB);
 const shared = sharedGround(dietA, dietB, pair);
+const related = relatedComparisons(dietA, dietB, DIETS).map((r) => ({ heading: `More ${r.diet.shortName} comparisons`, links: r.links }));
 
 type TextField = Exclude<keyof Diet, 'attrs'>;
 const ROWS: { label: string; key: TextField }[] = [
@@ -132,6 +134,8 @@ const ROW_GROUPS = [ROWS.slice(0, splitAt), ROWS.slice(splitAt)];
       </div>
     </>
   ))}
+
+  <LinkSection title="More diet comparisons" groups={related} />
 
   <p class="field-hint" style="margin-top:20px;">
     Educational only, not medical advice. Want to compare a different pair? <a href="/diets/arena/">Back to Diet Arena</a>.

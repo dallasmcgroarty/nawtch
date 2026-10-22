@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import BackLink from '../../../components/BackLink.astro';
 import AdSlot from '../../../components/AdSlot.astro';
 ---
 
@@ -16,7 +17,7 @@ import AdSlot from '../../../components/AdSlot.astro';
       <h1>Bowl Builder</h1>
       <p class="subtitle">Build a bowl, plate, or meal item by item and watch calories and macros update live as you go — tap in foods, adjust portions, and see the totals add up. No account needed.</p>
     </div>
-    <a class="ghost-btn" href="#" onclick="window.history.back(); return false;">← Back</a>
+    <BackLink />
   </header>
 
   <p class="field-hint" style="margin-bottom: 12px;">Use our <a href="/calculators/macros/">macro calculator</a> to see your target proteins, carbs, and fats.</p>

@@ -538,3 +538,50 @@ export function pairMeta(a: Diet, b: Diet) {
   const differences = keyDifferences(a, b, pair);
   return { pair, differences, title: pairTitle(a, b), description: pairDescription(a, b, differences) };
 }
+
+// ---------------------------------------------------------------- internal links
+
+export interface ComparisonLink {
+  href: string;
+  label: string;
+  title: string; // full "A vs B" name, for hover and context when the label is shortened
+}
+
+// Pair slugs always put the alphabetically-first diet first, matching getStaticPaths.
+export function pairSlug(a: Diet, b: Diet): string {
+  return a.slug < b.slug ? `${a.slug}-vs-${b.slug}` : `${b.slug}-vs-${a.slug}`;
+}
+
+function comparisonLink(from: Diet, to: Diet, label: string): ComparisonLink {
+  return { href: `/diets/arena/${pairSlug(from, to)}/`, label, title: `${nm(from)} vs ${nm(to)}` };
+}
+
+// Every Arena comparison that includes `diet`, alphabetical by the other diet.
+export function comparisonsFor(diet: Diet, diets: Diet[]): ComparisonLink[] {
+  return diets
+    .filter((d) => d.slug !== diet.slug)
+    .sort((x, y) => nm(x).localeCompare(nm(y)))
+    .map((d) => comparisonLink(diet, d, `vs ${nm(d)}`));
+}
+
+// A few more comparisons for each side of a pair page. Uses a fixed rotation
+// instead of random picks so the links are in the static HTML (crawlable) and
+// don't change between builds: for side X, take the `perSide` diets that come
+// right after the other diet in X's alphabetical list, wrapping around. Every
+// pair then receives exactly `perSide` links from each of its two diets' pages.
+export function relatedComparisons(a: Diet, b: Diet, diets: Diet[], perSide = 3): { diet: Diet; links: ComparisonLink[] }[] {
+  const bySlug = [...diets].sort((x, y) => x.slug.localeCompare(y.slug));
+  return [
+    [a, b],
+    [b, a],
+  ].map(([side, other]) => {
+    const others = bySlug.filter((d) => d.slug !== side.slug);
+    const start = others.findIndex((d) => d.slug === other.slug);
+    const links: ComparisonLink[] = [];
+    for (let k = 1; k <= perSide && k < others.length; k++) {
+      const d = others[(start + k) % others.length];
+      links.push(comparisonLink(side, d, `${nm(side)} vs ${nm(d)}`));
+    }
+    return { diet: side, links };
+  });
+}

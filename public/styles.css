@@ -822,6 +822,36 @@ input[readonly] {
   color: var(--warn);
 }
 
+.wt-est-tag {
+  font-family: "DM Mono", monospace;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.wt-est-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.wt-est-line {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.wt-est-note {
+  font-family: "DM Mono", monospace;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.wt-est-how {
+  margin: 14px 0 0;
+}
+
 .wt-goal-delete {
   background: none;
   border: 1px solid var(--border);
@@ -2272,6 +2302,404 @@ input[readonly] {
   color: var(--muted);
 }
 
+.pg-day-header .pg-day-count {
+  margin-left: auto;
+}
+
+.pg-start-btn {
+  margin-left: 10px;
+  font-size: 11px;
+  padding: 5px 14px;
+  height: auto;
+}
+
+/* ── Workout sessions (Programs page) ── */
+.pg-tabs {
+  margin-bottom: 14px;
+}
+
+.ws-resume-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  background: var(--surface2);
+  border: 1px solid var(--accent);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+}
+
+.ws-resume-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.ws-resume-sub {
+  font-family: "DM Mono", monospace;
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+/* Fixed height so adding or removing a set doesn't resize and re-center the panel */
+.ws-modal .ws-box {
+  max-width: 760px;
+  height: 90vh;
+  max-height: 900px;
+}
+
+.ws-bw-hint {
+  display: block;
+  color: var(--muted);
+  margin: 0 0 12px;
+}
+
+body.ws-open {
+  overflow: hidden;
+}
+
+.ws-ex {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+}
+
+.ws-ex-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.ws-ex-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.ws-mini-btn {
+  font-size: 11px;
+  padding: 5px 10px;
+  height: auto;
+  white-space: nowrap;
+}
+
+.ws-mini-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.ws-last {
+  font-family: "DM Mono", monospace;
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.ws-last-date {
+  opacity: 0.8;
+}
+
+.ws-set-row {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr) minmax(0, 1fr) 36px 30px 24px;
+  gap: 8px;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.ws-set-row.timed {
+  grid-template-columns: 22px minmax(0, 1fr) 36px 30px 24px;
+}
+
+.ws-set-head {
+  font-family: "DM Mono", monospace;
+  font-size: 10px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 10px;
+}
+
+.ws-set-num {
+  font-family: "DM Mono", monospace;
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.ws-set-row input.ws-input {
+  width: 100%;
+  min-width: 0;
+  padding: 7px 8px;
+}
+
+.ws-set-row.done input.ws-input {
+  color: var(--muted);
+}
+
+.ws-check {
+  width: 36px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface2);
+  color: var(--muted);
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.ws-check.on {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+}
+
+.ws-pr {
+  display: inline-block;
+  font-family: "DM Mono", monospace;
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1px 4px;
+}
+
+.ws-remove {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.ws-remove:hover {
+  color: var(--warn);
+}
+
+.ws-ex-foot {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.ws-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: "DM Mono", monospace;
+  font-size: 12px;
+  color: var(--accent);
+  cursor: pointer;
+}
+
+.ws-link-muted {
+  color: var(--muted);
+}
+
+.ws-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: "DM Mono", monospace;
+  font-size: 12px;
+  color: var(--muted);
+  margin: 12px 0 4px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.ws-checkbox input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface2);
+  display: grid;
+  place-content: center;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.ws-checkbox input[type="checkbox"]::after {
+  content: "✓";
+  font-size: 13px;
+  line-height: 1;
+  color: var(--on-accent);
+  opacity: 0;
+}
+
+.ws-checkbox input[type="checkbox"]:checked {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.ws-checkbox input[type="checkbox"]:checked::after {
+  opacity: 1;
+}
+
+.ws-checkbox input[type="checkbox"]:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.ws-checkbox:hover input[type="checkbox"]:not(:checked) {
+  border-color: var(--accent);
+}
+
+.ws-checkbox input[type="checkbox"]:checked + span {
+  color: var(--text);
+}
+
+.ws-pick-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.ws-pick {
+  text-align: left;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: var(--text);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.ws-pick:hover {
+  border-color: var(--accent);
+}
+
+.ws-pick-new {
+  color: var(--accent);
+  border-style: dashed;
+}
+
+.ws-pr-row {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.ws-pr-row:last-of-type {
+  border-bottom: none;
+}
+
+.ws-pr-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.ws-pr-items {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-family: "DM Mono", monospace;
+  font-size: 12px;
+  color: var(--text);
+}
+
+.ws-pr-item {
+  display: grid;
+  grid-template-columns: 76px 1fr auto;
+  gap: 10px;
+  align-items: baseline;
+}
+
+.ws-pr-lbl,
+.ws-pr-date,
+.ws-pr-from {
+  color: var(--muted);
+}
+
+.ws-prs-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+}
+
+.ws-prs-count {
+  flex: 1;
+  font-family: "DM Mono", monospace;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.ws-prs-body {
+  display: none;
+  margin-top: 8px;
+}
+
+.ws-prs.open .ws-prs-body {
+  display: block;
+}
+
+.ws-prs.open .info-banner-chevron {
+  transform: rotate(180deg);
+}
+
+#ws-history-filters select {
+  width: auto;
+}
+
+#ws-history-list .days-table {
+  min-width: 100%;
+}
+
+#ws-history-list .days-table th:last-child {
+  text-align: left;
+}
+
+.ws-history-wrap {
+  overflow-x: auto;
+  margin-bottom: 20px;
+}
+
+.ws-load-more {
+  margin-top: 10px;
+}
+
+/* Full-screen session view on phones */
+@media (max-width: 600px) {
+  .ws-modal {
+    padding: 0;
+  }
+
+  .ws-modal .ws-box {
+    max-width: 100%;
+    max-height: none;
+    height: 100%;
+    height: 100dvh;
+    border-radius: 0;
+    border: none;
+  }
+
+  .ws-set-row {
+    gap: 6px;
+  }
+}
+
 .pg-exercise-item {
   padding: 10px 14px;
   border-bottom: 1px solid var(--border);
@@ -3427,4 +3855,60 @@ ins.adsbygoogle[data-ad-status="unfilled"] {
 .ad-slot-preview-size {
   font-size: 11px;
   opacity: 0.8;
+}
+
+/* ── Diet Arena comparison links (collapsed accordion) ── */
+.comparison-links {
+  margin-top: 24px;
+}
+
+.comparison-links .info-banner-body {
+  padding-left: 14px;
+}
+
+.comparison-links-group + .comparison-links-group {
+  margin-top: 14px;
+}
+
+.comparison-links-heading {
+  font-family: "DM Mono", monospace;
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0 0 6px;
+}
+
+.comparison-links-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px 16px;
+}
+
+.comparison-links-grid a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.comparison-links-grid a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .comparison-links-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Single-link LinkSection: shown open, no toggle */
+.link-section-static .info-banner-header {
+  cursor: default;
+}
+
+.link-section-static .info-banner-header:hover {
+  background: none;
 }

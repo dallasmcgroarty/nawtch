@@ -1,5 +1,8 @@
 import * as db from '../../../lib/db.js';
 import { esc, showConfirm } from '../../../lib/ui.js';
+import { initWorkouts, startWorkout, getWeightUnit } from './workout.js';
+
+const KG_PER_LB = 0.45359237;
 
 export let PROGRAMS = [];
 export let EXERCISES = [];
@@ -95,6 +98,7 @@ function renderViewModal(program) {
       <div class="pg-day-header">
         <span class="pg-day-title">Day ${day.dayNumber}</span>
         <span class="pg-day-count">${day.exercises.length} exercise${day.exercises.length !== 1 ? 's' : ''}</span>
+        <button class="add-btn pg-start-btn" onclick="window.pgStartWorkout('${program.id}', ${day.dayNumber})">Start</button>
       </div>
       ${day.exercises.map(ex => {
         const meta = metaParts(ex);
@@ -109,7 +113,7 @@ function renderViewModal(program) {
   `).join('');
 
   modal.innerHTML = `
-    <div class="pg-modal-box">
+    <div class="pg-modal-box pg-modal-box-lg">
       <div class="pg-modal-header">
         <div>
           <div class="pg-modal-title">${esc(program.name)}</div>
@@ -304,6 +308,7 @@ function buildExerciseGridHTML() {
       <div class="pg-ex-card-meta">
         ${ex.sets ? `<span class="pg-ex-badge">Sets:${esc(ex.sets)}</span>` : ''}
         ${ex.reps ? `<span class="pg-ex-badge">Reps:${esc(ex.reps)}</span>` : ''}
+        ${weightLabel(ex) ? `<span class="pg-ex-badge">Weight:${weightLabel(ex)}</span>` : ''}
         ${timeVal ? `<span class="pg-ex-badge">Time:${timeVal}${esc(ex.timeUnit || 's')}</span>` : ''}
       </div>
       ${ex.notes ? `<div class="pg-ex-card-notes">${esc(ex.notes)}</div>` : ''}
@@ -375,6 +380,10 @@ function openExForm(prefill = {}, inlineEditContext = null) {
           <div class="field-group">
             <span class="field-label">Reps</span>
             <input type="number" id="pgex-reps" placeholder="10" min="1" value="${prefill.reps || ''}" />
+          </div>
+          <div class="field-group" style="grid-column: 1 / -1;">
+            <span class="field-label">Weight (${getWeightUnit()}, optional)</span>
+            <input type="number" id="pgex-weight" placeholder="Leave blank for bodyweight" min="0" step="any" value="${Number(prefill.weightKg) > 0 ? weightToDisplay(Number(prefill.weightKg)) : ''}" />
           </div>
           <div class="field-group" style="grid-column: 1 / -1;">
             <span class="field-label">Rest</span>
@@ -501,6 +510,7 @@ window.pgAddFromLibrary = (exerciseId) => {
     exerciseName: ex.name,
     sets: ex.sets || '',
     reps: ex.reps || '',
+    weightKg: ex.weightKg || '',
     rest: ex.rest || '',
     restUnit: ex.restUnit || 's',
     time: ex.time || '',
@@ -578,6 +588,8 @@ window.pgSaveExForm = async () => {
 
   const sets = document.getElementById('pgex-sets')?.value !== '' ? parseInt(document.getElementById('pgex-sets').value) : '';
   const reps = document.getElementById('pgex-reps')?.value !== '' ? parseInt(document.getElementById('pgex-reps').value) : '';
+  const weightVal = parseFloat(document.getElementById('pgex-weight')?.value);
+  const weightKg = weightVal > 0 ? (getWeightUnit() === 'lb' ? weightVal * KG_PER_LB : weightVal) : '';
   const rest = document.getElementById('pgex-rest')?.value !== '' ? parseInt(document.getElementById('pgex-rest').value) : '';
   const restUnit = currentRestUnit || 's';
   const time = document.getElementById('pgex-time')?.value !== '' ? parseInt(document.getElementById('pgex-time').value) : '';
@@ -588,21 +600,21 @@ window.pgSaveExForm = async () => {
 
   if (inlineEdit?.libraryEditId) {
     const libEx = EXERCISES.find(e => e.id === inlineEdit.libraryEditId);
-    if (libEx) await saveExercise({ ...libEx, name, sets, reps, rest, restUnit, time, timeUnit, notes });
+    if (libEx) await saveExercise({ ...libEx, name, sets, reps, weightKg, rest, restUnit, time, timeUnit, notes });
     window.pgCloseExForm();
     renderExSearchModal();
   } else if (inlineEdit) {
     const { dayIdx, exIdx } = inlineEdit;
     const ex = formState.days[dayIdx].exercises[exIdx];
-    Object.assign(ex, { exerciseName: name, sets, reps, rest, restUnit, time, timeUnit, notes });
+    Object.assign(ex, { exerciseName: name, sets, reps, weightKg, rest, restUnit, time, timeUnit, notes });
     if (ex.exerciseId) {
       const libEx = EXERCISES.find(e => e.id === ex.exerciseId);
-      if (libEx) await saveExercise({ ...libEx, name, sets, reps, rest, restUnit, time, timeUnit, notes });
+      if (libEx) await saveExercise({ ...libEx, name, sets, reps, weightKg, rest, restUnit, time, timeUnit, notes });
     }
     window.pgCloseExForm();
     renderCreateForm();
   } else {
-    const newEx = { id: 'ex_' + Date.now(), name, sets, reps, rest, restUnit, time, timeUnit, notes, muscleGroup: '', difficulty: '' };
+    const newEx = { id: 'ex_' + Date.now(), name, sets, reps, weightKg, rest, restUnit, time, timeUnit, notes, muscleGroup: '', difficulty: '' };
     await saveExercise(newEx);
     if (exLibraryMode) {
       window.pgCloseExForm();
@@ -614,7 +626,7 @@ window.pgSaveExForm = async () => {
         formState.days[dayIdx].exercises.push({
           exerciseId: newEx.id,
           exerciseName: name,
-          sets, reps, rest, restUnit, time, timeUnit, notes
+          sets, reps, weightKg, rest, restUnit, time, timeUnit, notes
         });
       }
       document.getElementById('pg-ex-search-modal')?.classList.remove('open');
@@ -650,6 +662,8 @@ window.pgSaveProgram = async () => {
 
 window.pgCloseView = () => closeViewModal();
 
+window.pgStartWorkout = (programId, dayNumber) => startWorkout(programId, dayNumber);
+
 window.pgDeleteProgram = async (programId) => {
   const program = PROGRAMS.find(p => p.id === programId);
   if (!program) return;
@@ -667,10 +681,22 @@ window.pgEditProgram = (programId) => {
 };
 
 // ── Helpers ──
+// Planned weight is stored in kg (weightKg) and shown in the shared lb/kg unit.
+function weightToDisplay(kg) {
+  const v = getWeightUnit() === 'lb' ? kg / KG_PER_LB : kg;
+  return Math.round(v * 10) / 10;
+}
+
+function weightLabel(ex) {
+  return Number(ex.weightKg) > 0 ? `${weightToDisplay(Number(ex.weightKg))} ${getWeightUnit()}` : '';
+}
+
 function metaParts(ex) {
   const parts = [];
   if (ex.sets) parts.push(`Sets: ${ex.sets}`);
   if (ex.reps) parts.push(`Reps: ${ex.reps}`);
+  const w = weightLabel(ex);
+  if (w) parts.push(`Weight: ${w}`);
   const timeVal = Number(ex.time);
   if (timeVal) parts.push(`Time: ${timeVal}${ex.timeUnit || 's'}`);
   const restVal = Number(ex.rest);
@@ -716,6 +742,13 @@ function alert_(message) {
 async function init() {
   await db.openDB();
   await loadAll();
+  await initWorkouts({
+    getPrograms: () => PROGRAMS,
+    getExercises: () => EXERCISES,
+    saveExercise,
+    saveProgram,
+    onProgramsChanged: renderProgramsList,
+  });
   renderProgramsTab();
 }
 

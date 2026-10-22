@@ -1,5 +1,19 @@
 [
   {
+    "date": "2026-10-22",
+    "title": "Added workout logging",
+    "description": "You can now start a workout from any program day and check off sets as you go, with your last session shown for each exercise. A new Workout Log tab keeps your past sessions and personal records.",
+    "category": "New",
+    "link": "/programs/"
+  },
+  {
+    "date": "2026-10-22",
+    "title": "Added weight trends and goal projections",
+    "description": "The Weight page now shows a smoothed trend line, your weekly rate of change, and an estimated TDEE based on your food and weight logs. With a goal set, it also projects when you will reach it and how many calories a day it takes to hit your target date.",
+    "category": "New",
+    "link": "/weight/"
+  },
+  {
     "date": "2026-09-28",
     "title": "Added the Heart Rate Zones calculator",
     "description": "I added a calculator for estimating heart-rate training zones.",
@@ -91,8 +105,15 @@
     "link": "/settings/"
   },
   {
+    "date": "2026-07-30",
+    "title": "Added Guides",
+    "description": "I added how-to guides for keeping your data safe, logging foods, tracking weight, using History and Programs, and more.",
+    "category": "New",
+    "link": "/guides/"
+  },
+  {
     "date": "2026-07-28",
-    "title": "Nawtch launched (formerly Foop).",
+    "title": "Nawtch launched (formerly Foop)",
     "description": "I launched Nawtch to the public as the new name for my personal project, Foop.",
     "category": "New",
     "link": "/"
@@ -110,5 +131,26 @@
     "description": "I added barcode scanning to look up product details and prefill the food form.",
     "category": "New",
     "link": "/foods/"
+  },
+  {
+    "date": "2026-05-14",
+    "title": "Added Programs",
+    "description": "I added workout programs. You can create programs and build your own list of exercises.",
+    "category": "New",
+    "link": "/programs/"
+  },
+  {
+    "date": "2026-03-04",
+    "title": "Added History",
+    "description": "I added a History page that shows past days grouped by week, with weekly cost and average calories.",
+    "category": "New",
+    "link": "/history/"
+  },
+  {
+    "date": "2026-03-03",
+    "title": "First version of Foop",
+    "description": "The first working version let you log foods for the day and see totals for calories, protein, carbs, fat, and cost, plus a running weekly cost.",
+    "category": "New",
+    "link": "/"
   }
 ]

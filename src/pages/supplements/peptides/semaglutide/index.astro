@@ -1,6 +1,10 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import LinkSection from '../../../../components/LinkSection.astro';
+import { relatedFor } from '../../../../data/relatedPages';
 import AdSlot from '../../../../components/AdSlot.astro';
+
+const related = relatedFor('/supplements/peptides/semaglutide/');
 ---
 
 <BaseLayout
@@ -110,4 +114,6 @@ import AdSlot from '../../../../components/AdSlot.astro';
           Looking for food guidance rather than prescribing info? See our page on <a href="/diets/eating-on-glp-1/">eating on GLP-1 medications</a>, covering protein needs and managing GI side effects through food choices.
         </div>
       </div>
+
+  <LinkSection title="Related" groups={related} />
 </BaseLayout>

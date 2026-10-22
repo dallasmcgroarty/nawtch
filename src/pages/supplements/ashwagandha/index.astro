@@ -1,6 +1,10 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import LinkSection from '../../../components/LinkSection.astro';
+import { relatedFor } from '../../../data/relatedPages';
 import AdSlot from '../../../components/AdSlot.astro';
+
+const related = relatedFor('/supplements/ashwagandha/');
 ---
 
 <BaseLayout
@@ -137,4 +141,6 @@ import AdSlot from '../../../components/AdSlot.astro';
       <a href="https://ods.od.nih.gov/factsheets/Ashwagandha-HealthProfessional/" target="_blank" rel="noopener">NIH Office of Dietary Supplements — Ashwagandha</a>
     </div>
   </div>
+
+  <LinkSection title="Related" groups={related} />
 </BaseLayout>

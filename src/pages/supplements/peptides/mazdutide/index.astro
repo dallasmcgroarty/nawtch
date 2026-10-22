@@ -1,5 +1,9 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import LinkSection from '../../../../components/LinkSection.astro';
+import { relatedFor } from '../../../../data/relatedPages';
+
+const related = relatedFor('/supplements/peptides/mazdutide/');
 ---
 
 <BaseLayout
@@ -88,4 +92,6 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
           <a href="https://www.prnewswire.com/news-releases/innovent-announces-mazdutide-received-approval-from-chinas-nmpa-for-glycemic-control-in-adults-with-type-2-diabetes-302561434.html" target="_blank" rel="noopener">Innovent — Mazdutide Received Approval from China's NMPA for Glycemic Control</a>
         </div>
       </div>
+
+  <LinkSection title="Related" groups={related} />
 </BaseLayout>

@@ -1,6 +1,10 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import LinkSection from '../../../components/LinkSection.astro';
+import { relatedFor } from '../../../data/relatedPages';
 import AdSlot from '../../../components/AdSlot.astro';
+
+const related = relatedFor('/supplements/beta-alanine/');
 ---
 
 <BaseLayout
@@ -88,4 +92,6 @@ import AdSlot from '../../../components/AdSlot.astro';
       <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4501114/" target="_blank" rel="noopener">ISSN Position Stand — Beta-Alanine</a>
     </div>
   </div>
+
+  <LinkSection title="Related" groups={related} />
 </BaseLayout>

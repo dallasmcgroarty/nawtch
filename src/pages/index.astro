@@ -1,11 +1,58 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const SITE = 'https://nawtch.app/';
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE}#website`,
+      url: SITE,
+      name: 'Nawtch',
+      publisher: { '@id': `${SITE}#organization` },
+      inLanguage: 'en',
+    },
+    {
+      '@type': 'Organization',
+      '@id': `${SITE}#organization`,
+      name: 'Nawtch',
+      url: SITE,
+      logo: 'https://nawtch.app/media/nawtch-logo-1000x1000.png',
+    },
+    {
+      '@type': 'WebApplication',
+      '@id': `${SITE}#app`,
+      name: 'Nawtch',
+      url: SITE,
+      description: 'Free calorie and macro tracker that runs in your browser. No account needed, and your data stays on your device.',
+      applicationCategory: 'HealthApplication',
+      operatingSystem: 'Any',
+      browserRequirements: 'Requires JavaScript and a modern web browser',
+      isAccessibleForFree: true,
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+      publisher: { '@id': `${SITE}#organization` },
+      featureList: [
+        'Calorie and macro tracking',
+        'Food cost tracking',
+        'Barcode scanning',
+        'Weight tracking with trend line and goal projections',
+        'Workout programs and workout logging with personal records',
+        'Supplement tracker',
+        'Fitness and nutrition calculators',
+        'Diet guides and comparisons',
+        'No account needed; data stays on your device',
+      ],
+    },
+  ],
+};
 ---
 
 <BaseLayout
   title="Nawtch — Free Calorie & Macro Tracker, No Account Needed"
-  description="Free calorie and macro tracker in your browser. No account, no app to install. Log food, cost, and weight. Plan workouts. Data stays on your device."
+  description="Free calorie and macro tracker in your browser. No account or app needed. Log food, cost, weight, and workouts. Your data stays on your device."
   canonicalPath="/"
+  jsonLd={jsonLd}
 >
   <header>
     <div class="header-left">

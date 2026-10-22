@@ -1,6 +1,10 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import LinkSection from '../../../../components/LinkSection.astro';
+import { relatedFor } from '../../../../data/relatedPages';
 import AdSlot from '../../../../components/AdSlot.astro';
+
+const related = relatedFor('/supplements/peptides/pt-141/');
 ---
 
 <BaseLayout
@@ -99,4 +103,6 @@ import AdSlot from '../../../../components/AdSlot.astro';
           <a href="https://www.accessdata.fda.gov/drugsatfda_docs/label/2019/210557s000lbl.pdf" target="_blank" rel="noopener">FDA — Vyleesi (Bremelanotide) Prescribing Information</a>
         </div>
       </div>
+
+  <LinkSection title="Related" groups={related} />
 </BaseLayout>

@@ -15,6 +15,7 @@ interface Props {
   showLegalFooter?: boolean;
   showSettingsHint?: boolean;
   ads?: AdLevel; // see src/data/ads.ts
+  jsonLd?: Record<string, unknown>; // schema.org structured data, rendered as JSON-LD in <head>
 }
 
 const {
@@ -28,7 +29,11 @@ const {
   showLegalFooter = true,
   showSettingsHint = true,
   ads = 'full',
+  jsonLd,
 } = Astro.props;
+
+// Escape "<" so a value can never close the script tag early
+const jsonLdHtml = jsonLd ? JSON.stringify(jsonLd).replace(/</g, '\\u003c') : null;
 
 const adPreviewDefault = import.meta.env.DEV;
 
@@ -92,6 +97,7 @@ const canonicalUrl = `https://nawtch.app${canonicalPath}`;
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
+    {jsonLdHtml && <script type="application/ld+json" set:html={jsonLdHtml} />}
 
     <link rel="icon" type="image/x-icon" sizes="48x48" href="/media/favicon-48x48.ico" />
     <link rel="icon" type="image/svg+xml" href="/media/nawtch-logo.svg" />

@@ -1,6 +1,10 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import LinkSection from '../../../components/LinkSection.astro';
+import { relatedFor } from '../../../data/relatedPages';
 import AdSlot from '../../../components/AdSlot.astro';
+
+const related = relatedFor('/supplements/berberine/');
 ---
 
 <BaseLayout
@@ -116,4 +120,6 @@ import AdSlot from '../../../components/AdSlot.astro';
       <a href="https://www.uclahealth.org/news/article/what-know-about-berberine-so-called-natures-ozempic" target="_blank" rel="noopener">UCLA Health — What to Know About Berberine, the So-Called "Nature's Ozempic"</a>
     </div>
   </div>
+
+  <LinkSection title="Related" groups={related} />
 </BaseLayout>

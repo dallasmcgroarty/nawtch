@@ -1,6 +1,10 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import LinkSection from '../../../../components/LinkSection.astro';
+import { relatedFor } from '../../../../data/relatedPages';
 import AdSlot from '../../../../components/AdSlot.astro';
+
+const related = relatedFor('/supplements/peptides/orforglipron/');
 ---
 
 <BaseLayout
@@ -117,4 +121,6 @@ import AdSlot from '../../../../components/AdSlot.astro';
           <a href="https://www.ajmc.com/view/fda-approves-lilly-s-oral-glp-1-orforglipron-for-obesity" target="_blank" rel="noopener">AJMC — FDA Approves Lilly's Oral GLP-1 Orforglipron for Obesity</a>
         </div>
       </div>
+
+  <LinkSection title="Related" groups={related} />
 </BaseLayout>

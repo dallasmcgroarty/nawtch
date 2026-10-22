@@ -1,5 +1,9 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import LinkSection from '../../../../components/LinkSection.astro';
+import { relatedFor } from '../../../../data/relatedPages';
+
+const related = relatedFor('/supplements/peptides/retatrutide/');
 ---
 
 <BaseLayout
@@ -92,4 +96,6 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
           <a href="https://www.pharmexec.com/view/lilly-retatrutide-positive-topline-results-successful-phase-iii-trial" target="_blank" rel="noopener">PharmExec — Lilly's Retatrutide Displays Positive Topline Results in Successful Phase III Trial</a>
         </div>
       </div>
+
+  <LinkSection title="Related" groups={related} />
 </BaseLayout>

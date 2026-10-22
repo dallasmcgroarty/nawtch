@@ -1,5 +1,9 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import LinkSection from '../../../../components/LinkSection.astro';
+import { relatedFor } from '../../../../data/relatedPages';
+
+const related = relatedFor('/supplements/peptides/cagrisema/');
 ---
 
 <BaseLayout
@@ -87,4 +91,6 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
           <a href="https://www.prnewswire.com/news-releases/novo-nordisk-files-for-fda-approval-of-cagrisema-the-first-once-weekly-combination-of-glp1-and-amylin-analogues-for-weight-management-302645862.html" target="_blank" rel="noopener">Novo Nordisk — Novo Nordisk Files for FDA Approval of CagriSema</a>
         </div>
       </div>
+
+  <LinkSection title="Related" groups={related} />
 </BaseLayout>

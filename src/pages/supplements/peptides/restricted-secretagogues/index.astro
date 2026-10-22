@@ -1,5 +1,9 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import LinkSection from '../../../../components/LinkSection.astro';
+import { relatedFor } from '../../../../data/relatedPages';
+
+const related = relatedFor('/supplements/peptides/restricted-secretagogues/');
 ---
 
 <BaseLayout
@@ -104,4 +108,6 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
           <a href="https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks" target="_blank" rel="noopener">FDA — Certain Bulk Drug Substances That May Present Significant Safety Risks (Category 2)</a>
         </div>
       </div>
+
+  <LinkSection title="Related" groups={related} />
 </BaseLayout>

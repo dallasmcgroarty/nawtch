@@ -1,6 +1,10 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import LinkSection from '../../../components/LinkSection.astro';
+import { relatedFor } from '../../../data/relatedPages';
 import AdSlot from '../../../components/AdSlot.astro';
+
+const related = relatedFor('/supplements/nad-nmn/');
 ---
 
 <BaseLayout
@@ -137,4 +141,6 @@ import AdSlot from '../../../components/AdSlot.astro';
       <a href="https://pubmed.ncbi.nlm.nih.gov/41655607/" target="_blank" rel="noopener">Ageing Research Reviews — PRISMA-guided systematic review of NAD+ supplementation</a>
     </div>
   </div>
+
+  <LinkSection title="Related" groups={related} />
 </BaseLayout>

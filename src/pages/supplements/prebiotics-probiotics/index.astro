@@ -1,6 +1,10 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import LinkSection from '../../../components/LinkSection.astro';
+import { relatedFor } from '../../../data/relatedPages';
 import AdSlot from '../../../components/AdSlot.astro';
+
+const related = relatedFor('/supplements/prebiotics-probiotics/');
 ---
 
 <BaseLayout
@@ -135,4 +139,6 @@ import AdSlot from '../../../components/AdSlot.astro';
       <a href="https://www.nature.com/articles/nrgastro.2014.66" target="_blank" rel="noopener">ISAPP — Scope and Appropriate Use of the Term "Probiotic" (2014 Consensus Statement)</a>
     </div>
   </div>
+
+  <LinkSection title="Related" groups={related} />
 </BaseLayout>

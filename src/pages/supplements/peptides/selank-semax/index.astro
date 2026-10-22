@@ -1,5 +1,9 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import LinkSection from '../../../../components/LinkSection.astro';
+import { relatedFor } from '../../../../data/relatedPages';
+
+const related = relatedFor('/supplements/peptides/selank-semax/');
 ---
 
 <BaseLayout
@@ -94,4 +98,6 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
           <a href="https://www.fda.gov/advisory-committees/advisory-committee-calendar/july-23-24-2026-meeting-pharmacy-compounding-advisory-committee-07232026" target="_blank" rel="noopener">FDA — July 23–24, 2026 Pharmacy Compounding Advisory Committee Meeting</a>
         </div>
       </div>
+
+  <LinkSection title="Related" groups={related} />
 </BaseLayout>

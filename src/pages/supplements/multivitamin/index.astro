@@ -1,6 +1,10 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import LinkSection from '../../../components/LinkSection.astro';
+import { relatedFor } from '../../../data/relatedPages';
 import AdSlot from '../../../components/AdSlot.astro';
+
+const related = relatedFor('/supplements/multivitamin/');
 ---
 
 <BaseLayout
@@ -110,4 +114,6 @@ import AdSlot from '../../../components/AdSlot.astro';
       <a href="https://www.ecfr.gov/current/title-21/section-101.17" target="_blank" rel="noopener">FDA (21 CFR 101.17) — Iron supplement warning label requirement</a>
     </div>
   </div>
+
+  <LinkSection title="Related" groups={related} />
 </BaseLayout>

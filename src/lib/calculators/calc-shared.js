@@ -32,6 +32,19 @@ export function heightOptionsHTML(selectedIn) {
   return html;
 }
 
+// One-rep-max estimates — shared by the One Rep Max calculator and the
+// Programs page's Workout Log PRs so both always agree. Unit-agnostic.
+// Both formulas are most reliable for 1–10 reps; Brzycki is undefined at 37+.
+export function epley1RM(weight, reps) {
+  return weight * (1 + reps / 30);
+}
+export function brzycki1RM(weight, reps) {
+  return (weight * 36) / (37 - reps);
+}
+export function estimate1RM(weight, reps) {
+  return (epley1RM(weight, reps) + brzycki1RM(weight, reps)) / 2;
+}
+
 export function computeBMR(sexVal, kg, cm, age) {
   const base = 10 * kg + 6.25 * cm - 5 * age;
   return sexVal === "male" ? base + 5 : base - 161;

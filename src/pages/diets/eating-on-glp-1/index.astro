@@ -1,6 +1,12 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import LinkSection from '../../../components/LinkSection.astro';
+import { DIETS } from '../../../data/diets';
+import { comparisonsFor } from '../../../lib/arena-compare';
 import AdSlot from '../../../components/AdSlot.astro';
+
+const diet = DIETS.find((d) => d.slug === 'eating-on-glp-1')!;
+const comparisons = comparisonsFor(diet, DIETS);
 ---
 
 <BaseLayout
@@ -134,4 +140,6 @@ import AdSlot from '../../../components/AdSlot.astro';
       <a href="https://pubmed.ncbi.nlm.nih.gov/39996356/" target="_blank" rel="noopener">Diabetes, Obesity and Metabolism — SURMOUNT-1 Body Composition Substudy (2025)</a>
     </div>
   </div>
+
+  <LinkSection title={`Compare ${diet.shortName} with other diets (${comparisons.length})`} groups={[{ links: comparisons }]} />
 </BaseLayout>

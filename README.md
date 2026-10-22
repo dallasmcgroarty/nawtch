@@ -12,7 +12,7 @@ https://nawtch.com
   - https://nawtch.app/foods/
 - daily weight logging and history
   - https://nawtch.app/history/
-- create and manage workout programs
+- create, manage and log workout programs, see PRs and history
   - https://nawtch.app/programs/
 - view your history and stats
   - https://nawtch.app/history/

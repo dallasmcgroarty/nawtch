@@ -1,5 +1,9 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import LinkSection from '../../../../components/LinkSection.astro';
+import { relatedFor } from '../../../../data/relatedPages';
+
+const related = relatedFor('/supplements/peptides/survodutide/');
 ---
 
 <BaseLayout
@@ -89,4 +93,6 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
           <a href="https://www.nature.com/articles/s41591-026-04479-3" target="_blank" rel="noopener">Nature Medicine — Survodutide in Adults with Obesity and MASLD: SYNCHRONIZE-MASLD Phase 3 Trial</a>
         </div>
       </div>
+
+  <LinkSection title="Related" groups={related} />
 </BaseLayout>

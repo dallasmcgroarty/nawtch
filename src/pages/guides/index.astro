@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import BackLink from '../../components/BackLink.astro';
 ---
 
 <BaseLayout
@@ -13,7 +14,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <h1>Nawtch Guides & How-To</h1>
       <p class="subtitle">Everything you need to know about tracking food, weight, and workouts in Nawtch — plus how to calculate your TDEE, explore diets, and keep your data safe.</p>
     </div>
-    <a class="ghost-btn" href="#" onclick="window.history.back(); return false;">← Back</a>
+    <BackLink />
   </header>
 
   <div class="info-banners">
@@ -202,7 +203,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <div class="info-banner">
       <div class="info-banner-header" onclick="this.parentElement.classList.toggle('open')">
         <div class="info-dot" style="background:var(--accent);box-shadow:0 0 6px var(--accent);"></div>
-        <h2 class="info-banner-label">Creating Programs &amp; Exercises</h2>
+        <h2 class="info-banner-label">Programs, Workouts &amp; Exercises</h2>
         <span class="info-banner-chevron">▼</span>
       </div>
       <div class="info-banner-body">
@@ -221,7 +222,16 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         Use <strong>Edit</strong> on a saved program to change its name, description, days, or exercises, or <strong>Delete</strong> to remove it entirely. A program needs at least one day — you can't remove the
         last one.
         <br /><br />
-        Try it on the <a href="/programs/">Programs & Exercises page</a>.
+        To log a workout, open a program and tap <strong>Start</strong> on a day. Each set is filled in from the
+        program, or from your last session if the program leaves a value blank. Tap <strong>✓</strong> as you finish
+        each set, change the weight or reps if you did something different, then tap <strong>Finish</strong>. Your
+        progress saves as you go, so you can close the page and pick up later with <strong>Resume workout</strong>.
+        <br /><br />
+        The <strong>Workout Log</strong> tab lists your past workouts, which you can view, edit, or delete, along
+        with your personal records for each exercise: heaviest weight, most reps, estimated one-rep max, and
+        longest time for timed exercises.
+        <br /><br />
+        Try it on the <a href="/programs/">Workout Planner &amp; Log page</a>.
       </div>
     </div>
     <div class="info-banner">

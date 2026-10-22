@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import BackLink from '../../components/BackLink.astro';
 
 const title = "What's New in Nawtch | Updates and Changelog";
 const description = "See the latest features, improvements, and fixes shipped in Nawtch, with a dated changelog of what's new.";
@@ -32,7 +33,7 @@ for (const update of updates) {
       <h1>What's New</h1>
       <p class="subtitle">Everything new and improved in Nawtch, newest first.</p>
     </div>
-    <a class="ghost-btn" href="#" onclick="window.history.back(); return false;">← Back</a>
+    <BackLink />
   </header>
 
   {Array.from(monthGroups, ([month, entries]) => (

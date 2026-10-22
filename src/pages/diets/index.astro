@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import BackLink from '../../components/BackLink.astro';
 ---
 
 <BaseLayout
@@ -13,7 +14,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <h1>Popular Diets & Their Evidence</h1>
       <p class="subtitle">Popular, well-studied eating patterns — one page per diet, evidence-based and non-promotional.</p>
     </div>
-    <a class="ghost-btn" style="font-size:12px;padding:6px 12px;" href="#" onclick="window.history.back(); return false;">← Back</a>
+    <BackLink style="font-size:12px;padding:6px 12px;" />
   </header>
 
   <p class="field-hint" style="margin:-4px 0 14px;">

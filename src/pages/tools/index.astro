@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import BackLink from '../../components/BackLink.astro';
 ---
 
 <BaseLayout
@@ -13,7 +14,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <h1>Free Tools</h1>
       <p class="subtitle">A growing set of fast, free tools that work right in your browser. No account, no app to install, nothing you enter is stored anywhere but your own device.</p>
     </div>
-    <a class="ghost-btn" href="#" onclick="window.history.back(); return false;">← Back</a>
+    <BackLink />
   </header>
 
   <div class="items-section">

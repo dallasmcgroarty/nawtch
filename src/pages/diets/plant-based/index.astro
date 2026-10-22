@@ -1,6 +1,12 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import LinkSection from '../../../components/LinkSection.astro';
+import { DIETS } from '../../../data/diets';
+import { comparisonsFor } from '../../../lib/arena-compare';
 import AdSlot from '../../../components/AdSlot.astro';
+
+const diet = DIETS.find((d) => d.slug === 'plant-based')!;
+const comparisons = comparisonsFor(diet, DIETS);
 ---
 
 <BaseLayout
@@ -147,4 +153,6 @@ import AdSlot from '../../../components/AdSlot.astro';
       <a href="https://www.eatright.org/health/wellness/vegetarian-and-plant-based/vegetarianism-the-basic-facts" target="_blank" rel="noopener">Academy of Nutrition and Dietetics — Vegetarianism: The Basic Facts</a>
     </div>
   </div>
+
+  <LinkSection title={`Compare ${diet.shortName} with other diets (${comparisons.length})`} groups={[{ links: comparisons }]} />
 </BaseLayout>
