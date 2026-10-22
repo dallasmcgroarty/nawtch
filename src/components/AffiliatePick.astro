@@ -1,0 +1,106 @@
+---
+// One affiliate product block. Content comes from src/data/affiliates.ts by
+// id, or from an inline `entry` for one-offs. Every block carries the visible
+// "Affiliate link ⓘ" label; the ⓘ reveals the full disclosure on hover,
+// keyboard focus, or tap (phones have no hover).
+//
+// Sizing (all optional; any CSS length):
+//   layout       'horizontal' (image left, default) | 'vertical' (image on top)
+//   width        default '100%' (fills its container)
+//   height       fixed height, e.g. '140px'
+//   aspectRatio  e.g. '1 / 1' for a square, '4 / 3' (use instead of height)
+//   mobileHeight height on narrow screens, where every block stretches full
+//                width in the horizontal layout so they stay uniform.
+//                Default '132px'.
+//
+// Usage:
+//   <AffiliatePick id="food-scale" />
+//   <AffiliatePick id="food-scale" layout="vertical" width="240px" aspectRatio="3 / 4" />
+//   <AffiliatePick entry={{ source: 'manual', href: '…', title: '…' }} />
+import { resolveAffiliate, resolveEntry, type AffiliateEntry } from '../data/affiliates';
+
+interface Props {
+  id?: string;
+  entry?: AffiliateEntry;
+  layout?: 'horizontal' | 'vertical';
+  width?: string;
+  height?: string;
+  aspectRatio?: string;
+  mobileHeight?: string;
+  class?: string;
+}
+
+const { id, entry, layout = 'horizontal', width = '100%', height, aspectRatio, mobileHeight = '132px', class: extraClass } = Astro.props;
+
+if (!id && !entry) throw new Error('AffiliatePick needs an `id` or an `entry`');
+const pick = id ? resolveAffiliate(id) : resolveEntry(entry!);
+
+// Unique per block so several picks on one page don't share a tooltip id
+const tipId = `ap-tip-${Math.random().toString(36).slice(2, 9)}`;
+
+const style = [
+  `--ap-width:${width}`,
+  height ? `--ap-height:${height}` : '',
+  aspectRatio ? `--ap-ratio:${aspectRatio}` : '',
+  `--ap-mobile-height:${mobileHeight}`,
+].filter(Boolean).join(';');
+
+const classes = [
+  'ap',
+  `ap--${layout}`,
+  height || aspectRatio ? 'ap--fixed' : '',
+  pick.image ? '' : 'ap--no-image',
+  extraClass ?? '',
+].filter(Boolean).join(' ');
+---
+
+<aside class={classes} style={style} data-source={pick.source}>
+  <a class="ap-link" href={pick.href} target="_blank" rel="sponsored noopener">
+    {pick.image && (
+      <span class="ap-image">
+        <img
+          src={pick.image.src}
+          alt={pick.image.alt}
+          width={pick.image.width}
+          height={pick.image.height}
+          loading="lazy"
+          decoding="async"
+        />
+      </span>
+    )}
+    <span class="ap-body">
+      <span class="ap-title">{pick.title}</span>
+      {pick.description && <span class="ap-desc">{pick.description}</span>}
+    </span>
+  </a>
+  <span class="ap-disclosure">
+    <button type="button" class="ap-disclosure-btn" aria-describedby={tipId} aria-expanded="false">
+      Affiliate link <span class="ap-info" aria-hidden="true">ⓘ</span>
+    </button>
+    <span class="ap-tip" id={tipId} role="tooltip">{pick.disclosure}</span>
+  </span>
+</aside>
+
+<script>
+  // Tap/click toggles the disclosure tooltip (hover and focus are pure CSS).
+  // Bundled once per page however many picks it has.
+  function closeAll(except?: Element) {
+    document.querySelectorAll('.ap-disclosure.open').forEach((el) => {
+      if (el === except) return;
+      el.classList.remove('open');
+      el.querySelector('.ap-disclosure-btn')?.setAttribute('aria-expanded', 'false');
+    });
+  }
+  document.addEventListener('click', (e) => {
+    const btn = (e.target as Element).closest('.ap-disclosure-btn');
+    if (!btn) return closeAll();
+    const wrap = btn.parentElement!;
+    const open = !wrap.classList.contains('open');
+    closeAll(wrap);
+    wrap.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', String(open));
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeAll();
+  });
+</script>
