@@ -2,7 +2,7 @@
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import AdSlot from '../components/AdSlot.astro';
-import type { AdLevel } from '../data/ads';
+import { ADS_LIVE, type AdLevel } from '../data/ads';
 
 interface Props {
   title: string;
@@ -68,16 +68,33 @@ const canonicalUrl = `https://nawtch.app${canonicalPath}`;
         } catch (e) {}
       })();
     </script>
-    <!-- Google tag (gtag.js) -->
-    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-DCERQMG3M3"></script>
-    <script is:inline>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+    {import.meta.env.PROD && (
+      <script is:inline define:vars={{ adsLive: ADS_LIVE }}>
+        (function () {
+          var hostname = location.hostname.toLowerCase();
+          var isLocal = hostname === "localhost" || hostname.endsWith(".localhost") || hostname === "127.0.0.1" || hostname === "[::1]" || hostname === "::1";
+          if (isLocal) return;
 
-      gtag('config', 'G-DCERQMG3M3');
-    </script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9032766473005467" crossorigin="anonymous"></script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-DCERQMG3M3');
+
+          var analytics = document.createElement('script');
+          analytics.async = true;
+          analytics.src = 'https://www.googletagmanager.com/gtag/js?id=G-DCERQMG3M3';
+          document.head.appendChild(analytics);
+
+          if (adsLive) {
+            var ads = document.createElement('script');
+            ads.async = true;
+            ads.crossOrigin = 'anonymous';
+            ads.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9032766473005467';
+            document.head.appendChild(ads);
+          }
+        })();
+      </script>
+    )}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>

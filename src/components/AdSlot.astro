@@ -7,7 +7,7 @@ interface Props {
 
 const { placement } = Astro.props;
 const unitId = AD_UNITS[placement];
-const live = ADS_LIVE && unitId !== '';
+const live = ADS_LIVE && !import.meta.env.DEV && unitId !== '';
 const isRail = placement === 'rail';
 // after-tool + page-bottom: fixed banner per breakpoint (see .ad-banner in styles.css)
 const isBanner = placement === 'after-tool' || placement === 'page-bottom';
