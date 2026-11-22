@@ -177,6 +177,16 @@ import BackLink from '../../components/BackLink.astro';
         showing how many days it took; only one goal can be active at a time, and you can delete it early if
         your target changes.
         <br /><br />
+        Once you have weigh-ins, <strong>Trend and Estimates</strong> shows a smoothed trend weight, your recent
+        weekly rate of change, and an estimated TDEE. The weekly rate uses the latest three weeks of trend data.
+        Estimated TDEE uses food and weight logs from the previous four weeks and appears after at least <strong>8
+        weigh-ins across 14 days</strong> and <strong>10 days with food logged</strong>. If it is
+        missing or looks implausible, check that your food and weight logs are consistent.
+        <br /><br />
+        With an active goal, the page also projects when your current weight trend may reach the target. When
+        there is enough data for an estimated TDEE, it can estimate the daily calorie intake that would match
+        your goal date. These are estimates based on your logged data, not guarantees or medical advice.
+        <br /><br />
         Try it on the <a href="/weight/">Weight Tracker page</a>.
       </div>
     </div>
@@ -253,8 +263,9 @@ import BackLink from '../../components/BackLink.astro';
         <strong>Body composition & measurements</strong> — Navy Body Fat %, BMI, Waist-to-Height Ratio, and Ideal
         Weight calculators, from a few tape-measure or scale inputs.
         <br /><br />
-        <strong>Activity & performance</strong> — Calories Burned, One-Rep Max, VO2 Max, and Walking Calorie
-        calculators, for estimating energy burn and fitness level from a workout, a set, or a test.
+        <strong>Activity & performance</strong> — Calories Burned, Heart Rate Zones, One-Rep Max, VO2 Max, and
+        Walking Calorie calculators, for estimating energy burn, setting training zones, and assessing fitness
+        from a workout, a set, or a test.
         <br /><br />
         <strong>Daily habits</strong> — Water Intake and Sleep Cycle calculators, for hydration targets and
         wake-up timing.
@@ -270,11 +281,10 @@ import BackLink from '../../components/BackLink.astro';
         <span class="info-banner-chevron">▼</span>
       </div>
       <div class="info-banner-body">
-        The Diets page is a hub linking to a dedicated page for each of 15 popular eating patterns —
-        Mediterranean, DASH, Intermittent Fasting, Keto, Plant-Based/Vegan, Paleo, MIND, Whole30, Flexible
-        Dieting/IIFYM, Flexitarian, Volumetrics, Low-FODMAP, Blue Zones, Carnivore, and Eating on GLP-1
-        Medications. Each page covers the actual rules, the cited research behind it (or, for diets like
-        Whole30 and Carnivore, an honest note about how thin or nonexistent independent clinical trials are),
+        The Diets page is a hub linking to guides on popular eating patterns, including Mediterranean, DASH,
+        Intermittent Fasting, Keto, plant-based eating, Low-FODMAP, and eating on GLP-1 medications. Each page
+        covers the actual rules, the cited research behind it (or, for diets like Whole30 and Carnivore, an
+        honest note about how thin or nonexistent independent clinical trials are),
         concrete food examples, a sample day of eating, who it might or might not suit, and links to reputable
         outside sources if you want to go deeper. It's meant purely as a starting point for research, not
         medical advice — check with a doctor or registered dietitian before making a real change to how you
@@ -297,22 +307,19 @@ import BackLink from '../../components/BackLink.astro';
         <span class="info-banner-chevron">▼</span>
       </div>
       <div class="info-banner-body">
-        The Supplements page is a hub linking to a dedicated page for popular supplements —
-        creatine, omega-3/fish oil, electrolytes, protein/whey, vitamin D, magnesium, caffeine, collagen,
-        beta-alanine, and berberine. Each page covers how it works, the cited research behind it, realistic
-        dosing where it applies, and who should be cautious — evidence strength is called out explicitly since
-        it varies a lot from one supplement to the next, and none of them are presented as a "must-have."
-        Berberine gets extra caution given its real drug interaction profile. It's meant purely as a starting
+        The Supplements page links to individual evidence summaries covering a range of products, including
+        creatine, omega-3, electrolytes, protein, vitamins, minerals, and other commonly used supplements.
+        Pages explain what the evidence does and does not show, note relevant cautions, and avoid presenting
+        supplements as "must-haves." It's meant purely as a starting
         point for research, not medical advice — check with a doctor or pharmacist before starting any
         supplement, especially if you take prescription medication.
         <br /><br />
         Take a look at the <a href="/supplements/">Supplements page</a>.
         <br /><br />
-        The Peptides page is a hub linking to a dedicated page for popular peptides —
-        Semaglutide, Tirzepatide, PT-141 (Bremelanotide), BPC-157, Sermorelin, TB-500, and MK-677 (Ibutamoren). Each page covers how it works,
-        the cited research behind it, realistic dosing where it applies, and who should be cautious. Evidence strength is called out explicitly since it
-        varies a lot from one peptide to the next. It's meant purely as a starting point for research, not medical advice —
-        check with a doctor or pharmacist before starting any peptide, especially if you take prescription medication.
+        The Peptides section identifies each substance's tier and regulatory status, with safety cautions and
+        cited evidence described on each page. Tier 2 and Tier 3 pages do not provide dosing or administration
+        instructions. This material is for education, not medical advice; discuss medications and health
+        decisions with a qualified clinician.
         <br /><br />
         Take a look at the <a href="/supplements/peptides/">Peptides page</a>.
       </div>

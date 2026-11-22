@@ -1,5 +1,19 @@
 [
   {
+    "date": "2026-11-22",
+    "title": "Expanded the Nawtch guides",
+    "description": "The Guides page now explains the Weight Tracker's trends, TDEE estimates, and goal projections, and has refreshed information about calculators, diets, and supplements.",
+    "category": "Improved",
+    "link": "/guides/"
+  },
+  {
+    "date": "2026-11-22",
+    "title": "Expanded the About page",
+    "description": "The About page now explains the meaning behind Nawtch and lists the app's main tracking, workout, calculator, diet, supplement, and planning features.",
+    "category": "Improved",
+    "link": "/about/"
+  },
+  {
     "date": "2026-10-22",
     "title": "Added workout logging",
     "description": "You can now start a workout from any program day and check off sets as you go, with your last session shown for each exercise. A new Workout Log tab keeps your past sessions and personal records.",
